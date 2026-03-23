@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Shop AI Portrait Packs</h2>
+    <p>Browse ready-made AI portrait packs for your social media and personal brand.</p>
+
+    {% if products %}
+        <div class="gallery-grid">
+            {% for product in products %}
+                <article class="gallery-card">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                    <h3>{{ product.title }}</h3>
+                    <p>€{{ product.price }}</p>
+                    <p>{{ product.description|truncatewords:20 }}</p>
+                    <a href="{% url 'product_detail' product.slug %}">View Product</a>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No products available yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
