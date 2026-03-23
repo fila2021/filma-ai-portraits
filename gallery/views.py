@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from .models import GalleryImage
 
-# Create your views here.
+
+def gallery_list(request):
+    images = GalleryImage.objects.all().order_by('-created_at')
+    return render(request, 'gallery/gallery_list.html', {'images': images})
