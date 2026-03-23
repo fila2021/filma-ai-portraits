@@ -56,3 +56,19 @@ main {
     border-radius: 6px;
     margin-bottom: 12px;
 }
+.gallery-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.gallery-card h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.gallery-card p {
+    margin: 6px 0;
+    color: #555;
+}
