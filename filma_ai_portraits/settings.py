@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'services',
     'payments',
     'reviews',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
