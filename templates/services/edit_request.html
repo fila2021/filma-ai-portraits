@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Request | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Edit Custom Request</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+</section>
+{% endblock %}
