@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Services | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Custom AI Photo Services</h2>
+    <p>Choose a package and create a personalised AI portrait request.</p>
+
+    {% if packages %}
+        <div class="gallery-grid">
+            {% for package in packages %}
+                <article class="gallery-card">
+                    <h3>{{ package.title }}</h3>
+                    <p><strong>Price:</strong> €{{ package.base_price }}</p>
+                    <p><strong>Images:</strong> {{ package.number_of_images }}</p>
+                    <p><strong>Turnaround:</strong> {{ package.turnaround_days }} days</p>
+                    <p>{{ package.description }}</p>
+                    <a href="{% url 'create_request' %}">Order This Package</a>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No service packages available yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
