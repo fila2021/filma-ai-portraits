@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Gallery | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Gallery</h2>
+    <p>Explore AI-generated portrait inspiration and featured styles.</p>
+
+    {% if images %}
+        <div class="gallery-grid">
+            {% for image in images %}
+                <article class="gallery-card">
+                    <img src="{{ image.image_url }}" alt="{{ image.title }}">
+                    <h3>{{ image.title }}</h3>
+                    <p>{{ image.category }}</p>
+                    <p>{{ image.caption }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No gallery images available yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
