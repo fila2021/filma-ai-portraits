@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>My Profile</h2>
+    <p><strong>Display Name:</strong> {{ profile.display_name }}</p>
+    <p><strong>Bio:</strong> {{ profile.bio }}</p>
+    <p><strong>Instagram:</strong> {{ profile.instagram_handle }}</p>
+
+    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+</section>
+{% endblock %}
