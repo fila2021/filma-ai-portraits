@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Request Details | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <article class="gallery-card">
+        <h2>{{ custom_request.package.title }}</h2>
+        <p><strong>Status:</strong> {{ custom_request.get_status_display }}</p>
+        <p><strong>Platform:</strong> {{ custom_request.get_platform_type_display }}</p>
+        <p><strong>Style:</strong> {{ custom_request.style_choice }}</p>
+        <p><strong>Prompt:</strong> {{ custom_request.prompt_details }}</p>
+        <p><strong>Extra Notes:</strong> {{ custom_request.extra_notes }}</p>
+        <p><strong>Total Price:</strong> €{{ custom_request.total_price }}</p>
+
+        <p>
+            <a href="{% url 'edit_request' custom_request.pk %}">Edit Request</a>
+        </p>
+
+        <form method="post" action="{% url 'delete_request' custom_request.pk %}">
+            {% csrf_token %}
+            <button type="submit">Delete Request</button>
+        </form>
+    </article>
+</section>
+{% endblock %}
