@@ -46,6 +46,7 @@ nav {
 nav a { color: var(--text); text-decoration: none; font-weight: 600; }
 nav ul { list-style: none; display: flex; gap: 18px; margin: 0; padding: 0; align-items: center; }
 nav button { background: none; border: 1px solid var(--card-border); color: var(--text); border-radius: 10px; padding: 6px 10px; cursor: pointer; }
+.logo { height: 36px; width: auto; display: block; }
 
 main { padding: 40px 0 64px; }
 
