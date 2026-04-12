@@ -1133,3 +1133,7 @@ img {
   display: grid;
   gap: 18px;
 }
+
+.footer-tag-row {
+  margin-top: 12px;
+}

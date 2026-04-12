@@ -32,52 +32,56 @@
         </main>
 
         <footer class="site-footer">
-            <div class="container footer-grid">
-                <div class="footer-brand-block">
-                    <h4>Askuala AI Portraits</h4>
-                    <p>
-                        Premium AI portraits, creator-ready packs, and tailored visual services
-                        designed for standout online presence.
-                    </p>
-                </div>
-
-                <div>
-                    <h5>Explore</h5>
-                    <ul>
-                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
-                        <li><a href="{% url 'product_list' %}">Shop</a></li>
-                        <li><a href="{% url 'service_list' %}">Services</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h5>Account</h5>
-                    <ul>
-                        {% if user.is_authenticated %}
-                            <li><a href="{% url 'profile' %}">My Profile</a></li>
-                            <li><a href="{% url 'request_list' %}">My Requests</a></li>
-                        {% else %}
-                            <li><a href="{% url 'signup' %}">Sign up</a></li>
-                            <li><a href="{% url 'login' %}">Log in</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-
-                <div>
-                    <h5>Why Choose Us</h5>
-                    <ul>
-                        <li><span>Curated premium visuals</span></li>
-                        <li><span>Custom portrait requests</span></li>
-                        <li><span>Secure payments</span></li>
-                    </ul>
-                </div>
+    <div class="container footer-grid">
+        <div class="footer-brand-block">
+            <h4>Askuala AI Portraits</h4>
+            <p>
+                Premium AI portraits, creator-ready packs, and tailored visual services
+                designed for standout online presence.
+            </p>
+            <div class="tag-row footer-tag-row">
+                <span class="pill accent">Premium visuals</span>
+                <span class="pill">Custom requests</span>
             </div>
+        </div>
 
-            <div class="container footer-bottom">
-                <p>© 2026 Askuala AI Portraits. All rights reserved.</p>
-                <p>Powered by AI. Refined for creators.</p>
-            </div>
-        </footer>
+        <div>
+            <h5>Explore</h5>
+            <ul>
+                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                <li><a href="{% url 'product_list' %}">Shop</a></li>
+                <li><a href="{% url 'service_list' %}">Services</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h5>Account</h5>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">My Profile</a></li>
+                    <li><a href="{% url 'request_list' %}">My Requests</a></li>
+                {% else %}
+                    <li><a href="{% url 'signup' %}">Sign up</a></li>
+                    <li><a href="{% url 'login' %}">Log in</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div>
+            <h5>Highlights</h5>
+            <ul>
+                <li><span>Premium storefront design</span></li>
+                <li><span>Curated portrait products</span></li>
+                <li><span>Tailored custom services</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container footer-bottom">
+        <p>© 2026 Askuala AI Portraits. All rights reserved.</p>
+        <p>Powered by AI. Refined for creators.</p>
+    </div>
+</footer>
     </div>
 
     {% block extra_js %}{% endblock %}
