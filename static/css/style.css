@@ -897,3 +897,32 @@ img {
   gap: 12px;
   flex-wrap: wrap;
 }
+
+.request-premium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.request-premium-card {
+  display: grid;
+  gap: 14px;
+}
+
+.request-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.request-meta {
+  display: grid;
+  gap: 8px;
+}
+
+.request-meta p {
+  margin: 0;
+  color: var(--muted);
+}
