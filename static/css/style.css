@@ -124,6 +124,67 @@ main {
     padding: 24px;
 }
 
+.hero {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: center;
+    padding: 32px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #111 0%, #333 60%, #555 100%);
+    color: #fff;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.hero p {
+    margin: 0;
+    color: #e6e6e6;
+}
+
+.hero .cta-row {
+    margin-top: 12px;
+}
+
+.hero-visual {
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), transparent 45%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08), transparent 40%), #222;
+    border-radius: 14px;
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+}
+
+.section {
+    margin-top: 32px;
+    display: grid;
+    gap: 14px;
+}
+
+.section h3 {
+    margin: 0;
+}
+
+.card-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+}
 .message {
     padding: 10px;
     margin-bottom: 12px;

@@ -3,8 +3,57 @@
 {% block title %}Home | Filma AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>Custom AI portraits and digital image packs for social media</h2>
-    <p>Buy AI portrait packs or order custom images for your brand and social media pages.</p>
+<section class="hero">
+    <div>
+        <span class="badge">AI Portrait Studio</span>
+        <h1>Stand-out portraits for every social platform.</h1>
+        <p>Order bespoke AI portraits or grab ready-to-use packs tuned for Instagram, TikTok, Facebook, and YouTube.</p>
+        <div class="cta-row">
+            <a class="btn-primary" href="{% url 'service_list' %}">Create a custom request</a>
+            <a class="btn-secondary" href="{% url 'product_list' %}">Browse packs</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        Gradient Studio Mock
+    </div>
+</section>
+
+<section class="section">
+    <h3>Featured services</h3>
+    <div class="card-row">
+        <article class="gallery-card">
+            <h3>Custom Portraits</h3>
+            <p>Pick a platform and style, describe the vibe, and we deliver polished AI images.</p>
+            <a class="btn-secondary" href="{% url 'service_list' %}">Order now</a>
+        </article>
+        <article class="gallery-card">
+            <h3>Brand Packs</h3>
+            <p>Consistent sets sized for profile pics, thumbnails, and reels covers.</p>
+            <a class="btn-secondary" href="{% url 'product_list' %}">View packs</a>
+        </article>
+        <article class="gallery-card">
+            <h3>Fast Turnaround</h3>
+            <p>Delivery in as little as 48 hours on selected packages.</p>
+            <a class="btn-secondary" href="{% url 'service_list' %}">See packages</a>
+        </article>
+    </div>
+</section>
+
+<section class="section">
+    <h3>Why Filma AI?</h3>
+    <div class="card-row">
+        <article class="gallery-card">
+            <h4>Platform tuned</h4>
+            <p>Outputs sized and composed for IG, TikTok, FB, and YouTube.</p>
+        </article>
+        <article class="gallery-card">
+            <h4>Human review</h4>
+            <p>We QC every set before delivery—no raw model dumps.</p>
+        </article>
+        <article class="gallery-card">
+            <h4>Clear pricing</h4>
+            <p>Transparent package prices and live estimates for custom requests.</p>
+        </article>
+    </div>
 </section>
 {% endblock %}
