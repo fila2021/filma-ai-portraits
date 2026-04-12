@@ -5,6 +5,9 @@
 {% block content %}
 <section>
     <h2>Create Custom Request</h2>
+    <div class="price-preview">
+        <p><strong>Estimated price:</strong> <span id="pricePreview">Select a package</span></p>
+    </div>
     <form method="post" class="form-card">
         {% csrf_token %}
         <div class="form-row">
@@ -44,4 +47,8 @@
         <button type="submit" class="btn-primary">Submit Request</button>
     </form>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/request_price.js' %}"></script>
 {% endblock %}

@@ -93,6 +93,11 @@ body {
     max-width: 500px;
 }
 
+.price-preview {
+    margin: 12px 0;
+    font-weight: 600;
+}
+
 nav {
     display: flex;
     justify-content: space-between;

@@ -1,3 +1,5 @@
+import json
+
 from django import forms
 from .models import CustomRequest
 
@@ -33,3 +35,11 @@ class CustomRequestForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs.setdefault('class', 'form-control')
         self.fields['platform_type'].empty_label = None
+        # attach price data for JS calculator
+        package_field = self.fields.get('package')
+        if package_field and hasattr(package_field, 'queryset'):
+            price_map = {
+                str(pkg.pk): str(pkg.base_price)
+                for pkg in package_field.queryset
+            }
+            package_field.widget.attrs['data-prices'] = json.dumps(price_map)
