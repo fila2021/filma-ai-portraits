@@ -1,42 +1,99 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Gallery | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
-    <div class="card-soft" style="padding:32px; box-shadow: var(--shadow);">
-        <div class="section-head" style="align-items:flex-start;">
-            <div>
-                <span class="badge">Gallery</span>
-                <h2 style="margin:10px 0 6px 0;">Inspiration & Styles</h2>
-                <p class="muted">A curated lookbook of Filma AI portraits across destinations and moods.</p>
-            </div>
-            <div class="tag-row">
-                <span class="pill soft">Featured</span>
-                <span class="pill soft">Latest</span>
-                <span class="pill soft">Social-ready</span>
-            </div>
+    <div class="card-soft">
+        <span class="badge accent">Gallery</span>
+        <h1>Explore premium AI portrait visuals</h1>
+        <p class="muted">
+            Browse a curated gallery of portrait styles, visual directions, and polished outputs.
+            This page is designed to feel more like a premium showcase rather than a plain image list,
+            inspired by the stronger visual merchandising approach in the Manus storefront reference. :contentReference[oaicite:1]{index=1}
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Showcase</span>
+            <h2>Portrait Inspiration</h2>
         </div>
     </div>
 
     {% if images %}
-        <div class="gallery-grid">
+        <div class="gallery-grid gallery-premium-grid">
             {% for image in images %}
-                <article class="card-floating" style="padding:14px;">
-                    <img src="{{ image.image_url }}" alt="{{ image.title }}" style="height:200px; object-fit:cover; border-radius:14px;">
-                    <div class="section-head" style="align-items:flex-start;">
-                        <h3 style="margin:6px 0 0 0;">{{ image.title }}</h3>
-                        {% if image.category %}<span class="pill soft">{{ image.category }}</span>{% endif %}
+                <article class="gallery-card gallery-premium-card">
+                    <div class="gallery-media-wrap">
+                        {% if image.image %}
+                            <img src="{{ image.image.url }}" alt="{{ image.title|default:'Gallery image' }}" class="gallery-premium-image">
+                        {% else %}
+                            <div class="card-img-placeholder"></div>
+                        {% endif %}
                     </div>
-                    {% if image.caption %}<p class="muted">{{ image.caption }}</p>{% endif %}
+
+                    <div class="gallery-card-body">
+                        <div class="tag-row">
+                            <span class="pill accent">AI Portrait</span>
+                            {% if image.category %}
+                                <span class="pill">{{ image.category }}</span>
+                            {% endif %}
+                        </div>
+
+                        <h3>
+                            {% if image.title %}
+                                {{ image.title }}
+                            {% else %}
+                                Premium Portrait Concept
+                            {% endif %}
+                        </h3>
+
+                        <p class="muted">
+                            {% if image.description %}
+                                {{ image.description|truncatewords:22 }}
+                            {% else %}
+                                A curated visual example from the Askuala AI Portraits gallery,
+                                presented in a more elevated premium showcase layout.
+                            {% endif %}
+                        </p>
+                    </div>
                 </article>
             {% endfor %}
         </div>
     {% else %}
         <div class="empty-state">
-            <h3>No gallery images yet</h3>
-            <p>Upload or add featured images to showcase your work.</p>
+            <span class="badge">No Gallery Items Yet</span>
+            <h2>Your gallery is still empty</h2>
+            <p class="muted">
+                Once gallery items are added, they will appear here in a curated premium layout.
+            </p>
         </div>
     {% endif %}
+</section>
+
+<section class="section">
+    <div class="split">
+        <div class="card-soft">
+            <span class="badge accent">Need something custom?</span>
+            <h2>Turn inspiration into a tailored request</h2>
+            <p class="muted">
+                If you see a style direction you like, move straight into a custom portrait request
+                and describe the look, mood, and intended platform.
+            </p>
+            <a href="{% url 'service_list' %}" class="btn-primary">Create Custom Request</a>
+        </div>
+
+        <div class="card-soft">
+            <span class="badge">Ready to buy?</span>
+            <h2>Browse ready-made portrait products</h2>
+            <p class="muted">
+                Prefer a quicker starting point? Explore the shop for portrait packs and ready-to-buy products.
+            </p>
+            <a href="{% url 'product_list' %}" class="btn-secondary">Go to Shop</a>
+        </div>
+    </div>
 </section>
 {% endblock %}
