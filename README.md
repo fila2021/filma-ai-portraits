@@ -42,6 +42,31 @@ Custom AI portrait studio with ready-made packs and bespoke requests, built on D
 - Product checkout: open a product page → Buy Now → complete Checkout.
 - Request checkout: create a custom request → Pay with Stripe → success/cancel pages.
 
+## User stories (abbreviated)
+- As a visitor, I can browse gallery images and shop packs without logging in.
+- As a user, I can sign up, log in, and edit my profile.
+- As a customer, I can create, view, edit, and delete custom requests with clear feedback.
+- As a customer, I can buy a product pack and see order/payment status.
+- As a customer, I can pay for a custom request via Stripe Checkout.
+- As a customer, I can leave, edit, or delete reviews on products or my requests.
+
+## Database schema (summary)
+- accounts.Profile (1–1 User): display_name, bio, instagram_handle.
+- gallery.GalleryImage: title, image_url, category, caption, is_featured.
+- shop.Product: title, slug, description, price, image_url, is_active.
+- services.ServicePackage: name, description, base_price, number_of_images, turnaround_days, platform_type, is_active.
+- services.CustomRequest: user FK, package FK, platform_type, style_choice, prompt_details, extra_notes, total_price, status, timestamps.
+- payments.Order: user FK, product FK, price_snapshot, status, stripe_session_id, timestamps.
+- payments.Payment: user FK, optional order/custom_request, amount, currency, status, stripe_payment_intent/session_id, paid_at, timestamps.
+- reviews.Review: user FK, optional product/custom_request FK, rating, comment, created_at.
+
+## Deployment (example: Render)
+1. Set env vars: `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `DEBUG=False`, `ALLOWED_HOSTS=<your-domain>`.
+2. Add build command: `pip install -r requirements.txt`.
+3. Add start command: `python manage.py migrate && python manage.py collectstatic --noinput && gunicorn filma_ai_portraits.wsgi:application`.
+4. Use persistent SQLite or switch to Postgres (preferred) and set `DATABASE_URL`.
+5. Verify Stripe webhooks if you add them; otherwise test Checkout with test card.
+
 ## Running tests
 ```bash
 python manage.py test
