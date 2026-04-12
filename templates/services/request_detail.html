@@ -1,68 +1,69 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Request Details | Askuala AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <article class="gallery-card">
-        <div class="section-head" style="align-items:flex-start;">
-            <div>
-                <span class="badge accent">{{ custom_request.get_platform_type_display }}</span>
-                <h2 style="margin:6px 0 4px 0;">{{ custom_request.package.name }}</h2>
-                <p class="muted">Style: {{ custom_request.get_style_choice_display }}</p>
+<section class="section">
+    <div class="card-soft">
+        <span class="badge accent">Request Detail</span>
+        <h1>{{ request.title }}</h1>
+        <p class="muted">
+            Review the details of your custom portrait request and track the service information.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="split">
+        <div class="card-soft">
+            <span class="badge">Overview</span>
+            <h2>Request Information</h2>
+
+            <div class="request-detail-grid">
+                {% if request.service %}
+                    <div class="request-detail-row">
+                        <span class="meta-label">Service</span>
+                        <span class="meta-value">{{ request.service }}</span>
+                    </div>
+                {% endif %}
+
+                {% if request.status %}
+                    <div class="request-detail-row">
+                        <span class="meta-label">Status</span>
+                        <span class="meta-value">{{ request.status }}</span>
+                    </div>
+                {% endif %}
+
+                {% if request.created_at %}
+                    <div class="request-detail-row">
+                        <span class="meta-label">Created</span>
+                        <span class="meta-value">{{ request.created_at|date:"M d, Y" }}</span>
+                    </div>
+                {% endif %}
             </div>
-            <span class="badge {% if custom_request.status == 'completed' %}success{% else %}accent{% endif %}">{{ custom_request.get_status_display }}</span>
         </div>
 
-        <p class="muted"><strong>Prompt</strong><br>{{ custom_request.prompt_details }}</p>
-        {% if custom_request.extra_notes %}<p class="muted"><strong>Notes</strong><br>{{ custom_request.extra_notes }}</p>{% endif %}
+        <div class="card-soft">
+            <span class="badge accent">Description</span>
+            <h2>Creative Brief</h2>
 
-        <div class="cta-row" style="margin:12px 0;">
-            <span class="pill">€{{ custom_request.total_price }}</span>
-            <span class="pill">Turnaround: {{ custom_request.package.turnaround_days }} days</span>
-            <span class="pill">Images: {{ custom_request.package.number_of_images }}</span>
-        </div>
-
-        <div class="cta-row">
-            <a class="btn-secondary" href="{% url 'edit_request' custom_request.pk %}">Edit Request</a>
-            <form method="post" action="{% url 'delete_request' custom_request.pk %}">
-                {% csrf_token %}
-                <button type="submit" class="btn-secondary">Delete</button>
-            </form>
-            {% if custom_request.status != 'completed' %}
-            <form method="post" action="{% url 'request_checkout' custom_request.pk %}">
-                {% csrf_token %}
-                <button type="submit" class="btn-primary">Pay now</button>
-            </form>
+            {% if request.description %}
+                <p class="muted">{{ request.description }}</p>
+            {% else %}
+                <p class="muted">
+                    No extra description was provided for this request.
+                </p>
             {% endif %}
         </div>
-    </article>
+    </div>
+</section>
 
-    <section class="reviews-section">
-        <div class="cta-row" style="margin: 12px 0;">
-            <a class="btn-secondary" href="{% url 'create_request_review' custom_request.pk %}">Leave a review</a>
+<section class="section">
+    <div class="card-soft">
+        <div class="cta-row">
+            <a href="{% url 'request_list' %}" class="btn-secondary">Back to My Requests</a>
+            <a href="{% url 'create_request' %}" class="btn-primary">Create Another Request</a>
         </div>
-        {% if custom_request.reviews.all %}
-            <div class="gallery-grid">
-                {% for review in custom_request.reviews.all %}
-                    <article class="gallery-card">
-                        <p><strong>Rating:</strong> {{ review.rating }}/5</p>
-                        <p>{{ review.comment }}</p>
-                        <p><em>by {{ review.user.username }} on {{ review.created_at|date:"Y-m-d" }}</em></p>
-                        {% if user == review.user %}
-                            <div class="cta-row">
-                                <a class="btn-secondary" href="{% url 'edit_review' review.pk %}">Edit</a>
-                                <a class="btn-secondary" href="{% url 'delete_review' review.pk %}">Delete</a>
-                            </div>
-                        {% endif %}
-                    </article>
-                {% empty %}
-                    <p>No reviews yet.</p>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>No reviews yet.</p>
-        {% endif %}
-    </section>
+    </div>
 </section>
 {% endblock %}
