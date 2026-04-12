@@ -1,14 +1,79 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}My Profile | Askuala AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>My Profile</h2>
-    <p><strong>Display Name:</strong> {{ profile.display_name }}</p>
-    <p><strong>Bio:</strong> {{ profile.bio }}</p>
-    <p><strong>Instagram:</strong> {{ profile.instagram_handle }}</p>
+<section class="section">
+    <div class="card-soft">
+        <span class="badge accent">My Profile</span>
+        <h1>Your account overview</h1>
+        <p class="muted">
+            Manage your personal details, review your activity, and keep your Askuala AI Portraits
+            account ready for purchases, requests, and reviews.
+        </p>
+    </div>
+</section>
 
-    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+<section class="section">
+    <div class="split">
+        <div class="card-soft profile-summary-card">
+            <span class="badge">Account Details</span>
+            <h2>Profile Information</h2>
+
+            <div class="profile-detail-grid">
+                <div class="profile-detail-row">
+                    <span class="meta-label">Username</span>
+                    <span class="meta-value">{{ user.username }}</span>
+                </div>
+
+                {% if user.email %}
+                    <div class="profile-detail-row">
+                        <span class="meta-label">Email</span>
+                        <span class="meta-value">{{ user.email }}</span>
+                    </div>
+                {% endif %}
+
+                {% if profile and profile.phone_number %}
+                    <div class="profile-detail-row">
+                        <span class="meta-label">Phone</span>
+                        <span class="meta-value">{{ profile.phone_number }}</span>
+                    </div>
+                {% endif %}
+
+                {% if profile and profile.address %}
+                    <div class="profile-detail-row">
+                        <span class="meta-label">Address</span>
+                        <span class="meta-value">{{ profile.address }}</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="cta-row">
+                <a href="{% url 'edit_profile' %}" class="btn-primary">Edit Profile</a>
+            </div>
+        </div>
+
+        <div class="card-soft profile-side-card">
+            <span class="badge accent">Quick Access</span>
+            <h2>Your account actions</h2>
+
+            <div class="profile-link-list">
+                <a href="{% url 'request_list' %}" class="profile-link-card">
+                    <h3>My Requests</h3>
+                    <p class="muted">Track submitted custom portrait requests and their details.</p>
+                </a>
+
+                <a href="{% url 'review_list' %}" class="profile-link-card">
+                    <h3>Reviews</h3>
+                    <p class="muted">View product and customer feedback pages from your account area.</p>
+                </a>
+
+                <a href="{% url 'product_list' %}" class="profile-link-card">
+                    <h3>Shop</h3>
+                    <p class="muted">Return to portrait packs and ready-made products anytime.</p>
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}
