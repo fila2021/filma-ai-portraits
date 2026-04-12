@@ -1,43 +1,75 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Shop | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
-    <div class="card-soft" style="padding:28px;">
-        <div class="section-head">
-            <div>
-                <span class="badge">Shop</span>
-                <h2 style="margin:8px 0 4px 0;">AI Portrait Packs</h2>
-                <p class="muted">Curated packs for social profiles, thumbnails, and covers.</p>
-            </div>
+    <div class="card-soft">
+        <span class="badge accent">Shop</span>
+        <h1>Premium portrait packs and ready-to-buy visuals</h1>
+        <p class="muted">
+            Browse curated AI portrait products designed for creators, personal brands,
+            and polished online presence. Each product is presented as a cleaner, more
+            premium storefront item with stronger visual hierarchy.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Collection</span>
+            <h2>Available Portrait Packs</h2>
         </div>
     </div>
 
     {% if products %}
         <div class="gallery-grid">
             {% for product in products %}
-                <article class="card-floating">
-                    <img src="{{ product.image_url }}" alt="{{ product.title }}" style="height:220px; object-fit:cover; border-radius:14px;">
-                    <div class="section-head" style="align-items:flex-start;">
-                        <h3>{{ product.title }}</h3>
-                        <span class="badge accent">€{{ product.price }}</span>
+                <article class="gallery-card">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <div class="card-img-placeholder"></div>
+                    {% endif %}
+
+                    <div class="tag-row">
+                        <span class="pill accent">Portrait Pack</span>
+                        {% if product.category %}
+                            <span class="pill">{{ product.category }}</span>
+                        {% endif %}
                     </div>
-                    <p class="muted">{{ product.description|truncatewords:18 }}</p>
-                    <div class="cta-row">
-                        <a class="btn-secondary" href="{% url 'product_detail' product.slug %}">View details</a>
-                        <form method="post" action="{% url 'buy_now' product.slug %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-primary">Buy now</button>
-                        </form>
+
+                    <h3>{{ product.name }}</h3>
+
+                    {% if product.description %}
+                        <p class="muted">{{ product.description|truncatewords:24 }}</p>
+                    {% else %}
+                        <p class="muted">
+                            Premium AI-generated portrait visuals designed for a more polished,
+                            creator-ready presentation.
+                        </p>
+                    {% endif %}
+
+                    <div class="product-card-footer">
+                        {% if product.price %}
+                            <p class="product-price">€{{ product.price }}</p>
+                        {% endif %}
+
+                        {% if product.id %}
+                            <a href="{% url 'product_detail' product.id %}" class="btn-primary">View Product</a>
+                        {% endif %}
                     </div>
                 </article>
             {% endfor %}
         </div>
     {% else %}
         <div class="empty-state">
-            <h3>No products yet</h3>
-            <p>Check back soon for curated portrait packs.</p>
+            <span class="badge">No Products Yet</span>
+            <h2>There are no products available right now</h2>
+            <p class="muted">
+                Once products are added, this page will showcase them in a premium storefront layout.
+            </p>
         </div>
     {% endif %}
 </section>

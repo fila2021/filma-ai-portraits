@@ -704,3 +704,18 @@ img {
     grid-template-columns: 1fr;
   }
 }
+.product-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.product-price {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent-2);
+}
