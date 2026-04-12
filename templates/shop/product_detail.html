@@ -37,13 +37,8 @@
             </div>
 
             <div class="cta-row">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'checkout' product.id %}" class="btn-primary">Buy Now</a>
-                    <a href="{% url 'add_product_review' product.id %}" class="btn-secondary">Leave a Review</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn-primary">Login to Purchase</a>
-                    <a href="{% url 'login' %}" class="btn-secondary">Login to Review</a>
-                {% endif %}
+                <a href="{% url 'product_list' %}" class="btn-secondary">Back to Shop</a>
+                <a href="{% url 'create_request' %}" class="btn-primary">Request Similar Style</a>
             </div>
 
             <div class="product-detail-meta">
@@ -91,15 +86,54 @@
             <article class="card-floating">
                 <h3>Premium storefront experience</h3>
                 <p class="muted">
-                    This page structure follows the same curated product-detail mindset used in the Manus storefront reference. :contentReference[oaicite:1]{index=1}
+                    This page structure supports a cleaner, more curated product-detail experience.
                 </p>
             </article>
         </div>
     </div>
 </section>
 
-<div class="cta-row">
-    <a href="{% url 'product_list' %}" class="btn-secondary">Back to Shop</a>
-    <a href="{% url 'create_request' %}" class="btn-primary">Request Similar Style</a>
-</div>
+<section class="section">
+    <div class="card-soft review-section-card">
+        <div class="section-head">
+            <div>
+                <span class="badge accent">Reviews</span>
+                <h2>Customer feedback</h2>
+            </div>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'add_product_review' product.id %}" class="btn-secondary">Write a Review</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-secondary">Login to Review</a>
+            {% endif %}
+        </div>
+
+        {% if reviews %}
+            <div class="review-grid">
+                {% for review in reviews %}
+                    <article class="card-floating review-showcase-card">
+                        <div class="review-showcase-top">
+                            <div>
+                                <h3>{{ review.user.username }}</h3>
+                                <p class="muted review-product-label">{{ product.name }}</p>
+                            </div>
+                            <span class="pill accent">{{ review.rating }}/5</span>
+                        </div>
+
+                        <p class="muted">{{ review.comment }}</p>
+                        <p class="review-date">{{ review.created_at|date:"M d, Y" }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <span class="badge">No Reviews Yet</span>
+                <h3>Be the first to review this product</h3>
+                <p class="muted">
+                    Reviews help create trust and make your storefront feel more complete and premium.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}
