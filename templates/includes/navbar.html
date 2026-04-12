@@ -1,7 +1,7 @@
 {% load static %}
 
-<nav class="site-nav">
-    <div class="container site-nav-inner">
+<header class="site-header">
+    <nav class="site-nav container">
         <a href="{% url 'home' %}" class="brand-link" aria-label="Askuala AI Portraits home">
             <img
                 src="{% static 'img/askuala-logo.png' %}"
@@ -32,8 +32,8 @@
             {% endif %}
 
             <li>
-                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">☼</button>
             </li>
         </ul>
-    </div>
-</nav>
+    </nav>
+</header>

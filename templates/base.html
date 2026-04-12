@@ -1,20 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Askuala AI Portraits{% endblock %}</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="page-shell">
         {% include 'includes/navbar.html' %}
 
-        <main class="container">
+        <main class="container site-main">
             {% if messages %}
                 <div class="messages" role="status" aria-live="polite">
                     {% for message in messages %}
@@ -31,10 +33,14 @@
 
         <footer class="site-footer">
             <div class="container footer-grid">
-                <div>
+                <div class="footer-brand-block">
                     <h4>Askuala AI Portraits</h4>
-                    <p>Stand-out portraits and packs for every platform.</p>
+                    <p>
+                        Premium AI portraits, creator-ready packs, and tailored visual services
+                        designed for standout online presence.
+                    </p>
                 </div>
+
                 <div>
                     <h5>Explore</h5>
                     <ul>
@@ -43,6 +49,7 @@
                         <li><a href="{% url 'service_list' %}">Services</a></li>
                     </ul>
                 </div>
+
                 <div>
                     <h5>Account</h5>
                     <ul>
@@ -55,10 +62,25 @@
                         {% endif %}
                     </ul>
                 </div>
+
+                <div>
+                    <h5>Why Choose Us</h5>
+                    <ul>
+                        <li><span>Curated premium visuals</span></li>
+                        <li><span>Custom portrait requests</span></li>
+                        <li><span>Secure payments</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container footer-bottom">
+                <p>© 2026 Askuala AI Portraits. All rights reserved.</p>
+                <p>Powered by AI. Refined for creators.</p>
             </div>
         </footer>
     </div>
+
+    {% block extra_js %}{% endblock %}
+    <script src="{% static 'js/theme.js' %}"></script>
 </body>
-{% block extra_js %}{% endblock %}
-<script src="{% static 'js/theme.js' %}"></script>
 </html>
