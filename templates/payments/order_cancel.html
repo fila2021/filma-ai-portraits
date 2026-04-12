@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Cancelled | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Payment cancelled</h2>
+    <p>No charge was made. You can try again when ready.</p>
+    <div class="gallery-card">
+        <p><strong>Order:</strong> #{{ order.pk }}</p>
+        <p><strong>Product:</strong> {{ order.product.title }}</p>
+        <p><strong>Total:</strong> €{{ order.price_snapshot }}</p>
+        <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+    </div>
+    <div class="cta-row">
+        <form method="post" action="{% url 'buy_now' order.product.slug %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary">Try payment again</button>
+        </form>
+        <a class="btn-secondary" href="{% url 'order_detail' order.pk %}">Back to order</a>
+    </div>
+</section>
+{% endblock %}

@@ -58,8 +58,8 @@ def buy_now(request, slug):
             },
             'quantity': 1,
         }],
-        success_url=request.build_absolute_uri(reverse('order_detail', args=[order.pk])) + '?paid=1',
-        cancel_url=request.build_absolute_uri(reverse('order_detail', args=[order.pk])),
+        success_url=request.build_absolute_uri(reverse('order_success', args=[order.pk])) + '?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=request.build_absolute_uri(reverse('order_cancel', args=[order.pk])),
     )
     order.stripe_session_id = session.id
     order.save(update_fields=['stripe_session_id'])
@@ -82,6 +82,28 @@ def order_detail(request, pk):
         order.save(update_fields=['status'])
         Payment.objects.filter(order=order).update(status='succeeded', paid_at=timezone.now())
     return render(request, 'payments/order_detail.html', {'order': order})
+
+
+@login_required
+def order_success(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    session_id = request.GET.get('session_id')
+    if order.status != 'paid':
+        order.status = 'paid'
+        order.save(update_fields=['status'])
+    Payment.objects.filter(order=order).update(
+        status='succeeded',
+        paid_at=timezone.now(),
+        stripe_session_id=session_id or '',
+    )
+    return render(request, 'payments/order_success.html', {'order': order})
+
+
+@login_required
+def order_cancel(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    messages.info(request, 'Payment cancelled.')
+    return render(request, 'payments/order_cancel.html', {'order': order})
 
 
 @login_required
