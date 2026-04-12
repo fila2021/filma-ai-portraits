@@ -1157,3 +1157,28 @@ img {
   display: grid;
   gap: 18px;
 }
+@media (max-width: 980px) {
+  .nav-menu {
+    gap: 10px;
+  }
+
+  .nav-menu a,
+  .nav-btn {
+    font-size: 14px;
+  }
+
+  .logo-large {
+    width: 160px;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-nav {
+    align-items: flex-start;
+  }
+
+  .nav-menu {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

@@ -15,11 +15,10 @@
             <li><a href="{% url 'gallery' %}">Gallery</a></li>
             <li><a href="{% url 'product_list' %}">Shop</a></li>
             <li><a href="{% url 'service_list' %}">Services</a></li>
-            <li><a href="{% url 'home' %}">About</a></li>
 
             {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">My Profile</a></li>
-                <li><a href="{% url 'request_list' %}">My Requests</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'request_list' %}">Requests</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                         {% csrf_token %}
