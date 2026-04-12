@@ -1,80 +1,135 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}{{ product.title }} | Askuala AI Portraits{% endblock %}
+{% block title %}{{ product.name }} | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
-    <div class="card-soft split">
-        <div>
-            <img src="{{ product.image_url }}" alt="{{ product.title }}" style="width:100%; border-radius:18px; box-shadow: var(--shadow);">
+    <div class="product-detail-layout">
+        <div class="card-soft product-detail-media">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
+            {% else %}
+                <div class="product-detail-placeholder"></div>
+            {% endif %}
         </div>
-        <div style="display:grid; gap:14px;">
-            <div class="section-head" style="align-items:flex-start;">
-                <h2 style="margin:0;">{{ product.title }}</h2>
-                <span class="badge accent">€{{ product.price }}</span>
-            </div>
-            <p class="muted">{{ product.description }}</p>
+
+        <div class="card-soft product-detail-info">
+            <span class="badge accent">Premium Portrait Product</span>
+            <h1>{{ product.name }}</h1>
+
+            {% if product.price %}
+                <p class="product-detail-price">€{{ product.price }}</p>
+            {% endif %}
+
+            {% if product.description %}
+                <p class="muted product-detail-description">{{ product.description }}</p>
+            {% else %}
+                <p class="muted product-detail-description">
+                    A premium AI portrait product designed for creators, personal brands,
+                    and polished social media presentation.
+                </p>
+            {% endif %}
+
             <div class="tag-row">
-                <span class="pill soft">Premium pack</span>
-                <span class="pill soft">Instant download</span>
-                <span class="pill soft">High-res</span>
+                <span class="pill accent">Curated pack</span>
+                <span class="pill">Premium finish</span>
+                <span class="pill">Creator-ready</span>
             </div>
+
             <div class="cta-row">
                 {% if user.is_authenticated %}
-                    <form method="post" action="{% url 'buy_now' product.slug %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-primary">Buy now</button>
-                    </form>
-                    {% if has_paid %}
-                        <span class="badge success">Already purchased</span>
-                    {% endif %}
+                    <a href="{% url 'checkout' product.id %}" class="btn-primary">Buy Now</a>
+                    <a href="{% url 'add_product_review' product.id %}" class="btn-secondary">Leave a Review</a>
                 {% else %}
-                    <a class="btn-primary" href="{% url 'login' %}?next={{ request.path }}">Log in to buy</a>
+                    <a href="{% url 'login' %}" class="btn-primary">Login to Purchase</a>
+                    <a href="{% url 'login' %}" class="btn-secondary">Login to Review</a>
                 {% endif %}
-                <a class="btn-secondary" href="{% url 'product_list' %}">Back to shop</a>
+            </div>
+
+            <div class="product-detail-meta">
+                <div class="meta-row">
+                    <span class="meta-label">Delivery</span>
+                    <span class="meta-value">Digital / instant access after purchase</span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Use case</span>
+                    <span class="meta-value">Profiles, branding, social content</span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Style</span>
+                    <span class="meta-value">Premium AI portrait presentation</span>
+                </div>
             </div>
         </div>
     </div>
+</section>
 
-    <section class="reviews-section">
+<section class="section">
+    <div class="card-soft">
         <div class="section-head">
             <div>
-                <span class="badge">Reviews</span>
-                <h3 style="margin:6px 0 4px 0;">What customers say</h3>
-            </div>
-            <div class="cta-row">
-                {% if user.is_authenticated %}
-                    <a class="btn-secondary" href="{% url 'create_product_review' product.slug %}">Write a review</a>
-                {% else %}
-                    <a class="btn-secondary" href="{% url 'login' %}?next={{ request.path }}">Log in to review</a>
-                {% endif %}
+                <span class="badge">Why this product</span>
+                <h2>Designed for a more premium online presence</h2>
             </div>
         </div>
 
-        {% if product.reviews.all %}
-            <div class="gallery-grid">
-                {% for review in product.reviews.all %}
-                    <article class="gallery-card">
-                        <p><strong>Rating:</strong> {{ review.rating }}/5</p>
-                        <p>{{ review.comment }}</p>
-                        <p class="muted">by {{ review.user.username }} on {{ review.created_at|date:"Y-m-d" }}</p>
-                        {% if user == review.user %}
-                            <div class="cta-row">
-                                <a class="btn-secondary" href="{% url 'edit_review' review.pk %}">Edit</a>
-                                <a class="btn-secondary" href="{% url 'delete_review' review.pk %}">Delete</a>
-                            </div>
-                        {% endif %}
+        <div class="card-row">
+            <article class="card-floating">
+                <h3>Polished visual direction</h3>
+                <p class="muted">
+                    Designed to give your profile or brand a more refined, standout appearance.
+                </p>
+            </article>
+
+            <article class="card-floating">
+                <h3>Creator-friendly usage</h3>
+                <p class="muted">
+                    Suitable for social media, creator branding, marketing visuals, and profile upgrades.
+                </p>
+            </article>
+
+            <article class="card-floating">
+                <h3>Premium storefront experience</h3>
+                <p class="muted">
+                    This page structure follows the same curated product-detail mindset used in the Manus storefront reference. :contentReference[oaicite:1]{index=1}
+                </p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="card-soft">
+        <div class="section-head">
+            <div>
+                <span class="badge accent">Reviews</span>
+                <h2>Customer feedback</h2>
+            </div>
+        </div>
+
+        {% if reviews %}
+            <div class="review-list">
+                {% for review in reviews %}
+                    <article class="card-floating review-card">
+                        <div class="review-top">
+                            <h3>{{ review.user.username }}</h3>
+                            <span class="pill accent">{{ review.rating }}/5</span>
+                        </div>
+
+                        <p class="muted">{{ review.comment }}</p>
+                        <p class="review-date">{{ review.created_at|date:"M d, Y" }}</p>
                     </article>
-                {% empty %}
-                    <p>No reviews yet.</p>
                 {% endfor %}
             </div>
         {% else %}
             <div class="empty-state">
-                <h4>No reviews yet</h4>
-                <p>Be the first to share your thoughts on this pack.</p>
+                <span class="badge">No Reviews Yet</span>
+                <h3>Be the first to review this product</h3>
+                <p class="muted">
+                    Reviews help create trust and make your storefront feel more complete and premium.
+                </p>
             </div>
         {% endif %}
-    </section>
+    </div>
 </section>
 {% endblock %}
