@@ -926,3 +926,54 @@ img {
   margin: 0;
   color: var(--muted);
 }
+
+/* ===== REQUEST DETAIL PAGE ===== */
+
+.request-detail-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.request-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--card-border);
+  flex-wrap: wrap;
+}
+
+.request-detail-row:first-child {
+  border-top: none;
+}
+
+.request-detail-row .meta-label {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.request-detail-row .meta-value {
+  color: var(--muted);
+}
+
+/* Improve spacing in split layout */
+.split .card-soft {
+  display: grid;
+  gap: 14px;
+}
+
+/* Better paragraph readability */
+.card-soft p {
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .request-detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
