@@ -84,6 +84,18 @@ main { padding: 40px 0 64px; }
 .gallery-card img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; }
 .gallery-card h3 { margin: 0; font-size: 18px; }
 .gallery-card p { margin: 0; color: var(--muted); }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.feature-tile { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; display: grid; gap: 6px; text-align: center; box-shadow: var(--shadow); }
+.feature-tile .emoji { font-size: 22px; }
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  align-items: center;
+}
+.tag-row { display:flex; flex-wrap:wrap; gap:8px; }
+.pill.soft { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+.card-soft { background: var(--bg-2); border: 1px solid var(--card-border); border-radius: var(--radius-card); box-shadow: var(--shadow); padding: 24px; }
 
 .site-footer { margin-top: auto; padding: 28px 0; background: var(--bg-2); border-top: 1px solid var(--card-border); }
 .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; color: var(--muted); }

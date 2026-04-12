@@ -4,29 +4,37 @@
 
 {% block content %}
 <section class="section">
-    <article class="gallery-card" style="display:grid; gap:16px;">
-        <img src="{{ product.image_url }}" alt="{{ product.title }}">
-        <div class="section-head" style="align-items:flex-start;">
-            <h2 style="margin:0;">{{ product.title }}</h2>
-            <span class="badge accent">€{{ product.price }}</span>
+    <div class="card-soft split">
+        <div>
+            <img src="{{ product.image_url }}" alt="{{ product.title }}" style="width:100%; border-radius:14px; box-shadow: var(--shadow);">
         </div>
-        <p class="muted">{{ product.description }}</p>
-
-        <div class="cta-row">
-            {% if user.is_authenticated %}
-                <form method="post" action="{% url 'buy_now' product.slug %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-primary">Buy now</button>
-                </form>
-                {% if has_paid %}
-                    <span class="badge success">Already purchased</span>
+        <div style="display:grid; gap:12px;">
+            <div class="section-head" style="align-items:flex-start;">
+                <h2 style="margin:0;">{{ product.title }}</h2>
+                <span class="badge accent">€{{ product.price }}</span>
+            </div>
+            <p class="muted">{{ product.description }}</p>
+            <div class="tag-row">
+                <span class="pill soft">Premium pack</span>
+                <span class="pill soft">Instant download</span>
+                <span class="pill soft">High-res</span>
+            </div>
+            <div class="cta-row">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'buy_now' product.slug %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-primary">Buy now</button>
+                    </form>
+                    {% if has_paid %}
+                        <span class="badge success">Already purchased</span>
+                    {% endif %}
+                {% else %}
+                    <a class="btn-primary" href="{% url 'login' %}?next={{ request.path }}">Log in to buy</a>
                 {% endif %}
-            {% else %}
-                <a class="btn-primary" href="{% url 'login' %}?next={{ request.path }}">Log in to buy</a>
-            {% endif %}
-            <a class="btn-secondary" href="{% url 'product_list' %}">Back to shop</a>
+                <a class="btn-secondary" href="{% url 'product_list' %}">Back to shop</a>
+            </div>
         </div>
-    </article>
+    </div>
 
     <section class="reviews-section">
         <div class="section-head">
