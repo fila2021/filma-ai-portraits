@@ -1,54 +1,52 @@
 {% extends "base.html" %}
 
-{% block title %}Request Details | Askuala AI Portraits{% endblock %}
+{% block title %}Request Detail | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
-    <div class="card-soft page-intro-card">
+    <div class="card-soft">
         <span class="badge accent">Request Detail</span>
-        <h1>{{ request.title }}</h1>
+        <h1>Request #{{ request_obj.id }}</h1>
         <p class="muted">
-            Review the details of your custom portrait request and track the service information.
+            Review the details of your custom portrait request and track progress.
         </p>
     </div>
-</section>
 
-<section class="section">
     <div class="split">
+        <!-- LEFT -->
         <div class="card-soft">
             <span class="badge">Overview</span>
             <h2>Request Information</h2>
 
-            <div class="request-detail-grid">
-                {% if request.service %}
-                    <div class="request-detail-row">
-                        <span class="meta-label">Service</span>
-                        <span class="meta-value">{{ request.service }}</span>
-                    </div>
-                {% endif %}
+            <div class="meta-row">
+                <span class="meta-label">Service</span>
+                <span class="meta-value">
+                    {{ request_obj.service.name }}
+                </span>
+            </div>
 
-                {% if request.status %}
-                    <div class="request-detail-row">
-                        <span class="meta-label">Status</span>
-                        <span class="meta-value">{{ request.status }}</span>
-                    </div>
-                {% endif %}
+            <div class="meta-row">
+                <span class="meta-label">Status</span>
+                <span class="meta-value">
+                    <span class="pill accent">{{ request_obj.status }}</span>
+                </span>
+            </div>
 
-                {% if request.created_at %}
-                    <div class="request-detail-row">
-                        <span class="meta-label">Created</span>
-                        <span class="meta-value">{{ request.created_at|date:"M d, Y" }}</span>
-                    </div>
-                {% endif %}
+            <div class="meta-row">
+                <span class="meta-label">Created</span>
+                <span class="meta-value">
+                    {{ request_obj.created_at|date:"M d, Y" }}
+                </span>
             </div>
         </div>
 
+        <!-- RIGHT -->
         <div class="card-soft">
-            <span class="badge accent">Description</span>
+            <span class="badge">Description</span>
             <h2>Creative Brief</h2>
 
-            {% if request.description %}
-                <p class="muted">{{ request.description }}</p>
+            {% if request_obj.description %}
+                <p>{{ request_obj.description }}</p>
             {% else %}
                 <p class="muted">
                     No extra description was provided for this request.
@@ -56,13 +54,15 @@
             {% endif %}
         </div>
     </div>
-</section>
 
-<section class="section">
     <div class="card-soft">
         <div class="cta-row">
-            <a href="{% url 'request_list' %}" class="btn-secondary">Back to My Requests</a>
-            <a href="{% url 'create_request' %}" class="btn-primary">Create Another Request</a>
+            <a href="{% url 'request_list' %}" class="btn-secondary">
+                Back to My Requests
+            </a>
+            <a href="{% url 'create_request' %}" class="btn-primary">
+                Create Another Request
+            </a>
         </div>
     </div>
 </section>
