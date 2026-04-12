@@ -2,13 +2,14 @@
 
 <header class="site-header">
     <nav class="site-nav container" aria-label="Main navigation">
+
+        <!-- Logo ONLY (no text) -->
         <a href="{% url 'home' %}" class="brand-link">
             <img
                 src="{% static 'img/askuala-logo.png' %}"
                 alt="Askuala AI Portraits"
-                class="logo"
+                class="logo logo-large"
             >
-            <span class="brand-name">Askuala AI Portraits</span>
         </a>
 
         <ul class="nav-menu">
@@ -21,6 +22,7 @@
             {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}">My Profile</a></li>
                 <li><a href="{% url 'request_list' %}">My Requests</a></li>
+
                 <li>
                     <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                         {% csrf_token %}
@@ -36,5 +38,6 @@
                 <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">☾</button>
             </li>
         </ul>
+
     </nav>
 </header>

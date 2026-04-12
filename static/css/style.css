@@ -161,3 +161,61 @@ main { padding: 40px 0 64px; }
 .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .success-hero { display: flex; flex-direction: column; gap: 14px; }
 .empty-state { border: 1px dashed var(--card-border); border-radius: var(--radius-card); padding: 24px; background: var(--card); display: grid; gap: 10px; max-width: 540px; }
+
+/* ===== NAVBAR LOGO IMPROVEMENT ===== */
+
+.brand-link {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: block;
+}
+
+.logo-large {
+    height: 75px; /* increase for bigger logo */
+    width: auto;
+    object-fit: contain;
+}
+
+/* Optional: better spacing for navbar */
+.site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Clean nav menu layout */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Buttons */
+.nav-btn {
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+}
+
+.nav-btn-outline {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn-solid {
+    background: #ff8b6a;
+    color: white;
+}
+
+/* Logout form inline */
+.nav-logout-form {
+    display: inline;
+}
