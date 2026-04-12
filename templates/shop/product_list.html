@@ -3,24 +3,40 @@
 {% block title %}Shop | Filma AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>Shop AI Portrait Packs</h2>
-    <p>Browse ready-made AI portrait packs for your social media and personal brand.</p>
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Shop</span>
+            <h2 style="margin:8px 0 4px 0;">AI Portrait Packs</h2>
+            <p class="muted">Curated packs for social profiles, thumbnails, and covers.</p>
+        </div>
+    </div>
 
     {% if products %}
         <div class="gallery-grid">
             {% for product in products %}
                 <article class="gallery-card">
                     <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                    <h3>{{ product.title }}</h3>
-                    <p>€{{ product.price }}</p>
-                    <p>{{ product.description|truncatewords:20 }}</p>
-                    <a href="{% url 'product_detail' product.slug %}">View Product</a>
+                    <div class="section-head" style="align-items:flex-start;">
+                        <h3>{{ product.title }}</h3>
+                        <span class="badge accent">€{{ product.price }}</span>
+                    </div>
+                    <p class="muted">{{ product.description|truncatewords:18 }}</p>
+                    <div class="cta-row">
+                        <a class="btn-secondary" href="{% url 'product_detail' product.slug %}">View details</a>
+                        <form method="post" action="{% url 'buy_now' product.slug %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-primary">Buy now</button>
+                        </form>
+                    </div>
                 </article>
             {% endfor %}
         </div>
     {% else %}
-        <p>No products available yet.</p>
+        <div class="empty-state">
+            <h3>No products yet</h3>
+            <p>Check back soon for curated portrait packs.</p>
+        </div>
     {% endif %}
 </section>
 {% endblock %}

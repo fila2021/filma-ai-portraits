@@ -3,9 +3,14 @@
 {% block title %}Gallery | Filma AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>Gallery</h2>
-    <p>Explore AI-generated portrait inspiration and featured styles.</p>
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Gallery</span>
+            <h2 style="margin:8px 0 4px 0;">Inspiration & Styles</h2>
+            <p class="muted">A curated lookbook of Filma AI portraits across destinations and moods.</p>
+        </div>
+    </div>
 
     {% if images %}
         <div class="gallery-grid">
@@ -13,13 +18,16 @@
                 <article class="gallery-card">
                     <img src="{{ image.image_url }}" alt="{{ image.title }}">
                     <h3>{{ image.title }}</h3>
-                    <p>{{ image.category }}</p>
-                    <p>{{ image.caption }}</p>
+                    <p class="muted">{{ image.category }}</p>
+                    <p class="muted">{{ image.caption }}</p>
                 </article>
             {% endfor %}
         </div>
     {% else %}
-        <p>No gallery images available yet.</p>
+        <div class="empty-state">
+            <h3>No gallery images yet</h3>
+            <p>Upload or add featured images to showcase your work.</p>
+        </div>
     {% endif %}
 </section>
 {% endblock %}
