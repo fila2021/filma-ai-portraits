@@ -1,80 +1,177 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}Home | Askuala AI Portraits{% endblock %}
+{% block title %}Askuala AI Portraits{% endblock %}
 
 {% block content %}
-<section class="hero-split">
-    <div class="hero-dark">
-        <span class="badge">AI Portrait Studio</span>
-        <h1>Stand-out portraits for every social platform.</h1>
-        <p>Order bespoke AI portraits or grab ready-to-use packs tuned for Instagram, TikTok, Facebook, and YouTube.</p>
-        <div class="cta-row">
-            <a class="btn-primary" href="{% url 'service_list' %}">Create a custom request</a>
-            <a class="btn-secondary" href="{% url 'product_list' %}">Browse packs</a>
+<section class="section">
+    <div class="hero-split">
+        <div class="hero-dark">
+            <span class="badge accent">Premium AI Portrait Studio</span>
+            <h1>Portraits that feel editorial, premium, and ready for every platform.</h1>
+            <p>
+                Askuala AI Portraits helps creators, brands, and professionals turn ideas into
+                polished AI portraits, creator packs, and custom visual assets with a more refined,
+                high-end look.
+            </p>
+
+            <div class="cta-row">
+                <a href="{% url 'service_list' %}" class="btn-primary">Create a Custom Request</a>
+                <a href="{% url 'product_list' %}" class="btn-secondary">Browse Packs</a>
+            </div>
+
+            <div class="tag-row">
+                <span class="pill accent">Premium quality</span>
+                <span class="pill">Creator-ready</span>
+                <span class="pill">Custom portrait requests</span>
+            </div>
         </div>
-    </div>
-    <div class="hero-light">
-        <div class="hero-photo"></div>
+
+        <div class="hero-light">
+            <div class="hero-photo"></div>
+        </div>
     </div>
 </section>
 
 <section class="section">
     <div class="section-head">
         <div>
-            <span class="badge">Why Filma AI</span>
-            <h3 style="margin:8px 0 4px 0;">Curated, reliable, ready to post</h3>
+            <span class="badge">Why Askuala AI</span>
+            <h2>Luxury visual direction with practical creator value</h2>
         </div>
     </div>
+
     <div class="feature-grid">
-        <div class="feature-tile"><div class="emoji">⚡️</div><strong>Fast turnaround</strong><p class="muted">Delivery in as little as 48 hours.</p></div>
-        <div class="feature-tile"><div class="emoji">🎨</div><strong>Human quality check</strong><p class="muted">Every set reviewed before you receive it.</p></div>
-        <div class="feature-tile"><div class="emoji">📐</div><strong>Platform-tuned</strong><p class="muted">Sizes for IG, TikTok, YouTube, Facebook.</p></div>
-        <div class="feature-tile"><div class="emoji">🔒</div><strong>Secure checkout</strong><p class="muted">Stripe-powered payments.</p></div>
-    </div>
-</section>
+        <article class="feature-tile">
+            <div class="emoji">✦</div>
+            <h3>Premium visual finish</h3>
+            <p class="muted">A more polished aesthetic inspired by high-end editorial and storefront design.</p>
+        </article>
 
-<section class="section">
-    <div class="section-head">
-        <h3>Featured services</h3>
-        <a class="btn-secondary" href="{% url 'service_list' %}">View all</a>
-    </div>
-    <div class="card-row">
-        <article class="gallery-card">
-            <h3>Custom Portraits</h3>
-            <p>Pick a platform and style, describe the vibe, and we deliver polished AI images.</p>
-            <a class="btn-secondary" href="{% url 'service_list' %}">Order now</a>
+        <article class="feature-tile">
+            <div class="emoji">⚡</div>
+            <h3>Fast turnaround</h3>
+            <p class="muted">Move from idea to usable portrait assets faster for launches and social content.</p>
         </article>
-        <article class="gallery-card">
-            <h3>Brand Packs</h3>
-            <p>Consistent sets sized for profile pics, thumbnails, and reels covers.</p>
-            <a class="btn-secondary" href="{% url 'product_list' %}">View packs</a>
+
+        <article class="feature-tile">
+            <div class="emoji">🛍</div>
+            <h3>Ready-made packs</h3>
+            <p class="muted">Shop curated packs for quick purchases and easier creative decision-making.</p>
         </article>
-        <article class="gallery-card">
-            <h3>Fast Turnaround</h3>
-            <p>Delivery in as little as 48 hours on selected packages.</p>
-            <a class="btn-secondary" href="{% url 'service_list' %}">See packages</a>
+
+        <article class="feature-tile">
+            <div class="emoji">🔒</div>
+            <h3>Secure checkout</h3>
+            <p class="muted">A more trustworthy storefront experience with cleaner layout and clearer actions.</p>
         </article>
     </div>
 </section>
 
 <section class="section">
     <div class="section-head">
-        <h3>Why Filma AI?</h3>
-        <p class="muted">Practical perks that speed up your content pipeline.</p>
+        <div>
+            <span class="badge">Featured Services</span>
+            <h2>Designed for creators, brands, and standout profiles</h2>
+        </div>
+        <a href="{% url 'service_list' %}" class="btn-secondary">View All Services</a>
     </div>
+
     <div class="card-row">
-        <article class="gallery-card">
-            <h4>Platform tuned</h4>
-            <p>Outputs sized and composed for IG, TikTok, FB, and YouTube.</p>
+        <article class="card-floating">
+            <span class="pill accent">Custom Portraits</span>
+            <div class="card-img-placeholder dark"></div>
+            <h3>Custom AI Portrait Requests</h3>
+            <p class="muted">
+                Submit a tailored request for portraits that match your vibe, audience,
+                platform, and personal or business brand.
+            </p>
+            <a href="{% url 'service_list' %}" class="btn-primary">Start Request</a>
         </article>
-        <article class="gallery-card">
-            <h4>Human review</h4>
-            <p>We QC every set before delivery—no raw model dumps.</p>
+
+        <article class="card-floating">
+            <span class="pill accent">Creator Packs</span>
+            <div class="card-img-placeholder"></div>
+            <h3>Ready-to-Buy Portrait Packs</h3>
+            <p class="muted">
+                Browse prepared portrait products for profile images, content packs,
+                social media visuals, and creator branding.
+            </p>
+            <a href="{% url 'product_list' %}" class="btn-secondary">Shop Packs</a>
         </article>
-        <article class="gallery-card">
-            <h4>Clear pricing</h4>
-            <p>Transparent package prices and live estimates for custom requests.</p>
+
+        <article class="card-floating">
+            <span class="pill accent">Showcase</span>
+            <div class="card-img-placeholder dark"></div>
+            <h3>Explore the Gallery</h3>
+            <p class="muted">
+                See example outputs, visual directions, and premium style references
+                before placing your request or buying a pack.
+            </p>
+            <a href="{% url 'gallery' %}" class="btn-secondary">View Gallery</a>
         </article>
+    </div>
+</section>
+
+<section class="section">
+    <div class="split">
+        <div class="card-soft">
+            <span class="badge accent">For creators</span>
+            <h2>Build a stronger visual identity</h2>
+            <p class="muted">
+                Whether you need polished profile portraits, branded creator imagery,
+                or visually consistent assets for your audience, Askuala AI Portraits
+                gives you a cleaner, more premium starting point.
+            </p>
+            <div class="tag-row">
+                <span class="pill">Instagram</span>
+                <span class="pill">TikTok</span>
+                <span class="pill">YouTube</span>
+                <span class="pill">Facebook</span>
+            </div>
+        </div>
+
+        <div class="card-soft">
+            <span class="badge">Storefront experience</span>
+            <h2>Clearer paths to buy, browse, and request</h2>
+            <p class="muted">
+                The Manus reference uses a more curated storefront structure with strong sections,
+                premium cards, and trust-building UI. We are applying that same design logic here
+                using your Django templates and styling system. :contentReference[oaicite:1]{index=1}
+            </p>
+            <div class="cta-row">
+                <a href="{% url 'product_list' %}" class="btn-primary">Browse Shop</a>
+                <a href="{% url 'service_list' %}" class="btn-secondary">Explore Services</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="card-soft">
+        <div class="section-head">
+            <div>
+                <span class="badge accent">Next step</span>
+                <h2>Choose how you want to begin</h2>
+            </div>
+        </div>
+
+        <div class="card-row">
+            <article class="card-floating">
+                <h3>Buy a portrait pack</h3>
+                <p class="muted">
+                    Best if you want a faster, ready-made purchase experience with clear products.
+                </p>
+                <a href="{% url 'product_list' %}" class="btn-primary">Go to Shop</a>
+            </article>
+
+            <article class="card-floating">
+                <h3>Submit a custom request</h3>
+                <p class="muted">
+                    Best if you want something tailored to your exact style, purpose, or brand direction.
+                </p>
+                <a href="{% url 'service_list' %}" class="btn-secondary">Request a Service</a>
+            </article>
+        </div>
     </div>
 </section>
 {% endblock %}
