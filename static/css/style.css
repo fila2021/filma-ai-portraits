@@ -1487,3 +1487,37 @@ img {
   background: rgba(255, 255, 255, 0.03);
   color: var(--accent-2);
 }
+
+/* ===== BUTTON CONSISTENCY ===== */
+
+.btn-primary,
+.btn-secondary,
+.nav-btn {
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.nav-btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-secondary:hover,
+.nav-btn-outline:hover {
+  border-color: rgba(212, 162, 76, 0.28);
+}
+
+.btn-primary:hover,
+.nav-btn-solid:hover {
+  box-shadow: 0 16px 32px rgba(212, 162, 76, 0.28);
+}
+
+.cta-row .btn-primary,
+.cta-row .btn-secondary {
+  min-width: 168px;
+}
