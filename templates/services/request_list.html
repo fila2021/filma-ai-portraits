@@ -11,7 +11,7 @@
         <div class="gallery-grid">
             {% for request_item in requests %}
                 <article class="gallery-card">
-                    <h3>{{ request_item.package.title }}</h3>
+                    <h3>{{ request_item.package.name }}</h3>
                     <p><strong>Status:</strong> {{ request_item.get_status_display }}</p>
                     <p><strong>Platform:</strong> {{ request_item.get_platform_type_display }}</p>
                     <p><strong>Total:</strong> €{{ request_item.total_price }}</p>
