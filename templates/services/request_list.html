@@ -61,13 +61,16 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="empty-state">
-            <span class="badge">No Requests Yet</span>
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Requests Yet</span>
             <h2>You have not submitted any requests yet</h2>
             <p class="muted">
                 Start your first custom portrait request to begin building tailored visual assets.
             </p>
-            <a href="{% url 'create_request' %}" class="btn-primary">Create Request</a>
+            <div class="cta-row">
+                <a href="{% url 'create_request' %}" class="btn-primary">Create Request</a>
+                <a href="{% url 'service_list' %}" class="btn-secondary">View Services</a>
+            </div>
         </div>
     {% endif %}
 </section>

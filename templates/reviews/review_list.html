@@ -44,12 +44,16 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="empty-state">
-            <span class="badge">No Reviews Yet</span>
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Reviews Yet</span>
             <h2>There are no reviews available yet</h2>
             <p class="muted">
                 Once customers submit reviews, they will appear here in a premium testimonial layout.
             </p>
+            <div class="cta-row">
+                <a href="{% url 'product_list' %}" class="btn-primary">Browse Products</a>
+                <a href="{% url 'service_list' %}" class="btn-secondary">Explore Services</a>
+            </div>
         </div>
     {% endif %}
 </section>

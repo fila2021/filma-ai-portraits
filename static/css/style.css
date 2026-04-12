@@ -1521,3 +1521,20 @@ img {
 .cta-row .btn-secondary {
   min-width: 168px;
 }
+
+/* ===== EMPTY STATE CONSISTENCY ===== */
+
+.premium-empty-state {
+  justify-items: start;
+  gap: 16px;
+}
+
+.premium-empty-state h2,
+.premium-empty-state h3 {
+  margin: 0;
+}
+
+.premium-empty-state p {
+  max-width: 620px;
+  margin: 0;
+}
