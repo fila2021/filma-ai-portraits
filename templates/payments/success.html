@@ -4,26 +4,43 @@
 
 {% block content %}
 <section class="section">
-    <div class="card-soft success-state-card">
-        <span class="badge success">Success</span>
+    <div class="card-soft page-intro-card">
+        <span class="badge success">Payment Successful</span>
         <h1>Your order was completed successfully</h1>
         <p class="muted">
             Thank you for your purchase. Your premium portrait experience is now one step closer to complete.
         </p>
+    </div>
+</section>
 
-        <div class="card-row">
-            <article class="card-floating">
-                <h3>Continue browsing</h3>
-                <p class="muted">Explore more portrait packs and premium products.</p>
-                <a href="{% url 'product_list' %}" class="btn-secondary">Go to Shop</a>
-            </article>
+<section class="section">
+    <div class="card-row">
+        <article class="card-floating success-option-card">
+            <span class="badge">Continue Browsing</span>
+            <h2>Explore more portrait packs</h2>
+            <p class="muted">
+                Return to the shop and browse more ready-made portrait products and curated visuals.
+            </p>
+            <a href="{% url 'product_list' %}" class="btn-secondary">Go to Shop</a>
+        </article>
 
-            <article class="card-floating">
-                <h3>Need something custom?</h3>
-                <p class="muted">Submit a custom request for tailored portrait work.</p>
-                <a href="{% url 'create_request' %}" class="btn-primary">Create Request</a>
-            </article>
-        </div>
+        <article class="card-floating success-option-card">
+            <span class="badge accent">Need something custom?</span>
+            <h2>Create a tailored request</h2>
+            <p class="muted">
+                Want something more specific? Submit a custom request for a more personalized visual direction.
+            </p>
+            <a href="{% url 'create_request' %}" class="btn-primary">Create Request</a>
+        </article>
+
+        <article class="card-floating success-option-card">
+            <span class="badge">Showcase</span>
+            <h2>View the gallery</h2>
+            <p class="muted">
+                Explore more premium portrait examples and visual inspiration inside the gallery.
+            </p>
+            <a href="{% url 'gallery' %}" class="btn-secondary">Open Gallery</a>
+        </article>
     </div>
 </section>
 {% endblock %}

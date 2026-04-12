@@ -1428,3 +1428,12 @@ img {
 .delete-review-form {
   width: 100%;
 }
+
+.success-option-card {
+  display: grid;
+  gap: 14px;
+}
+
+.success-option-card h2 {
+  margin: 0;
+}
