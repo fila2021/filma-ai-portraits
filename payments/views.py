@@ -1,13 +1,24 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.urls import reverse
 
 from shop.models import Product
 
-from .models import Order
+from .models import Order, Payment
+
+try:
+    import stripe
+    if getattr(settings, 'STRIPE_SECRET_KEY', None):
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+    else:
+        stripe = None
+except ImportError:  # pragma: no cover - if stripe not installed we fallback
+    stripe = None
 
 
 @login_required
@@ -23,11 +34,122 @@ def buy_now(request, slug):
         price_snapshot=Decimal(product.price),
         status='pending',
     )
-    messages.success(request, 'Order created. Payment step coming soon.')
-    return redirect('order_detail', pk=order.pk)
+    if stripe is None or not getattr(stripe, 'api_key', None):
+        order.status = 'paid'
+        order.save(update_fields=['status'])
+        Payment.objects.create(
+            user=request.user,
+            order=order,
+            amount=order.price_snapshot,
+            status='succeeded',
+            paid_at=timezone.now(),
+        )
+        messages.success(request, 'Order created and marked paid (Stripe not configured).')
+        return redirect('order_detail', pk=order.pk)
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        mode='payment',
+        line_items=[{
+            'price_data': {
+                'currency': 'eur',
+                'product_data': {'name': product.title},
+                'unit_amount': int(order.price_snapshot * 100),
+            },
+            'quantity': 1,
+        }],
+        success_url=request.build_absolute_uri(reverse('order_detail', args=[order.pk])) + '?paid=1',
+        cancel_url=request.build_absolute_uri(reverse('order_detail', args=[order.pk])),
+    )
+    order.stripe_session_id = session.id
+    order.save(update_fields=['stripe_session_id'])
+    Payment.objects.create(
+        user=request.user,
+        order=order,
+        amount=order.price_snapshot,
+        status='pending',
+        stripe_session_id=session.id,
+    )
+    return redirect(session.url)
 
 
 @login_required
 def order_detail(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
+    paid_flag = request.GET.get('paid')
+    if paid_flag and order.status != 'paid':
+        order.status = 'paid'
+        order.save(update_fields=['status'])
+        Payment.objects.filter(order=order).update(status='succeeded', paid_at=timezone.now())
     return render(request, 'payments/order_detail.html', {'order': order})
+
+
+@login_required
+def request_checkout(request, pk):
+    from services.models import CustomRequest
+    custom_request = get_object_or_404(CustomRequest, pk=pk, user=request.user)
+
+    if request.method != 'POST':
+        return redirect('request_detail', pk=pk)
+
+    amount = Decimal(custom_request.total_price)
+
+    if stripe is None or not getattr(stripe, 'api_key', None):
+        Payment.objects.create(
+            user=request.user,
+            custom_request=custom_request,
+            amount=amount,
+            status='succeeded',
+            paid_at=timezone.now(),
+        )
+        custom_request.status = 'completed'
+        custom_request.save(update_fields=['status'])
+        messages.success(request, 'Marked paid (Stripe not configured).')
+        return redirect('request_checkout_success', pk=custom_request.pk)
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        mode='payment',
+        line_items=[{
+            'price_data': {
+                'currency': 'eur',
+                'product_data': {'name': f'Custom request #{custom_request.pk}'},
+                'unit_amount': int(amount * 100),
+            },
+            'quantity': 1,
+        }],
+        success_url=request.build_absolute_uri(reverse('request_checkout_success', args=[custom_request.pk])) + '?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=request.build_absolute_uri(reverse('request_checkout_cancel', args=[custom_request.pk])),
+    )
+    Payment.objects.create(
+        user=request.user,
+        custom_request=custom_request,
+        amount=amount,
+        status='pending',
+        stripe_session_id=session.id,
+    )
+    return redirect(session.url)
+
+
+@login_required
+def request_checkout_success(request, pk):
+    from services.models import CustomRequest
+    custom_request = get_object_or_404(CustomRequest, pk=pk, user=request.user)
+    session_id = request.GET.get('session_id')
+    if custom_request.status != 'completed':
+        custom_request.status = 'completed'
+        custom_request.save(update_fields=['status'])
+    Payment.objects.filter(custom_request=custom_request).update(
+        status='succeeded',
+        paid_at=timezone.now(),
+        stripe_session_id=session_id or '',
+    )
+    return render(request, 'payments/request_success.html', {'custom_request': custom_request})
+
+
+@login_required
+def request_checkout_cancel(request, pk):
+    from services.models import CustomRequest
+    custom_request = get_object_or_404(CustomRequest, pk=pk, user=request.user)
+    messages.info(request, 'Payment cancelled.')
+    return render(request, 'payments/request_cancel.html', {'custom_request': custom_request})

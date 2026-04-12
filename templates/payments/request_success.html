@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Success | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section class="success-hero">
+    <h2>Payment successful</h2>
+    <p>Your custom request is now marked as paid.</p>
+    <div class="gallery-card">
+        <p><strong>Request:</strong> #{{ custom_request.pk }}</p>
+        <p><strong>Status:</strong> {{ custom_request.get_status_display }}</p>
+        <p><strong>Total:</strong> €{{ custom_request.total_price }}</p>
+    </div>
+    <div class="cta-row">
+        <a class="btn-primary" href="{% url 'request_detail' custom_request.pk %}">View request</a>
+        <a class="btn-secondary" href="{% url 'request_list' %}">Back to my requests</a>
+    </div>
+</section>
+{% endblock %}

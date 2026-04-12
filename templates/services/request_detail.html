@@ -13,14 +13,20 @@
         <p><strong>Extra Notes:</strong> {{ custom_request.extra_notes }}</p>
         <p><strong>Total Price:</strong> €{{ custom_request.total_price }}</p>
 
-        <p>
-            <a href="{% url 'edit_request' custom_request.pk %}">Edit Request</a>
-        </p>
+        <div class="cta-row">
+            <a class="btn-secondary" href="{% url 'edit_request' custom_request.pk %}">Edit Request</a>
+            <form method="post" action="{% url 'delete_request' custom_request.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-secondary">Delete Request</button>
+            </form>
+        </div>
 
-        <form method="post" action="{% url 'delete_request' custom_request.pk %}">
+        {% if custom_request.status != 'completed' %}
+        <form method="post" action="{% url 'request_checkout' custom_request.pk %}">
             {% csrf_token %}
-            <button type="submit">Delete Request</button>
+            <button type="submit" class="btn-primary">Pay with Stripe</button>
         </form>
+        {% endif %}
     </article>
 
     <section class="reviews-section">

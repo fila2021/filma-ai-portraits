@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Cancelled | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Payment cancelled</h2>
+    <p>No charge was made. You can try again when ready.</p>
+    <div class="cta-row">
+        <a class="btn-primary" href="{% url 'request_checkout' custom_request.pk %}">Try payment again</a>
+        <a class="btn-secondary" href="{% url 'request_detail' custom_request.pk %}">Back to request</a>
+    </div>
+</section>
+{% endblock %}
