@@ -22,11 +22,11 @@
     {% if images %}
         <div class="gallery-grid">
             {% for image in images %}
-                <article class="gallery-card" style="padding:12px;">
-                    <img src="{{ image.image_url }}" alt="{{ image.title }}">
+                <article class="card-floating" style="padding:14px;">
+                    <img src="{{ image.image_url }}" alt="{{ image.title }}" style="height:200px; object-fit:cover; border-radius:14px;">
                     <div class="section-head" style="align-items:flex-start;">
                         <h3 style="margin:6px 0 0 0;">{{ image.title }}</h3>
-                        {% if image.category %}<span class="pill">{{ image.category }}</span>{% endif %}
+                        {% if image.category %}<span class="pill soft">{{ image.category }}</span>{% endif %}
                     </div>
                     {% if image.caption %}<p class="muted">{{ image.caption }}</p>{% endif %}
                 </article>

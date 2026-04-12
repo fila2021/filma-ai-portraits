@@ -23,18 +23,19 @@
     {% if packages %}
         <div class="gallery-grid">
             {% for package in packages %}
-                <article class="gallery-card">
+                <article class="card-floating">
+                    <div class="card-img-placeholder"></div>
                     <div class="section-head" style="align-items:flex-start;">
                         <h3>{{ package.name }}</h3>
-                        <span class="badge">€{{ package.base_price }}</span>
+                        <span class="badge accent">€{{ package.base_price }}</span>
                     </div>
                     <p class="muted">{{ package.description }}</p>
                     <div class="cta-row" style="margin:10px 0;">
-                        <span class="pill">Images: {{ package.number_of_images }}</span>
-                        <span class="pill">Turnaround: {{ package.turnaround_days }} days</span>
-                        <span class="pill">Platform: {{ package.get_platform_type_display }}</span>
+                        <span class="pill">{{ package.number_of_images }} images</span>
+                        <span class="pill">{{ package.turnaround_days }} days</span>
+                        <span class="pill">{{ package.get_platform_type_display }}</span>
                     </div>
-                    <a class="btn-secondary" href="{% url 'create_request' %}">Order this package</a>
+                    <a class="btn-primary" href="{% url 'create_request' %}">Book now</a>
                 </article>
             {% endfor %}
         </div>
