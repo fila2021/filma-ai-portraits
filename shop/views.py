@@ -9,4 +9,7 @@ def product_list(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
-    return render(request, 'shop/product_detail.html', {'product': product})
+    has_paid = False
+    if request.user.is_authenticated:
+        has_paid = product.orders.filter(user=request.user, status='paid').exists()
+    return render(request, 'shop/product_detail.html', {'product': product, 'has_paid': has_paid})
