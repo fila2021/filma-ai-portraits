@@ -977,3 +977,36 @@ img {
     align-items: flex-start;
   }
 }
+
+.request-form-card,
+.request-tips-card {
+  display: grid;
+  gap: 16px;
+}
+
+.request-form {
+  display: grid;
+  gap: 4px;
+}
+
+.request-tip-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.request-tip-item {
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.request-tip-item h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+.request-tip-item p {
+  margin: 0;
+}
