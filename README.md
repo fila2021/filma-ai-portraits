@@ -67,6 +67,11 @@ Custom AI portrait studio with ready-made packs and bespoke requests, built on D
 4. Use persistent SQLite or switch to Postgres (preferred) and set `DATABASE_URL`.
 5. Verify Stripe webhooks if you add them; otherwise test Checkout with test card.
 
+### Postgres (recommended)
+- Install `psycopg2-binary` or `psycopg` in production.
+- Set `DATABASE_URL=postgres://USER:PASSWORD@HOST:PORT/DBNAME`.
+- Use `django-environ` or `dj-database-url` (optional) to parse; or configure `DATABASES` manually in settings.
+
 ## Running tests
 ```bash
 python manage.py test
