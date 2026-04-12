@@ -3,8 +3,8 @@
 {% block title %}Home | Filma AI Portraits{% endblock %}
 
 {% block content %}
-<section class="hero" style="grid-template-columns: 1.1fr 0.9fr;">
-    <div>
+<section class="hero-split">
+    <div class="hero-dark">
         <span class="badge">AI Portrait Studio</span>
         <h1>Stand-out portraits for every social platform.</h1>
         <p>Order bespoke AI portraits or grab ready-to-use packs tuned for Instagram, TikTok, Facebook, and YouTube.</p>
@@ -13,23 +13,8 @@
             <a class="btn-secondary" href="{% url 'product_list' %}">Browse packs</a>
         </div>
     </div>
-    <div class="card-soft" style="padding:18px; box-shadow: var(--shadow);">
-        <div class="split" style="align-items:center; gap:12px;">
-            <div style="text-align:left;">
-                <span class="pill soft">IG / TikTok ready</span>
-                <h3 style="margin:10px 0 4px 0;">15 portraits • 3 styles</h3>
-                <p class="muted" style="margin:0;">Cinematic, studio, lifestyle looks.</p>
-            </div>
-            <div class="mock-img" style="height:140px; border-radius:14px;"></div>
-        </div>
-        <div class="split" style="align-items:center; gap:12px; margin-top:14px;">
-            <div class="mock-img alt" style="height:140px; border-radius:14px;"></div>
-            <div style="text-align:left;">
-                <span class="pill soft">YouTube thumbnails</span>
-                <h3 style="margin:10px 0 4px 0;">Bold, clickable faces</h3>
-                <p class="muted" style="margin:0;">Framed for high CTR thumbnails.</p>
-            </div>
-        </div>
+    <div class="hero-light">
+        <div class="hero-photo"></div>
     </div>
 </section>
 
