@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Order {{ order.id }} | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Order #{{ order.id }}</h2>
+    <div class="gallery-card">
+        <p><strong>Product:</strong> {{ order.product.title }}</p>
+        <p><strong>Price:</strong> €{{ order.price_snapshot }}</p>
+        <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+        <p><strong>Created:</strong> {{ order.created_at }}</p>
+    </div>
+    <p>Payment processing will be added soon. For now, we’ll confirm your order by email.</p>
+</section>
+{% endblock %}
