@@ -5,10 +5,43 @@
 {% block content %}
 <section>
     <h2>Create Custom Request</h2>
-    <form method="post">
+    <form method="post" class="form-card">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Request</button>
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.package.label_tag }}
+                {{ form.package }}
+            </div>
+            <div class="form-group">
+                {{ form.platform_type.label_tag }}
+                {{ form.platform_type }}
+            </div>
+            <div class="form-group">
+                {{ form.style_choice.label_tag }}
+                {{ form.style_choice }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.prompt_details.label_tag }}
+            {{ form.prompt_details }}
+            {% if form.prompt_details.help_text %}
+                <p class="form-help">{{ form.prompt_details.help_text }}</p>
+            {% endif %}
+            {% for error in form.prompt_details.errors %}
+                <p class="form-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.extra_notes.label_tag }}
+            {{ form.extra_notes }}
+            {% if form.extra_notes.help_text %}
+                <p class="form-help">{{ form.extra_notes.help_text }}</p>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn-primary">Submit Request</button>
     </form>
 </section>
 {% endblock %}

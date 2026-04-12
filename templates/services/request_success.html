@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Request Submitted | Filma AI Portraits{% endblock %}
+
+{% block content %}
+<section class="success-hero">
+    <h2>Request received!</h2>
+    <p>We’re on it. Your request is now in the queue.</p>
+
+    <div class="gallery-card">
+        <h3>{{ custom_request.package.name }}</h3>
+        <p><strong>Style:</strong> {{ custom_request.get_style_choice_display }}</p>
+        <p><strong>Platform:</strong> {{ custom_request.get_platform_type_display }}</p>
+        <p><strong>Total:</strong> €{{ custom_request.total_price }}</p>
+        <p><strong>Status:</strong> {{ custom_request.get_status_display }}</p>
+    </div>
+
+    <div class="cta-row">
+        <a class="btn-primary" href="{% url 'request_detail' custom_request.pk %}">View details</a>
+        <a class="btn-secondary" href="{% url 'request_list' %}">Back to my requests</a>
+    </div>
+</section>
+{% endblock %}

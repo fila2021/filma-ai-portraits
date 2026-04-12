@@ -35,7 +35,7 @@ def create_request(request):
             custom_request.total_price = Decimal(custom_request.package.base_price)
             custom_request.save()
             messages.success(request, 'Your custom request has been created successfully.')
-            return redirect('request_list')
+            return redirect('request_success', pk=custom_request.pk)
     else:
         form = CustomRequestForm()
 
@@ -66,6 +66,12 @@ def edit_request(request, pk):
         'services/edit_request.html',
         {'form': form, 'custom_request': custom_request}
     )
+
+
+@login_required
+def request_success(request, pk):
+    custom_request = get_object_or_404(CustomRequest, pk=pk, user=request.user)
+    return render(request, 'services/request_success.html', {'custom_request': custom_request})
 
 
 @login_required
