@@ -3,24 +3,40 @@
 {% block title %}My Requests | Filma AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>My Custom Requests</h2>
-    <p><a href="{% url 'create_request' %}">Create New Request</a></p>
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">My Requests</span>
+            <h2 style="margin:8px 0 4px 0;">Custom Requests</h2>
+            <p class="muted">Track your requests, update details, or pay when ready.</p>
+        </div>
+        <a class="btn-primary" href="{% url 'create_request' %}">Create new request</a>
+    </div>
 
     {% if requests %}
         <div class="gallery-grid">
             {% for request_item in requests %}
                 <article class="gallery-card">
-                    <h3>{{ request_item.package.name }}</h3>
-                    <p><strong>Status:</strong> {{ request_item.get_status_display }}</p>
-                    <p><strong>Platform:</strong> {{ request_item.get_platform_type_display }}</p>
-                    <p><strong>Total:</strong> €{{ request_item.total_price }}</p>
-                    <a href="{% url 'request_detail' request_item.pk %}">View Details</a>
+                    <div class="section-head" style="align-items:flex-start;">
+                        <h3>{{ request_item.package.name }}</h3>
+                        <span class="badge {% if request_item.status == 'completed' %}success{% else %}accent{% endif %}">{{ request_item.get_status_display }}</span>
+                    </div>
+                    <p class="muted">{{ request_item.prompt_details|truncatewords:18 }}</p>
+                    <div class="cta-row" style="margin:10px 0;">
+                        <span class="pill">{{ request_item.get_platform_type_display }}</span>
+                        <span class="pill">€{{ request_item.total_price }}</span>
+                        <span class="pill">Updated {{ request_item.updated_at|date:"M d" }}</span>
+                    </div>
+                    <a class="btn-secondary" href="{% url 'request_detail' request_item.pk %}">View details</a>
                 </article>
             {% endfor %}
         </div>
     {% else %}
-        <p>You have no custom requests yet.</p>
+        <div class="empty-state">
+            <h3>No requests yet</h3>
+            <p>Create your first custom request to get started.</p>
+            <a class="btn-primary" href="{% url 'create_request' %}">Create request</a>
+        </div>
     {% endif %}
 </section>
 {% endblock %}

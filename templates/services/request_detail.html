@@ -5,28 +5,37 @@
 {% block content %}
 <section>
     <article class="gallery-card">
-        <h2>{{ custom_request.package.name }}</h2>
-        <p><strong>Status:</strong> {{ custom_request.get_status_display }}</p>
-        <p><strong>Platform:</strong> {{ custom_request.get_platform_type_display }}</p>
-        <p><strong>Style:</strong> {{ custom_request.style_choice }}</p>
-        <p><strong>Prompt:</strong> {{ custom_request.prompt_details }}</p>
-        <p><strong>Extra Notes:</strong> {{ custom_request.extra_notes }}</p>
-        <p><strong>Total Price:</strong> €{{ custom_request.total_price }}</p>
+        <div class="section-head" style="align-items:flex-start;">
+            <div>
+                <span class="badge accent">{{ custom_request.get_platform_type_display }}</span>
+                <h2 style="margin:6px 0 4px 0;">{{ custom_request.package.name }}</h2>
+                <p class="muted">Style: {{ custom_request.get_style_choice_display }}</p>
+            </div>
+            <span class="badge {% if custom_request.status == 'completed' %}success{% else %}accent{% endif %}">{{ custom_request.get_status_display }}</span>
+        </div>
+
+        <p class="muted"><strong>Prompt</strong><br>{{ custom_request.prompt_details }}</p>
+        {% if custom_request.extra_notes %}<p class="muted"><strong>Notes</strong><br>{{ custom_request.extra_notes }}</p>{% endif %}
+
+        <div class="cta-row" style="margin:12px 0;">
+            <span class="pill">€{{ custom_request.total_price }}</span>
+            <span class="pill">Turnaround: {{ custom_request.package.turnaround_days }} days</span>
+            <span class="pill">Images: {{ custom_request.package.number_of_images }}</span>
+        </div>
 
         <div class="cta-row">
             <a class="btn-secondary" href="{% url 'edit_request' custom_request.pk %}">Edit Request</a>
             <form method="post" action="{% url 'delete_request' custom_request.pk %}">
                 {% csrf_token %}
-                <button type="submit" class="btn-secondary">Delete Request</button>
+                <button type="submit" class="btn-secondary">Delete</button>
             </form>
+            {% if custom_request.status != 'completed' %}
+            <form method="post" action="{% url 'request_checkout' custom_request.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-primary">Pay now</button>
+            </form>
+            {% endif %}
         </div>
-
-        {% if custom_request.status != 'completed' %}
-        <form method="post" action="{% url 'request_checkout' custom_request.pk %}">
-            {% csrf_token %}
-            <button type="submit" class="btn-primary">Pay with Stripe</button>
-        </form>
-        {% endif %}
     </article>
 
     <section class="reviews-section">

@@ -3,11 +3,18 @@
 {% block title %}Create Request | Filma AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>Create Custom Request</h2>
-    <div class="price-preview">
-        <p><strong>Estimated price:</strong> <span id="pricePreview">Select a package</span></p>
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">New Request</span>
+            <h2 style="margin:8px 0 4px 0;">Create Custom Request</h2>
+            <p class="muted">Choose a package, add your prompt, and we’ll craft your portraits.</p>
+        </div>
+        <div class="price-preview">
+            <p><strong>Estimated:</strong> <span id="pricePreview">Select a package</span></p>
+        </div>
     </div>
+
     <form method="post" class="form-card">
         {% csrf_token %}
         <div class="form-row">
