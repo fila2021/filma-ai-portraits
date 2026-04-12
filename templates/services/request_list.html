@@ -16,7 +16,7 @@
     {% if requests %}
         <div class="gallery-grid">
             {% for request_item in requests %}
-                <article class="gallery-card">
+                <article class="card-floating">
                     <div class="section-head" style="align-items:flex-start;">
                         <h3>{{ request_item.package.name }}</h3>
                         <span class="badge {% if request_item.status == 'completed' %}success{% else %}accent{% endif %}">{{ request_item.get_status_display }}</span>

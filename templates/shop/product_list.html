@@ -4,19 +4,21 @@
 
 {% block content %}
 <section class="section">
-    <div class="section-head">
-        <div>
-            <span class="badge">Shop</span>
-            <h2 style="margin:8px 0 4px 0;">AI Portrait Packs</h2>
-            <p class="muted">Curated packs for social profiles, thumbnails, and covers.</p>
+    <div class="card-soft" style="padding:28px;">
+        <div class="section-head">
+            <div>
+                <span class="badge">Shop</span>
+                <h2 style="margin:8px 0 4px 0;">AI Portrait Packs</h2>
+                <p class="muted">Curated packs for social profiles, thumbnails, and covers.</p>
+            </div>
         </div>
     </div>
 
     {% if products %}
         <div class="gallery-grid">
             {% for product in products %}
-                <article class="gallery-card">
-                    <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                <article class="card-floating">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}" style="height:220px; object-fit:cover; border-radius:14px;">
                     <div class="section-head" style="align-items:flex-start;">
                         <h3>{{ product.title }}</h3>
                         <span class="badge accent">€{{ product.price }}</span>
