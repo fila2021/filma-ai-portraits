@@ -8,16 +8,30 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ['rating', 'comment']
         labels = {
-            'rating': 'Rating (1-5)',
+            'rating': 'Rating (1–5)',
             'comment': 'Your review',
         }
         widgets = {
-            'rating': forms.NumberInput(attrs={'min': 1, 'max': 5, 'class': 'form-control'}),
-            'comment': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
+            'rating': forms.NumberInput(
+                attrs={
+                    'min': 1,
+                    'max': 5,
+                    'class': 'form-control',
+                }
+            ),
+            'comment': forms.Textarea(
+                attrs={
+                    'rows': 4,
+                    'class': 'form-control',
+                    'placeholder': 'Share your experience...',
+                }
+            ),
         }
 
     def clean_rating(self):
-        rating = self.cleaned_data['rating']
+        rating = self.cleaned_data.get('rating')
+        if rating is None:
+            raise forms.ValidationError('Please provide a rating.')
         if rating < 1 or rating > 5:
             raise forms.ValidationError('Rating must be between 1 and 5.')
         return rating
