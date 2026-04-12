@@ -1,10 +1,8 @@
 {% load static %}
 
-<header class="site-header">
-    <nav class="site-nav container" aria-label="Main navigation">
-
-        <!-- Logo ONLY (no text) -->
-        <a href="{% url 'home' %}" class="brand-link">
+<nav class="site-nav">
+    <div class="container site-nav-inner">
+        <a href="{% url 'home' %}" class="brand-link" aria-label="Askuala AI Portraits home">
             <img
                 src="{% static 'img/askuala-logo.png' %}"
                 alt="Askuala AI Portraits"
@@ -22,7 +20,6 @@
             {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}">My Profile</a></li>
                 <li><a href="{% url 'request_list' %}">My Requests</a></li>
-
                 <li>
                     <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                         {% csrf_token %}
@@ -35,9 +32,8 @@
             {% endif %}
 
             <li>
-                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">☾</button>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
             </li>
         </ul>
-
-    </nav>
-</header>
+    </div>
+</nav>
