@@ -7,9 +7,17 @@ def product_list(request):
     return render(request, 'shop/product_list.html', {'products': products})
 
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug, is_active=True)
+def product_detail(request, slug=None, pk=None):
+    if pk is not None:
+        product = get_object_or_404(Product, pk=pk, is_active=True)
+    else:
+        product = get_object_or_404(Product, slug=slug, is_active=True)
+
     has_paid = False
-    if request.user.is_authenticated:
-        has_paid = product.orders.filter(user=request.user, status='paid').exists()
-    return render(request, 'shop/product_detail.html', {'product': product, 'has_paid': has_paid})
+
+    context = {
+        'product': product,
+        'has_paid': has_paid,
+        'reviews': product.reviews.all(),
+    }
+    return render(request, 'shop/product_detail.html', context)

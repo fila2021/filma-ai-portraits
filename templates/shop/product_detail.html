@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{ product.name }} | Askuala AI Portraits{% endblock %}
+{% block title %}{{ product.title }} | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
     <div class="product-detail-layout">
         <div class="card-soft product-detail-media">
-            {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
+            {% if product.image_url %}
+                <img src="{{ product.image_url }}" alt="{{ product.title }}" class="product-detail-image">
             {% else %}
                 <div class="product-detail-placeholder"></div>
             {% endif %}
@@ -15,7 +15,7 @@
 
         <div class="card-soft product-detail-info">
             <span class="badge accent">Premium Portrait Product</span>
-            <h1>{{ product.name }}</h1>
+            <h1>{{ product.title }}</h1>
 
             {% if product.price %}
                 <p class="product-detail-price">€{{ product.price }}</p>
@@ -37,8 +37,21 @@
             </div>
 
             <div class="cta-row">
-                <a href="{% url 'product_list' %}" class="btn-secondary">Back to Shop</a>
-                <a href="{% url 'create_request' %}" class="btn-primary">Request Similar Style</a>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'buy_now' product.slug %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-primary">Buy now</button>
+                    </form>
+
+                    <a href="{% url 'add_product_review' product.id %}" class="btn-secondary">Write a Review</a>
+
+                    {% if has_paid %}
+                        <span class="badge success">Already purchased</span>
+                    {% endif %}
+                {% else %}
+                    <a class="btn-primary" href="{% url 'login' %}?next={{ request.path }}">Log in to buy</a>
+                    <a class="btn-secondary" href="{% url 'login' %}?next={{ request.path }}">Log in to review</a>
+                {% endif %}
             </div>
 
             <div class="product-detail-meta">
@@ -104,7 +117,7 @@
             {% if user.is_authenticated %}
                 <a href="{% url 'add_product_review' product.id %}" class="btn-secondary">Write a Review</a>
             {% else %}
-                <a href="{% url 'login' %}" class="btn-secondary">Login to Review</a>
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn-secondary">Login to Review</a>
             {% endif %}
         </div>
 
@@ -115,7 +128,7 @@
                         <div class="review-showcase-top">
                             <div>
                                 <h3>{{ review.user.username }}</h3>
-                                <p class="muted review-product-label">{{ product.name }}</p>
+                                <p class="muted review-product-label">{{ product.title }}</p>
                             </div>
                             <span class="pill accent">{{ review.rating }}/5</span>
                         </div>
