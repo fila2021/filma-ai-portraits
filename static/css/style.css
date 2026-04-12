@@ -1129,3 +1129,7 @@ img {
   gap: 4px;
 }
 /* Service detail reuses product detail styles */
+.success-state-card {
+  display: grid;
+  gap: 18px;
+}

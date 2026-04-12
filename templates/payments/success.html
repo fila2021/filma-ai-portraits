@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Success | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft success-state-card">
+        <span class="badge success">Success</span>
+        <h1>Your order was completed successfully</h1>
+        <p class="muted">
+            Thank you for your purchase. Your premium portrait experience is now one step closer to complete.
+        </p>
+
+        <div class="card-row">
+            <article class="card-floating">
+                <h3>Continue browsing</h3>
+                <p class="muted">Explore more portrait packs and premium products.</p>
+                <a href="{% url 'product_list' %}" class="btn-secondary">Go to Shop</a>
+            </article>
+
+            <article class="card-floating">
+                <h3>Need something custom?</h3>
+                <p class="muted">Submit a custom request for tailored portrait work.</p>
+                <a href="{% url 'create_request' %}" class="btn-primary">Create Request</a>
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}
