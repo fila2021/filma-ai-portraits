@@ -16,6 +16,10 @@
         <p>Payment received. We’ll send your download/fulfillment details shortly.</p>
     {% else %}
         <p>Payment pending. If you just paid, refresh in a moment; otherwise try again or contact support.</p>
+        <form method="post" action="{% url 'buy_now' order.product.slug %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary">Pay now</button>
+        </form>
     {% endif %}
 </section>
 {% endblock %}
