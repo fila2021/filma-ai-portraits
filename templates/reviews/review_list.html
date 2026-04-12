@@ -4,12 +4,12 @@
 
 {% block content %}
 <section class="section">
-    <div class="card-soft">
+    <div class="card-soft page-intro-card">
         <span class="badge accent">Reviews</span>
         <h1>Customer feedback and product reviews</h1>
         <p class="muted">
             Explore reviews from customers who purchased products and shared their experience.
-            This makes the storefront feel more trustworthy and complete.
+            This helps the storefront feel more trustworthy, complete, and premium.
         </p>
     </div>
 </section>
@@ -39,7 +39,6 @@
                     </div>
 
                     <p class="muted">{{ review.comment }}</p>
-
                     <p class="review-date">{{ review.created_at|date:"M d, Y" }}</p>
                 </article>
             {% endfor %}
