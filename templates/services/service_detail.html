@@ -1,82 +1,43 @@
 {% extends "base.html" %}
 
-{% block title %}{{ service.name }} | Askuala AI Portraits{% endblock %}
+{% block title %}Service Detail | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
-    <div class="product-detail-layout">
-        <div class="card-soft product-detail-media">
-            <div class="product-detail-placeholder"></div>
-        </div>
-
-        <div class="card-soft product-detail-info">
-            <span class="badge accent">Service Detail</span>
+    <div class="split">
+        <div class="card-soft">
+            <span class="badge accent">Service</span>
             <h1>{{ service.name }}</h1>
+            <p class="muted">{{ service.description }}</p>
 
-            {% if service.price %}
-                <p class="product-detail-price">€{{ service.price }}</p>
-            {% endif %}
-
-            {% if service.description %}
-                <p class="muted product-detail-description">{{ service.description }}</p>
-            {% else %}
-                <p class="muted product-detail-description">
-                    A premium AI portrait service designed for tailored visual direction and polished delivery.
-                </p>
-            {% endif %}
-
-            <div class="tag-row">
-                <span class="pill accent">Custom service</span>
-                <span class="pill">Premium finish</span>
-                <span class="pill">Tailored request</span>
-            </div>
+            <p class="price-preview">Starting from €{{ service.price }}</p>
 
             <div class="cta-row">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'create_request' %}" class="btn-primary">Request This Service</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn-primary">Login to Request</a>
-                {% endif %}
+                <a href="{% url 'create_request' %}" class="btn-primary">Start Request</a>
                 <a href="{% url 'service_list' %}" class="btn-secondary">Back to Services</a>
             </div>
+        </div>
 
-            <div class="product-detail-meta">
-                <div class="meta-row">
-                    <span class="meta-label">Type</span>
-                    <span class="meta-value">Custom portrait service</span>
+        <div class="card-soft">
+            <span class="badge">What to expect</span>
+            <h2>How this works</h2>
+
+            <div class="request-tip-list">
+                <div class="request-tip-item">
+                    <h3>Submit your idea</h3>
+                    <p class="muted">Describe your portrait style and goal.</p>
                 </div>
-                <div class="meta-row">
-                    <span class="meta-label">Use case</span>
-                    <span class="meta-value">Branding, profiles, social visuals</span>
+
+                <div class="request-tip-item">
+                    <h3>We process it</h3>
+                    <p class="muted">Your request is transformed into a premium visual output.</p>
                 </div>
-                <div class="meta-row">
-                    <span class="meta-label">Delivery style</span>
-                    <span class="meta-value">Tailored creative output</span>
+
+                <div class="request-tip-item">
+                    <h3>Receive your result</h3>
+                    <p class="muted">You get a refined, high-quality AI portrait.</p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="card-soft">
-        <span class="badge">Why choose this service?</span>
-        <h2>A more premium and tailored creative route</h2>
-        <div class="card-row">
-            <article class="card-floating">
-                <h3>Tailored output</h3>
-                <p class="muted">Better suited for clients who want a result designed around a specific goal or aesthetic.</p>
-            </article>
-
-            <article class="card-floating">
-                <h3>Creative flexibility</h3>
-                <p class="muted">Describe your preferred visual tone, platform, and intended use for a more precise result.</p>
-            </article>
-
-            <article class="card-floating">
-                <h3>Premium presentation</h3>
-                <p class="muted">The service detail layout now matches the upgraded storefront style across the project.</p>
-            </article>
         </div>
     </div>
 </section>
