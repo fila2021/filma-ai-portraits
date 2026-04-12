@@ -1,16 +1,9 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    path('', include('home.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('gallery/', include('gallery.urls')),
-    path('shop/', include('shop.urls')),
-    path('services/', include('services.urls')),
-    path('payments/', include('payments.urls')),
-
-    path('reviews/', include('reviews.urls')),  # 👈 THIS LINE
+    path('', views.review_list, name='review_list'),
+    path('product/<int:product_id>/', views.add_product_review, name='add_product_review'),
+    path('request/<int:request_id>/', views.add_custom_request_review, name='add_custom_request_review'),
 ]
