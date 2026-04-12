@@ -1,4 +1,4 @@
-# Filma AI Portraits
+# Askuala AI Portraits
 
 Custom AI portrait studio with ready-made packs and bespoke requests, built on Django.
 
