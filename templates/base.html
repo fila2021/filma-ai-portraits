@@ -5,25 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Filma AI Portraits{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% include 'includes/navbar.html' %}
+    <div class="page-shell">
+        {% include 'includes/navbar.html' %}
 
-    <main>
-        {% if messages %}
-            <div class="messages" role="status" aria-live="polite">
-                {% for message in messages %}
-                    <div class="message {{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+        <main class="container">
+            {% if messages %}
+                <div class="messages" role="status" aria-live="polite">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer class="site-footer">
+            <div class="container footer-grid">
+                <div>
+                    <h4>Filma AI Portraits</h4>
+                    <p>Stand-out portraits and packs for every platform.</p>
+                </div>
+                <div>
+                    <h5>Explore</h5>
+                    <ul>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'product_list' %}">Shop</a></li>
+                        <li><a href="{% url 'service_list' %}">Services</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Account</h5>
+                    <ul>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile' %}">My Profile</a></li>
+                            <li><a href="{% url 'request_list' %}">My Requests</a></li>
+                        {% else %}
+                            <li><a href="{% url 'signup' %}">Sign up</a></li>
+                            <li><a href="{% url 'login' %}">Log in</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-        {% endif %}
-
-        {% block content %}
-        {% endblock %}
-    </main>
+        </footer>
+    </div>
 </body>
 {% block extra_js %}{% endblock %}
 </html>
