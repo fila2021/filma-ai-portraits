@@ -1450,3 +1450,20 @@ img {
 .request-premium-card .service-actions {
   margin-top: 4px;
 }
+
+.hero-home-section {
+  margin-top: 6px;
+}
+
+.hero-cta-row {
+  margin-top: 8px;
+}
+
+.card-row .card-floating h3 {
+  margin: 0;
+}
+
+.card-row .card-floating .btn-primary,
+.card-row .card-floating .btn-secondary {
+  margin-top: 4px;
+}
