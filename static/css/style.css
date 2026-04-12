@@ -1186,3 +1186,19 @@ img {
   justify-items: start;
   max-width: 720px;
 }
+
+.page-intro-card {
+  display: grid;
+  gap: 12px;
+}
+
+.page-intro-card h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  line-height: 1.08;
+}
+
+.page-intro-card p {
+  max-width: 760px;
+  margin: 0;
+}
