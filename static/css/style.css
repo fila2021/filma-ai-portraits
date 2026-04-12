@@ -1412,3 +1412,19 @@ img {
   font-size: 14px;
   margin: 0;
 }
+
+.delete-confirm-card {
+  justify-items: start;
+  max-width: 760px;
+  gap: 18px;
+}
+
+.delete-review-preview {
+  width: 100%;
+  display: grid;
+  gap: 14px;
+}
+
+.delete-review-form {
+  width: 100%;
+}

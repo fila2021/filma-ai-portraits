@@ -1,19 +1,41 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Delete Review | Askuala AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>Delete review</h2>
-    <p>Are you sure you want to delete this review?</p>
-    <article class="gallery-card">
-        <p><strong>Rating:</strong> {{ review.rating }}/5</p>
-        <p>{{ review.comment }}</p>
-    </article>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn-primary">Yes, delete</button>
-        <a class="btn-secondary" href="{% url 'edit_review' review.pk %}">Cancel</a>
-    </form>
+<section class="section">
+    <div class="empty-state delete-confirm-card">
+        <span class="badge accent">Delete Review</span>
+        <h1>Are you sure you want to delete this review?</h1>
+        <p class="muted">
+            This action cannot be undone. Removing the review will permanently delete your feedback
+            from the storefront.
+        </p>
+
+        <div class="card-soft delete-review-preview">
+            <div class="review-showcase-top">
+                <div>
+                    <h3>{{ review.user.username }}</h3>
+                    {% if review.product %}
+                        <p class="muted review-product-label">{{ review.product.name }}</p>
+                    {% elif review.custom_request %}
+                        <p class="muted review-product-label">{{ review.custom_request }}</p>
+                    {% endif %}
+                </div>
+                <span class="pill accent">{{ review.rating }}/5</span>
+            </div>
+
+            <p class="muted">{{ review.comment }}</p>
+            <p class="review-date">{{ review.created_at|date:"M d, Y" }}</p>
+        </div>
+
+        <form method="post" class="delete-review-form">
+            {% csrf_token %}
+            <div class="cta-row">
+                <button type="submit" class="btn-primary">Yes, Delete Review</button>
+                <a href="{% url 'review_list' %}" class="btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
 </section>
 {% endblock %}
