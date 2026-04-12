@@ -1,21 +1,29 @@
-(function() {
+document.addEventListener("DOMContentLoaded", function () {
   const root = document.documentElement;
-  const btn = document.getElementById('themeToggle');
-  if (!btn) return;
+  const toggle = document.getElementById("themeToggle");
+  const storageKey = "askuala-theme";
 
-  const stored = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const initial = stored || 'light';
-  setTheme(initial);
+  const applyTheme = (theme) => {
+    root.setAttribute("data-theme", theme);
+    if (toggle) {
+      toggle.textContent = theme === "dark" ? "☼" : "☾";
+      toggle.setAttribute(
+        "aria-label",
+        theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+      );
+    }
+  };
 
-  btn.addEventListener('click', () => {
-    const current = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    setTheme(current);
-    localStorage.setItem('theme', current);
-  });
+  const savedTheme = localStorage.getItem(storageKey);
+  const initialTheme = savedTheme || root.getAttribute("data-theme") || "dark";
+  applyTheme(initialTheme);
 
-  function setTheme(mode) {
-    root.dataset.theme = mode;
-    btn.textContent = mode === 'dark' ? '🌞' : '🌙';
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      const currentTheme = root.getAttribute("data-theme") || "dark";
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      localStorage.setItem(storageKey, nextTheme);
+      applyTheme(nextTheme);
+    });
   }
-})();
+});

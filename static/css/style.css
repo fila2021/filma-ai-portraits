@@ -1467,3 +1467,23 @@ img {
 .card-row .card-floating .btn-secondary {
   margin-top: 4px;
 }
+
+/* ===== THEME TOGGLE POLISH ===== */
+
+.theme-toggle {
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px) scale(1.02);
+}
+
+:root[data-theme="light"] .theme-toggle {
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .theme-toggle {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--accent-2);
+}
