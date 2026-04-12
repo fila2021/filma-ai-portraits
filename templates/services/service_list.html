@@ -21,7 +21,11 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>No service packages available yet.</p>
+        <div class="empty-state">
+            <h3>We’re setting up packages right now</h3>
+            <p>Tell us what you need and we’ll build a custom set for your platform.</p>
+            <a class="btn-primary" href="{% url 'create_request' %}">Start a custom request</a>
+        </div>
     {% endif %}
 </section>
 {% endblock %}
