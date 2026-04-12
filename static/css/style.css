@@ -1182,3 +1182,7 @@ img {
     justify-content: flex-start;
   }
 }
+.not-found-card {
+  justify-items: start;
+  max-width: 720px;
+}
