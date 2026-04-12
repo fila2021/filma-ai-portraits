@@ -113,6 +113,39 @@ main {
     padding: 10px;
     margin-bottom: 12px;
     border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.message.success {
+    background: #e8f7ef;
+    border-color: #2ecc71;
+    color: #1f7a45;
+}
+
+.message.error,
+.message.danger {
+    background: #fdecea;
+    border-color: #e74c3c;
+    color: #a83b2a;
+}
+
+.message.info {
+    background: #e8f1fd;
+    border-color: #3498db;
+    color: #2c6ea6;
+}
+
+.message.warning {
+    background: #fff7e6;
+    border-color: #f1c40f;
+    color: #946200;
 }
 .gallery-grid {
     display: grid;
