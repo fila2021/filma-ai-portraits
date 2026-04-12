@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft">
+        <span class="badge accent">Admin Dashboard</span>
+        <h1>Manage the premium storefront</h1>
+        <p class="muted">
+            Use this dashboard to oversee products, services, reviews, and the overall presentation
+            of Askuala AI Portraits in a cleaner and more professional admin environment.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="admin-dashboard-grid">
+        <article class="card-floating admin-stat-card">
+            <span class="badge">Shop</span>
+            <h2>Manage Products</h2>
+            <p class="muted">Add, edit, and refine portrait products available for purchase.</p>
+            <a href="{% url 'product_list' %}" class="btn-secondary">View Shop</a>
+        </article>
+
+        <article class="card-floating admin-stat-card">
+            <span class="badge accent">Services</span>
+            <h2>Review Services</h2>
+            <p class="muted">Maintain your premium service offerings and request experience.</p>
+            <a href="{% url 'service_list' %}" class="btn-secondary">View Services</a>
+        </article>
+
+        <article class="card-floating admin-stat-card">
+            <span class="badge">Reviews</span>
+            <h2>Customer Feedback</h2>
+            <p class="muted">Monitor reviews to keep the storefront trustworthy and polished.</p>
+            <a href="{% url 'review_list' %}" class="btn-secondary">View Reviews</a>
+        </article>
+
+        <article class="card-floating admin-stat-card">
+            <span class="badge accent">Gallery</span>
+            <h2>Visual Showcase</h2>
+            <p class="muted">Keep your gallery aligned with the premium design direction.</p>
+            <a href="{% url 'gallery' %}" class="btn-secondary">View Gallery</a>
+        </article>
+    </div>
+</section>
+{% endblock %}

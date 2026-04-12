@@ -1137,3 +1137,18 @@ img {
 .footer-tag-row {
   margin-top: 12px;
 }
+
+.admin-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.admin-stat-card {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-stat-card h2 {
+  margin: 0;
+}
