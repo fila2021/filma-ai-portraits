@@ -1,1 +1,91 @@
-Redesign create request page with premium form layout and guidance panel
+{% extends "base.html" %}
+
+{% block title %}Create Request | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Custom Request</span>
+        <h1>Create your portrait request</h1>
+        <p class="muted">
+            Tell us what kind of portrait or visual direction you want. The more detail you provide,
+            the better we can shape a premium result that matches your goals, platform, and style.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="split">
+        <div class="form-card request-form-card">
+            <span class="badge">Request Form</span>
+            <h2>Project Details</h2>
+            <p class="form-help">
+                Fill in the form below to submit your custom AI portrait request.
+            </p>
+
+            <form method="post" enctype="multipart/form-data" class="request-form">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="message error">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <p class="form-help">{{ field.help_text }}</p>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <div class="form-error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="cta-row">
+                    <button type="submit" class="btn-primary">Submit Request</button>
+                    <a href="{% url 'service_list' %}" class="btn-secondary">Back to Services</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-soft request-tips-card">
+            <span class="badge accent">Tips</span>
+            <h2>What makes a strong request?</h2>
+            <p class="muted">
+                Clear requests lead to better results. Describe the mood, style, purpose,
+                and where you want to use the final portrait.
+            </p>
+
+            <div class="request-tip-list">
+                <div class="request-tip-item">
+                    <h3>Describe the style</h3>
+                    <p class="muted">For example: luxury, editorial, soft glam, bold, minimal, cinematic.</p>
+                </div>
+
+                <div class="request-tip-item">
+                    <h3>Explain the purpose</h3>
+                    <p class="muted">Tell us whether it is for social media, branding, profile image, or promotion.</p>
+                </div>
+
+                <div class="request-tip-item">
+                    <h3>Be specific</h3>
+                    <p class="muted">Mention colours, outfit direction, background mood, and overall vibe.</p>
+                </div>
+
+                <div class="request-tip-item">
+                    <h3>Think about platform use</h3>
+                    <p class="muted">Let us know if the result should suit TikTok, Instagram, YouTube, or business branding.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

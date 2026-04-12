@@ -1347,3 +1347,68 @@ img {
 .request-detail-row .meta-value {
   color: var(--muted);
 }
+
+.auth-form-card,
+.review-form-card,
+.request-form-card,
+.profile-form-card {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-form,
+.review-form,
+.request-form,
+.profile-form {
+  display: grid;
+  gap: 4px;
+}
+
+.form-card h1,
+.form-card h2 {
+  margin: 0;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select,
+.form-card input,
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 12px 14px;
+  outline: none;
+}
+
+.form-group textarea,
+.form-card textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-help {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 14px;
+  margin: 0;
+}
