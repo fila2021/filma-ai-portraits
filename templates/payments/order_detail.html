@@ -11,6 +11,11 @@
         <p><strong>Status:</strong> {{ order.get_status_display }}</p>
         <p><strong>Created:</strong> {{ order.created_at }}</p>
     </div>
-    <p>Payment processing will be added soon. For now, we’ll confirm your order by email.</p>
+
+    {% if order.status == 'paid' %}
+        <p>Payment received. We’ll send your download/fulfillment details shortly.</p>
+    {% else %}
+        <p>Payment pending. If you just paid, refresh in a moment; otherwise try again or contact support.</p>
+    {% endif %}
 </section>
 {% endblock %}
