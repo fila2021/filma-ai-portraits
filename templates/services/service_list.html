@@ -1,50 +1,115 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Services | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
-    <div class="card-soft" style="padding:28px;">
-        <div class="section-head">
-            <div>
-                <span class="badge">Services</span>
-                <h2 style="margin:8px 0 4px 0;">Custom AI Photo Services</h2>
-                <p class="muted">Pick a package, then tailor it to your platform and style.</p>
-            </div>
-            <a class="btn-primary" href="{% url 'create_request' %}">Start a request</a>
+    <div class="card-soft">
+        <span class="badge accent">Services</span>
+        <h1>Custom AI portrait services with a premium creative feel</h1>
+        <p class="muted">
+            Choose from tailored portrait services designed for creators, personal brands,
+            social media visuals, and polished digital presentation. This page is styled
+            to feel more curated and premium, following the stronger storefront logic seen
+            in the Manus reference. :contentReference[oaicite:1]{index=1}
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Offerings</span>
+            <h2>Available Services</h2>
         </div>
-        <div class="tag-row" style="margin-top:10px;">
-            <span class="pill soft">Popular</span>
-            <span class="pill soft">Fast</span>
-            <span class="pill soft">Platform-tuned</span>
-        </div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'create_request' %}" class="btn-primary">Start a Custom Request</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn-primary">Login to Request</a>
+        {% endif %}
     </div>
 
-    {% if packages %}
-        <div class="gallery-grid">
-            {% for package in packages %}
-                <article class="card-floating">
-                    <div class="card-img-placeholder"></div>
-                    <div class="section-head" style="align-items:flex-start;">
-                        <h3>{{ package.name }}</h3>
-                        <span class="badge accent">€{{ package.base_price }}</span>
+    {% if services %}
+        <div class="service-premium-grid">
+            {% for service in services %}
+                <article class="card-floating service-premium-card">
+                    <div class="service-premium-top">
+                        <span class="pill accent">Service</span>
+                        {% if service.price %}
+                            <span class="service-price">€{{ service.price }}</span>
+                        {% endif %}
                     </div>
-                    <p class="muted">{{ package.description }}</p>
-                    <div class="cta-row" style="margin:10px 0;">
-                        <span class="pill">{{ package.number_of_images }} images</span>
-                        <span class="pill">{{ package.turnaround_days }} days</span>
-                        <span class="pill">{{ package.get_platform_type_display }}</span>
+
+                    <div class="card-img-placeholder dark"></div>
+
+                    <h3>{{ service.name }}</h3>
+
+                    {% if service.description %}
+                        <p class="muted">{{ service.description|truncatewords:26 }}</p>
+                    {% else %}
+                        <p class="muted">
+                            A premium AI portrait service designed to deliver tailored visuals
+                            with stronger creative direction and better presentation quality.
+                        </p>
+                    {% endif %}
+
+                    <div class="tag-row">
+                        <span class="pill">Custom</span>
+                        <span class="pill">Premium finish</span>
+                        <span class="pill">Creator-ready</span>
                     </div>
-                    <a class="btn-primary" href="{% url 'create_request' %}">Book now</a>
+
+                    <div class="service-actions">
+                        {% if service.id %}
+                            <a href="{% url 'service_detail' service.id %}" class="btn-secondary">View Details</a>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'create_request' %}" class="btn-primary">Request This</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn-primary">Login to Request</a>
+                        {% endif %}
+                    </div>
                 </article>
             {% endfor %}
         </div>
     {% else %}
         <div class="empty-state">
-            <h3>We’re setting up packages right now</h3>
-            <p>Tell us what you need and we’ll build a custom set for your platform.</p>
-            <a class="btn-primary" href="{% url 'create_request' %}">Start a custom request</a>
+            <span class="badge">No Services Yet</span>
+            <h2>No services are available right now</h2>
+            <p class="muted">
+                When services are added, they will appear here in a more curated premium layout.
+            </p>
         </div>
     {% endif %}
+</section>
+
+<section class="section">
+    <div class="split">
+        <div class="card-soft">
+            <span class="badge accent">Need something specific?</span>
+            <h2>Submit a tailored request</h2>
+            <p class="muted">
+                If you already know the style, mood, or purpose you want, send a custom request
+                and describe your ideal result in more detail.
+            </p>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_request' %}" class="btn-primary">Create Request</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-primary">Login to Continue</a>
+            {% endif %}
+        </div>
+
+        <div class="card-soft">
+            <span class="badge">Want something ready-made?</span>
+            <h2>Explore portrait products instead</h2>
+            <p class="muted">
+                Prefer a quicker route? Browse the shop for ready-made portrait packs and curated products.
+            </p>
+            <a href="{% url 'product_list' %}" class="btn-secondary">Browse Shop</a>
+        </div>
+    </div>
 </section>
 {% endblock %}

@@ -866,3 +866,34 @@ img {
   font-size: 1.35rem;
   line-height: 1.2;
 }
+
+.service-premium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.service-premium-card {
+  display: grid;
+  gap: 14px;
+}
+
+.service-premium-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.service-price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--accent-2);
+}
+
+.service-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
