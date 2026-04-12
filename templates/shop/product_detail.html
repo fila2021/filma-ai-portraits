@@ -9,7 +9,47 @@
         <h2>{{ product.title }}</h2>
         <p><strong>Price:</strong> €{{ product.price }}</p>
         <p>{{ product.description }}</p>
-\n        {% if user.is_authenticated %}\n        <form method=\"post\" action=\"{% url 'buy_now' product.slug %}\">\n            {% csrf_token %}\n            <button type=\"submit\" class=\"btn-primary\">Buy Now</button>\n        </form>\n        {% else %}\n            <a class=\"btn-primary\" href=\"{% url 'login' %}?next={{ request.path }}\">Log in to buy</a>\n        {% endif %}\n     </article>\n </section>\n {% endblock %}\n*** End Patch:UITableViewCell##
+
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'buy_now' product.slug %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary">Buy Now</button>
+        </form>
+        {% else %}
+            <a class="btn-primary" href="{% url 'login' %}?next={{ request.path }}">Log in to buy</a>
+        {% endif %}
     </article>
+
+    <section class="reviews-section">
+        <div class="cta-row" style="margin: 12px 0;">
+            {% if user.is_authenticated %}
+                <a class="btn-secondary" href="{% url 'create_product_review' product.slug %}">Write a review</a>
+            {% else %}
+                <a class="btn-secondary" href="{% url 'login' %}?next={{ request.path }}">Log in to review</a>
+            {% endif %}
+        </div>
+
+        {% if product.reviews.all %}
+            <div class="gallery-grid">
+                {% for review in product.reviews.all %}
+                    <article class="gallery-card">
+                        <p><strong>Rating:</strong> {{ review.rating }}/5</p>
+                        <p>{{ review.comment }}</p>
+                        <p><em>by {{ review.user.username }} on {{ review.created_at|date:"Y-m-d" }}</em></p>
+                        {% if user == review.user %}
+                            <div class="cta-row">
+                                <a class="btn-secondary" href="{% url 'edit_review' review.pk %}">Edit</a>
+                                <a class="btn-secondary" href="{% url 'delete_review' review.pk %}">Delete</a>
+                            </div>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <p>No reviews yet.</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+    </section>
 </section>
 {% endblock %}

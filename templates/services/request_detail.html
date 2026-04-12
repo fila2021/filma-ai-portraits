@@ -22,5 +22,32 @@
             <button type="submit">Delete Request</button>
         </form>
     </article>
+
+    <section class="reviews-section">
+        <div class="cta-row" style="margin: 12px 0;">
+            <a class="btn-secondary" href="{% url 'create_request_review' custom_request.pk %}">Leave a review</a>
+        </div>
+        {% if custom_request.reviews.all %}
+            <div class="gallery-grid">
+                {% for review in custom_request.reviews.all %}
+                    <article class="gallery-card">
+                        <p><strong>Rating:</strong> {{ review.rating }}/5</p>
+                        <p>{{ review.comment }}</p>
+                        <p><em>by {{ review.user.username }} on {{ review.created_at|date:"Y-m-d" }}</em></p>
+                        {% if user == review.user %}
+                            <div class="cta-row">
+                                <a class="btn-secondary" href="{% url 'edit_review' review.pk %}">Edit</a>
+                                <a class="btn-secondary" href="{% url 'delete_review' review.pk %}">Delete</a>
+                            </div>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <p>No reviews yet.</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+    </section>
 </section>
 {% endblock %}
