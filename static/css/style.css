@@ -1044,3 +1044,12 @@ img {
   font-size: 14px;
   color: var(--muted);
 }
+.review-form-card {
+  display: grid;
+  gap: 16px;
+}
+
+.review-form {
+  display: grid;
+  gap: 4px;
+}

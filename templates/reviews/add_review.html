@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Add Review | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft">
+        <span class="badge accent">Write a Review</span>
+        <h1>Share your experience</h1>
+        <p class="muted">
+            Your review helps other customers understand the quality and value of the product or service.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="split">
+        <div class="form-card review-form-card">
+            <span class="badge">Review Form</span>
+            <h2>Submit your review</h2>
+
+            {% if target %}
+                <p class="form-help">You are reviewing: <strong>{{ target }}</strong></p>
+            {% endif %}
+
+            <form method="post" class="review-form">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="message error">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <p class="form-help">{{ field.help_text }}</p>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <div class="form-error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="cta-row">
+                    <button type="submit" class="btn-primary">Submit Review</button>
+                    <a href="{% url 'review_list' %}" class="btn-secondary">Back to Reviews</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-soft">
+            <span class="badge accent">Helpful Reviews</span>
+            <h2>What makes a useful review?</h2>
+            <div class="request-tip-list">
+                <div class="request-tip-item">
+                    <h3>Be honest</h3>
+                    <p class="muted">Share what you genuinely liked or disliked about the result.</p>
+                </div>
+                <div class="request-tip-item">
+                    <h3>Be specific</h3>
+                    <p class="muted">Mention quality, style, usefulness, or how well it matched your expectations.</p>
+                </div>
+                <div class="request-tip-item">
+                    <h3>Help future customers</h3>
+                    <p class="muted">Your feedback can guide others when choosing a product or requesting a service.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
