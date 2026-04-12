@@ -1063,3 +1063,4 @@ img {
   display: grid;
   gap: 4px;
 }
+/* Signup uses the same auth styles as login */

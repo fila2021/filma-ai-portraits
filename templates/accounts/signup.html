@@ -1,14 +1,69 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Sign Up | Askuala AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>Create an account</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
-    </form>
+<section class="section">
+    <div class="split">
+        <div class="form-card auth-form-card">
+            <span class="badge accent">Create Account</span>
+            <h1>Join Askuala AI Portraits</h1>
+            <p class="muted">
+                Create your account to submit requests, manage purchases, and build your premium portrait experience.
+            </p>
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="message error">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <p class="form-help">{{ field.help_text }}</p>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <div class="form-error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="cta-row">
+                    <button type="submit" class="btn-primary">Create Account</button>
+                    <a href="{% url 'login' %}" class="btn-secondary">Already have an account?</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-soft">
+            <span class="badge">Why create an account?</span>
+            <h2>Start building your visual identity</h2>
+
+            <div class="request-tip-list">
+                <div class="request-tip-item">
+                    <h3>Submit custom requests</h3>
+                    <p class="muted">Order tailored portrait work that matches your personal or brand style.</p>
+                </div>
+                <div class="request-tip-item">
+                    <h3>Save your journey</h3>
+                    <p class="muted">Keep track of account activity, reviews, and purchased products.</p>
+                </div>
+                <div class="request-tip-item">
+                    <h3>Unlock a smoother experience</h3>
+                    <p class="muted">A single account makes browsing, purchasing, and requesting much easier.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}
