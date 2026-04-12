@@ -1235,3 +1235,57 @@ img {
   font-size: 14px;
   color: var(--muted);
 }
+
+.profile-summary-card,
+.profile-side-card {
+  display: grid;
+  gap: 16px;
+}
+
+.profile-detail-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.profile-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--card-border);
+  flex-wrap: wrap;
+}
+
+.profile-detail-row:first-child {
+  border-top: none;
+}
+
+.profile-link-list {
+  display: grid;
+  gap: 14px;
+}
+
+.profile-link-card {
+  display: block;
+  padding: 18px;
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.profile-link-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212, 162, 76, 0.24);
+}
+
+.profile-link-card h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+}
+
+.profile-link-card p {
+  margin: 0;
+}

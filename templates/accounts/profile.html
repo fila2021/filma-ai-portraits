@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="section">
-    <div class="card-soft">
+    <div class="card-soft page-intro-card">
         <span class="badge accent">My Profile</span>
         <h1>Your account overview</h1>
         <p class="muted">
@@ -60,12 +60,12 @@
             <div class="profile-link-list">
                 <a href="{% url 'request_list' %}" class="profile-link-card">
                     <h3>My Requests</h3>
-                    <p class="muted">Track submitted custom portrait requests and their details.</p>
+                    <p class="muted">Track submitted custom portrait requests and check their details.</p>
                 </a>
 
                 <a href="{% url 'review_list' %}" class="profile-link-card">
                     <h3>Reviews</h3>
-                    <p class="muted">View product and customer feedback pages from your account area.</p>
+                    <p class="muted">View review pages and customer feedback connected to your account.</p>
                 </a>
 
                 <a href="{% url 'product_list' %}" class="profile-link-card">
