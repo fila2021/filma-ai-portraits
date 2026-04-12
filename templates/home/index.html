@@ -13,13 +13,31 @@
             <a class="btn-secondary" href="{% url 'product_list' %}">Browse packs</a>
         </div>
     </div>
-    <div class="hero-visual">
-        Gradient Studio Mock
+    <div class="hero-visual hero-visual-grid">
+        <div class="mock-card">
+            <div class="dot-row"><span></span><span></span><span></span></div>
+            <div class="mock-img"></div>
+            <div class="mock-meta">
+                <p>IG / TikTok ready</p>
+                <strong>15 portraits • 3 styles</strong>
+            </div>
+        </div>
+        <div class="mock-card">
+            <div class="dot-row"><span></span><span></span><span></span></div>
+            <div class="mock-img alt"></div>
+            <div class="mock-meta">
+                <p>YouTube thumbnails</p>
+                <strong>Bold, clickable faces</strong>
+            </div>
+        </div>
     </div>
 </section>
 
 <section class="section">
-    <h3>Featured services</h3>
+    <div class="section-head">
+        <h3>Featured services</h3>
+        <a class="btn-secondary" href="{% url 'service_list' %}">View all</a>
+    </div>
     <div class="card-row">
         <article class="gallery-card">
             <h3>Custom Portraits</h3>
@@ -40,7 +58,10 @@
 </section>
 
 <section class="section">
-    <h3>Why Filma AI?</h3>
+    <div class="section-head">
+        <h3>Why Filma AI?</h3>
+        <p class="muted">Practical perks that speed up your content pipeline.</p>
+    </div>
     <div class="card-row">
         <article class="gallery-card">
             <h4>Platform tuned</h4>
