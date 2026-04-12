@@ -4,13 +4,20 @@
 
 {% block content %}
 <section class="section">
-    <div class="section-head">
-        <div>
-            <span class="badge">Services</span>
-            <h2 style="margin:8px 0 4px 0;">Custom AI Photo Services</h2>
-            <p class="muted">Pick a package, then tailor it to your platform and style.</p>
+    <div class="card-soft" style="padding:28px;">
+        <div class="section-head">
+            <div>
+                <span class="badge">Services</span>
+                <h2 style="margin:8px 0 4px 0;">Custom AI Photo Services</h2>
+                <p class="muted">Pick a package, then tailor it to your platform and style.</p>
+            </div>
+            <a class="btn-primary" href="{% url 'create_request' %}">Start a request</a>
         </div>
-        <a class="btn-primary" href="{% url 'create_request' %}">Start a request</a>
+        <div class="tag-row" style="margin-top:10px;">
+            <span class="pill soft">Popular</span>
+            <span class="pill soft">Fast</span>
+            <span class="pill soft">Platform-tuned</span>
+        </div>
     </div>
 
     {% if packages %}
