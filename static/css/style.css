@@ -1053,3 +1053,13 @@ img {
   display: grid;
   gap: 4px;
 }
+
+.auth-form-card {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 4px;
+}

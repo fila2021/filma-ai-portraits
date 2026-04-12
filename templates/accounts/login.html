@@ -1,14 +1,65 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Login | Askuala AI Portraits{% endblock %}
 
 {% block content %}
-<section>
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+<section class="section">
+    <div class="split">
+        <div class="form-card auth-form-card">
+            <span class="badge accent">Welcome Back</span>
+            <h1>Login to your account</h1>
+            <p class="muted">
+                Access your profile, requests, purchases, and reviews through your Askuala AI Portraits account.
+            </p>
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="message error">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <div class="form-error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="cta-row">
+                    <button type="submit" class="btn-primary">Login</button>
+                    <a href="{% url 'signup' %}" class="btn-secondary">Create Account</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-soft">
+            <span class="badge">Why sign in?</span>
+            <h2>Manage everything in one place</h2>
+
+            <div class="request-tip-list">
+                <div class="request-tip-item">
+                    <h3>Track your requests</h3>
+                    <p class="muted">See the custom portrait requests you submitted and check their details.</p>
+                </div>
+                <div class="request-tip-item">
+                    <h3>Access your purchases</h3>
+                    <p class="muted">Return to product pages, reviews, and your account information with ease.</p>
+                </div>
+                <div class="request-tip-item">
+                    <h3>Stay consistent</h3>
+                    <p class="muted">Keep your creative workflow, profile, and requests under one account.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}
