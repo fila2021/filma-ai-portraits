@@ -1118,3 +1118,13 @@ img {
 .profile-link-card p {
   margin: 0;
 }
+
+.profile-form-card {
+  display: grid;
+  gap: 16px;
+}
+
+.profile-form {
+  display: grid;
+  gap: 4px;
+}
