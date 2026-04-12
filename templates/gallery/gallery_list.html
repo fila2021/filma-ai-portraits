@@ -15,11 +15,13 @@
     {% if images %}
         <div class="gallery-grid">
             {% for image in images %}
-                <article class="gallery-card">
+                <article class="gallery-card" style="padding:12px;">
                     <img src="{{ image.image_url }}" alt="{{ image.title }}">
-                    <h3>{{ image.title }}</h3>
-                    <p class="muted">{{ image.category }}</p>
-                    <p class="muted">{{ image.caption }}</p>
+                    <div class="section-head" style="align-items:flex-start;">
+                        <h3 style="margin:6px 0 0 0;">{{ image.title }}</h3>
+                        {% if image.category %}<span class="pill">{{ image.category }}</span>{% endif %}
+                    </div>
+                    {% if image.caption %}<p class="muted">{{ image.caption }}</p>{% endif %}
                 </article>
             {% endfor %}
         </div>
