@@ -15,10 +15,6 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            Profile.objects.create(
-                user=user,
-                display_name=user.username
-            )
             messages.success(request, 'Account created successfully. Please log in.')
             return redirect('login')
     else:
