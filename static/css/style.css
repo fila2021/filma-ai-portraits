@@ -1447,3 +1447,6 @@ img {
   display: grid;
   gap: 4px;
 }
+.request-premium-card .service-actions {
+  margin-top: 4px;
+}
