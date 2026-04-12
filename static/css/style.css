@@ -1538,3 +1538,71 @@ img {
   max-width: 620px;
   margin: 0;
 }
+
+/* ===== RESPONSIVE POLISH ===== */
+
+@media (max-width: 1024px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-light {
+    padding: 18px;
+  }
+
+  .hero-photo {
+    height: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 14px 18px;
+  }
+
+  .container {
+    width: 94%;
+  }
+
+  .card-row,
+  .gallery-grid,
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-row {
+    flex-direction: column;
+  }
+
+  .cta-row a,
+  .cta-row button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .logo-large {
+    height: 64px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-large {
+    height: 56px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero-dark {
+    padding: 24px;
+  }
+}
