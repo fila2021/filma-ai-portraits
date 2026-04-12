@@ -1,30 +1,40 @@
 {% load static %}
-<nav>
-    <h1 style="display:flex; align-items:center; gap:10px;">
-        <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
-            <img src="{% static 'img/askuala-logo.png' %}" alt="Askuala AI Portraits" class="logo" style="height:36px; width:auto;">
-        </a>
-    </h1>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="{% url 'gallery' %}">Gallery</a></li>
-       <li><a href="{% url 'product_list' %}">Shop</a></li>
-        <li><a href="{% url 'service_list' %}">Services</a></li>
-        <li><a href="/">About</a></li>
 
-        {% if user.is_authenticated %}
-            <li><a href="{% url 'profile' %}">My Profile</a></li>
+<header class="site-header">
+    <nav class="site-nav container" aria-label="Main navigation">
+        <a href="{% url 'home' %}" class="brand-link">
+            <img
+                src="{% static 'img/askuala-logo.png' %}"
+                alt="Askuala AI Portraits"
+                class="logo"
+            >
+            <span class="brand-name">Askuala AI Portraits</span>
+        </a>
+
+        <ul class="nav-menu">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'gallery' %}">Gallery</a></li>
+            <li><a href="{% url 'product_list' %}">Shop</a></li>
+            <li><a href="{% url 'service_list' %}">Services</a></li>
+            <li><a href="{% url 'home' %}">About</a></li>
+
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">My Profile</a></li>
+                <li><a href="{% url 'request_list' %}">My Requests</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-btn nav-btn-outline">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'signup' %}" class="nav-btn nav-btn-outline">Sign Up</a></li>
+                <li><a href="{% url 'login' %}" class="nav-btn nav-btn-solid">Login</a></li>
+            {% endif %}
+
             <li>
-                <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">☾</button>
             </li>
-            <li><a href="{% url 'request_list' %}">My Requests</a></li>
-        {% else %}
-            <li><a href="{% url 'signup' %}">Sign Up</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
-        {% endif %}
-        <li><button id="themeToggle" aria-label="Toggle theme">🌙</button></li>
-    </ul>
-</nav>
+        </ul>
+    </nav>
+</header>
