@@ -1010,3 +1010,37 @@ img {
 .request-tip-item p {
   margin: 0;
 }
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.review-showcase-card {
+  display: grid;
+  gap: 14px;
+}
+
+.review-showcase-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.review-showcase-top h3 {
+  margin: 0;
+}
+
+.review-product-label {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.review-date {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}

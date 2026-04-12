@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Reviews | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft">
+        <span class="badge accent">Reviews</span>
+        <h1>Customer feedback and product reviews</h1>
+        <p class="muted">
+            Explore reviews from customers who purchased products and shared their experience.
+            This makes the storefront feel more trustworthy and complete.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Testimonials</span>
+            <h2>What customers are saying</h2>
+        </div>
+    </div>
+
+    {% if reviews %}
+        <div class="review-grid">
+            {% for review in reviews %}
+                <article class="card-floating review-showcase-card">
+                    <div class="review-showcase-top">
+                        <div>
+                            <h3>{{ review.user.username }}</h3>
+                            {% if review.product %}
+                                <p class="muted review-product-label">{{ review.product.name }}</p>
+                            {% elif review.custom_request %}
+                                <p class="muted review-product-label">{{ review.custom_request }}</p>
+                            {% endif %}
+                        </div>
+                        <span class="pill accent">{{ review.rating }}/5</span>
+                    </div>
+
+                    <p class="muted">{{ review.comment }}</p>
+
+                    <p class="review-date">{{ review.created_at|date:"M d, Y" }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <span class="badge">No Reviews Yet</span>
+            <h2>There are no reviews available yet</h2>
+            <p class="muted">
+                Once customers submit reviews, they will appear here in a premium testimonial layout.
+            </p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
