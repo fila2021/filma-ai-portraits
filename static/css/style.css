@@ -1152,3 +1152,8 @@ img {
 .admin-stat-card h2 {
   margin: 0;
 }
+
+.review-section-card {
+  display: grid;
+  gap: 18px;
+}
