@@ -37,6 +37,9 @@
                         <a href="{{ activity_url }}" class="{% if request.path|starts_with:activity_url %}active{% endif %}">My Orders</a>
                         <a href="{{ wishlist_url }}" class="{% if request.path|starts_with:wishlist_url %}active{% endif %}">Wishlist</a>
                         <a href="{{ profile_url }}" class="{% if request.path|starts_with:profile_url %}active{% endif %}">Edit Profile</a>
+                        {% if user.is_staff %}
+                            <a href="{% url 'admin:index' %}">Admin</a>
+                        {% endif %}
                         <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                             {% csrf_token %}
                             <button type="submit">Logout</button>
