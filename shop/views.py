@@ -38,6 +38,8 @@ def _add_bundle_to_session(target, count, price, title_prefix):
         'price': str(price),
         'quantity': 1,
         'image_url': '',
+        'type': 'bundle',
+        'count': count,
     }
     return key
 
@@ -47,6 +49,14 @@ def _cart_totals(cart):
     total = Decimal('0.00')
 
     for key, item in cart.items():
+        is_bundle = str(key).startswith('bundle-') or item.get('type') == 'bundle'
+        bundle_count = item.get('count')
+        if is_bundle and not bundle_count:
+            try:
+                bundle_count = int(str(key).split('-')[1])
+            except Exception:
+                bundle_count = None
+
         line_total = Decimal(str(item['price'])) * int(item['quantity'])
         total += line_total
         items.append({
@@ -57,6 +67,8 @@ def _cart_totals(cart):
             'quantity': item['quantity'],
             'line_total': line_total,
             'image_url': item.get('image_url', ''),
+            'type': 'bundle' if is_bundle else 'product',
+            'count': bundle_count,
         })
 
     return items, total
@@ -252,6 +264,10 @@ def cart_checkout(request):
     created_orders = []
 
     for item in cart_items:
+        if item.get('type') == 'bundle':
+            # bundles do not create Order rows (no Product FK); handled purely in Stripe line items
+            continue
+
         product = get_object_or_404(Product, pk=item['id'], is_active=True)
 
         for _ in range(item['quantity']):
