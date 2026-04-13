@@ -36,7 +36,10 @@
                     <div>{{ order.get_status_display }}</div>
                     <div>{{ order.created_at|date:"M d, Y" }}</div>
                     <div>€{{ order.price_snapshot }}</div>
-                    <div><a class="btn-secondary btn-small" href="{% url 'order_detail' order.pk %}">View</a></div>
+                    <div class="order-actions">
+                        <a class="btn-secondary btn-small" href="{% url 'order_detail' order.pk %}">View</a>
+                        <a class="btn-secondary btn-small" href="{% url 'order_receipt' order.pk %}">Receipt</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>

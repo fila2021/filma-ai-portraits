@@ -18,7 +18,13 @@
         </div>
         <div class="orders-row">
             <span>#{{ order.pk }}</span>
-            <span>{{ order.product.title }}</span>
+            <span>
+                {% if order.product %}
+                    {{ order.product.title }}
+                {% else %}
+                    {{ order.bundle_label|default:"Prompt Bundle" }}
+                {% endif %}
+            </span>
             <span>€{{ order.price_snapshot }}</span>
             <span>{{ order.created_at|date:"M d, Y" }}</span>
             <span class="pill accent">{{ order.get_status_display }}</span>

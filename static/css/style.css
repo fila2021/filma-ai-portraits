@@ -2640,6 +2640,12 @@ img {
   pointer-events: none;
 }
 
+.order-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .table-row {
   display: grid;
   grid-template-columns: 1.2fr 2fr 1fr 1.3fr 1fr 1fr;

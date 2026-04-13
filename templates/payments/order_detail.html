@@ -19,6 +19,23 @@
         <p><strong>Created:</strong> {{ order.created_at }}</p>
     </div>
 
+    {% if order.status == 'paid' and order.product %}
+        {% if order.product.image_url %}
+            <div class="card-soft" style="margin:16px 0;">
+                <h3>Download</h3>
+                <img src="{{ order.product.image_url }}" alt="{{ order.product.title }}" class="product-card-image" style="max-width:520px;border-radius:12px;">
+            </div>
+        {% endif %}
+        <div class="card-soft" style="margin:16px 0;">
+            <h3>Prompt</h3>
+            {% if order.product.description %}
+                <p class="muted">{{ order.product.description }}</p>
+            {% else %}
+                <p class="muted">No prompt text provided.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
     {% if order.status == 'paid' %}
         <p>Payment received. We’ll send your download/fulfillment details shortly.</p>
     {% else %}
@@ -34,6 +51,7 @@
     <div class="cta-row" style="margin-top:16px;">
         <a href="javascript:history.back()" class="btn-secondary">Go Back</a>
         <a href="{% url 'order_list' %}" class="btn-primary">My Orders</a>
+        <a href="{% url 'order_receipt' order.pk %}" class="btn-secondary">Receipt</a>
     </div>
 </section>
 {% endblock %}

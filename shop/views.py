@@ -105,6 +105,9 @@ def product_detail(request, slug=None, pk=None):
     avg_rating = reviews.aggregate(avg=Avg('rating'))['avg'] or 0
 
     has_paid = False
+    if request.user.is_authenticated:
+        from payments.models import Order
+        has_paid = Order.objects.filter(user=request.user, product=product, status='paid').exists()
 
     context = {
         'product': product,
