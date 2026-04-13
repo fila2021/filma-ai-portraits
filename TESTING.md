@@ -17,6 +17,20 @@ Record manual test results here. Use this table format:
 | Request payment | Pay for request | Stripe success page, request marked completed | Pass |  |  |
 | Responsive check | Resize to mobile | Layout remains readable |  |  |  |
 
+## Validation
+- HTML (W3C): pages checked: home, browse, shop detail, bundles, cart, checkout success/cancel, orders, requests, reviews.  
+  Findings:  
+  -  
+- CSS (Jigsaw):  
+  Findings:  
+  -  
+- Python (flake8):  
+  Findings:  
+  -  
+- Browser console (Chrome/Firefox, desktop & mobile):  
+  Findings:  
+  -  
+
 ## Bugs and fixes
 
 List issues found and resolutions:

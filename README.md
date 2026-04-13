@@ -60,10 +60,11 @@ Visit http://127.0.0.1:8000/
 7. Collect static (Heroku handles via whitenoise/staticfiles on deploy).
 
 ## Validation Plan (keep updated)
-- HTML: https://validator.w3.org/ — pages checked after final build.
+- HTML: https://validator.w3.org/ — check home, browse, shop/product detail, bundles, cart, checkout success/cancel, requests, orders, reviews after final build.
 - CSS: https://jigsaw.w3.org/css-validator/
 - Python: `flake8` (PEP8). Do not claim “0 issues” unless run.
-- Browser console: check home, browse, shop, bundles, cart, checkout, requests, orders, reviews (desktop + mobile).
+- Browser console: check all key pages on desktop & mobile; ensure no missing assets/404s or JS errors.
+Record findings in `TESTING.md` (Validation section) with screenshots/notes. Mention any acceptable warnings.
 
 ## Testing (manual checklist)
 - Auth: signup / login / logout / profile update
@@ -87,3 +88,4 @@ Record outcomes and screenshots in `/docs/testing/` (add images) and link them i
 ## Credits / Attribution
 - All custom Django/JS/CSS written by the project author.
 - Icons/illustrations from project assets; replace with licensed media as needed.
+- Cite any external snippets/tutorials directly in code comments and here when added.
