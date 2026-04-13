@@ -4,7 +4,13 @@ from .models import PromptBundle, PromptSample
 
 
 def home(request):
-    return render(request, 'home/index.html')
+    # Show a few recent portrait products on the homepage
+    from shop.models import Product
+
+    featured_products = Product.objects.filter(is_active=True).order_by('-created_at')[:3]
+    return render(request, 'home/index.html', {
+        'featured_products': featured_products,
+    })
 
 
 def browse(request):
