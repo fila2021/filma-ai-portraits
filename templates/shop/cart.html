@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Cart | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="cart-showcase-page">
+    <div class="cart-showcase-shell">
+        <h1>Shopping Cart</h1>
+
+        {% if cart_items %}
+            <div class="cart-layout">
+                <div class="cart-items-panel">
+                    {% for item in cart_items %}
+                        <article class="cart-item-card">
+                            <div class="cart-item-left">
+                                <div class="cart-item-image-wrap">
+                                    {% if item.image_url %}
+                                        <img src="{{ item.image_url }}" alt="{{ item.title }}" class="cart-item-image">
+                                    {% else %}
+                                        <div class="cart-item-placeholder"></div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="cart-item-content">
+                                    <h3>{{ item.title }}</h3>
+                                    <p>Digital download</p>
+                                    <strong>€{{ item.price }}</strong>
+                                </div>
+                            </div>
+
+                            <div class="cart-item-actions">
+                                <p>Qty: {{ item.quantity }}</p>
+                                <a href="{% url 'cart_remove' item.key %}" class="cart-remove-link">🗑 Remove</a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+
+                <aside class="cart-summary-panel">
+                    <h2>Order Summary</h2>
+
+                    <div class="cart-summary-lines">
+                        {% for item in cart_items %}
+                            <div class="cart-summary-line">
+                                <span>{{ item.title }}</span>
+                                <span>€{{ item.line_total }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="cart-summary-total">
+                        <span>Total</span>
+                        <strong>€{{ cart_total }}</strong>
+                    </div>
+
+                    <div class="cart-summary-actions">
+                        {% if cart_items.0 %}
+                            <a href="{% url 'product_detail_by_id' cart_items.0.id %}" class="cart-checkout-button">
+                                ▭ Proceed to Checkout
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <p class="cart-summary-note">Secure payment powered by Stripe</p>
+                </aside>
+            </div>
+        {% else %}
+            <div class="cart-empty-state">
+                <h2>Your cart is empty</h2>
+                <p>Browse the catalog and add premium products to your cart.</p>
+                <a href="{% url 'product_list' %}" class="cart-checkout-button">Browse Catalog</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
