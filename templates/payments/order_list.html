@@ -13,20 +13,31 @@
 
 <section class="section">
     {% if orders %}
-        <div class="request-premium-grid">
+        <div class="table-shell">
+            <div class="table-row table-head">
+                <div>Order #</div>
+                <div>Item</div>
+                <div>Status</div>
+                <div>Date</div>
+                <div>Total</div>
+                <div>Action</div>
+            </div>
             {% for order in orders %}
-                <article class="card-floating request-premium-card">
-                    <div class="request-card-top">
-                        <span class="pill accent">Order #{{ order.pk }}</span>
-                        <span class="pill">{{ order.get_status_display }}</span>
+                <div class="table-row">
+                    <div>#{{ order.pk }}</div>
+                    <div>
+                        {% if order.product %}
+                            {{ order.product.title }}
+                        {% else %}
+                            {{ order.bundle_label|default:"Prompt Bundle" }}
+                            {% if order.bundle_count %} ({{ order.bundle_count }} prompts){% endif %}
+                        {% endif %}
                     </div>
-                    <h3>{{ order.product.title }}</h3>
-                    <p class="muted">Total: €{{ order.price_snapshot }}</p>
-                    <p class="muted">Created: {{ order.created_at|date:"M d, Y" }}</p>
-                    <div class="service-actions">
-                        <a href="{% url 'order_detail' order.pk %}" class="btn-secondary">View</a>
-                    </div>
-                </article>
+                    <div>{{ order.get_status_display }}</div>
+                    <div>{{ order.created_at|date:"M d, Y" }}</div>
+                    <div>€{{ order.price_snapshot }}</div>
+                    <div><a class="btn-secondary btn-small" href="{% url 'order_detail' order.pk %}">View</a></div>
+                </div>
             {% endfor %}
         </div>
     {% else %}

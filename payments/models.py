@@ -11,7 +11,9 @@ class Order(models.Model):
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
-    product = models.ForeignKey('shop.Product', on_delete=models.PROTECT, related_name='orders')
+    product = models.ForeignKey('shop.Product', on_delete=models.PROTECT, related_name='orders', null=True, blank=True)
+    bundle_label = models.CharField(max_length=150, blank=True)
+    bundle_count = models.PositiveIntegerField(null=True, blank=True)
     price_snapshot = models.DecimalField(max_digits=8, decimal_places=2)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -21,7 +23,8 @@ class Order(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'Order #{self.pk} - {self.product.title}'
+        label = self.product.title if self.product else (self.bundle_label or 'Bundle')
+        return f'Order #{self.pk} - {label}'
 
 
 class Payment(models.Model):

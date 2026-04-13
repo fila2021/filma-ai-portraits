@@ -317,7 +317,16 @@ def cart_checkout(request):
 
     for item in cart_items:
         if item.get('type') == 'bundle':
-            # bundles do not create Order rows (no Product FK); handled purely in Stripe line items
+            for _ in range(item['quantity']):
+                order = Order.objects.create(
+                    user=request.user,
+                    product=None,
+                    bundle_label=item.get('title', 'Prompt Bundle'),
+                    bundle_count=item.get('count'),
+                    price_snapshot=item['price'],
+                    status='pending',
+                )
+                created_orders.append(order)
             continue
 
         product = get_object_or_404(Product, pk=item['id'], is_active=True)
@@ -359,7 +368,7 @@ def cart_checkout(request):
             order.save(update_fields=['stripe_session_id'])
             Payment.objects.create(
                 user=request.user,
-                order=order,
+                order=order if order.product else None,
                 amount=order.price_snapshot,
                 status='pending',
                 stripe_session_id=session.id,
@@ -375,7 +384,7 @@ def cart_checkout(request):
         order.save(update_fields=['status'])
         Payment.objects.create(
             user=request.user,
-            order=order,
+            order=order if order.product else None,
             amount=order.price_snapshot,
             status='succeeded',
             paid_at=timezone.now(),
