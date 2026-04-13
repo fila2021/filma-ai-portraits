@@ -98,6 +98,12 @@ def order_detail(request, pk):
 
 
 @login_required
+def order_list(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'payments/order_list.html', {'orders': orders})
+
+
+@login_required
 def order_success(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
     payment = Payment.objects.filter(order=order).order_by('-created_at').first()
@@ -226,3 +232,44 @@ def request_checkout_cancel(request, pk):
     Payment.objects.filter(custom_request=custom_request, status='pending').update(status='failed')
     messages.info(request, 'Payment cancelled.')
     return render(request, 'payments/request_cancel.html', {'custom_request': custom_request})
+
+
+@login_required
+def cart_checkout_success(request):
+    session_id = request.GET.get('session_id')
+    if not session_id:
+        messages.error(request, 'Missing session id.')
+        return redirect('cart_view')
+
+    session = _retrieve_session(session_id)
+    if not session:
+        messages.error(request, 'Could not verify Stripe session.')
+        return redirect('cart_view')
+
+    orders = Order.objects.filter(user=request.user, stripe_session_id=session_id)
+    payments = Payment.objects.filter(user=request.user, stripe_session_id=session_id)
+
+    if session.payment_status == 'paid':
+        now = timezone.now()
+        orders.update(status='paid')
+        payments.update(
+            status='succeeded',
+            paid_at=now,
+            stripe_payment_intent=getattr(session, 'payment_intent', '') or '',
+        )
+        messages.success(request, 'Payment confirmed and orders updated.')
+    else:
+        messages.error(request, 'Stripe did not confirm payment. Please try again.')
+        return redirect('cart_view')
+
+    return render(request, 'payments/cart_success.html', {'orders': orders, 'session': session})
+
+
+@login_required
+def cart_checkout_cancel(request):
+    session_id = request.GET.get('session_id')
+    if session_id:
+        Order.objects.filter(user=request.user, stripe_session_id=session_id).update(status='cancelled')
+        Payment.objects.filter(user=request.user, stripe_session_id=session_id, status='pending').update(status='failed')
+    messages.info(request, 'Payment cancelled.')
+    return redirect('cart_view')

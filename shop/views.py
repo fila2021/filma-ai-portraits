@@ -1,13 +1,24 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib import messages
 from django.db import transaction
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-from payments.models import Order
+from payments.models import Order, Payment
 from .models import Product
+
+try:
+    import stripe
+    if getattr(settings, 'STRIPE_SECRET_KEY', None):
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+    else:
+        stripe = None
+except ImportError:  # pragma: no cover
+    stripe = None
 
 
 def _get_cart(request):
@@ -163,14 +174,63 @@ def cart_checkout(request):
                 user=request.user,
                 product=product,
                 price_snapshot=product.price,
-                status='paid',
+                status='pending',
             )
             created_orders.append(order)
 
+    # If Stripe configured, create a single checkout session
+    if stripe is not None and getattr(stripe, 'api_key', None):
+        line_items = []
+        for item in cart_items:
+            line_items.append({
+                'price_data': {
+                    'currency': 'eur',
+                    'product_data': {'name': item['title']},
+                    'unit_amount': int(Decimal(str(item['price'])) * 100),
+                },
+                'quantity': item['quantity'],
+            })
+
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            mode='payment',
+            line_items=line_items,
+            success_url=request.build_absolute_uri(
+                reverse('cart_checkout_success')
+            ) + '?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=request.build_absolute_uri(reverse('cart_checkout_cancel')),
+        )
+
+        for order in created_orders:
+            order.stripe_session_id = session.id
+            order.save(update_fields=['stripe_session_id'])
+            Payment.objects.create(
+                user=request.user,
+                order=order,
+                amount=order.price_snapshot,
+                status='pending',
+                stripe_session_id=session.id,
+            )
+
+        request.session['cart'] = {}
+        request.session.modified = True
+        return redirect(session.url)
+
+    # Fallback: mark paid immediately (no Stripe)
+    for order in created_orders:
+        order.status = 'paid'
+        order.save(update_fields=['status'])
+        Payment.objects.create(
+            user=request.user,
+            order=order,
+            amount=order.price_snapshot,
+            status='succeeded',
+            paid_at=timezone.now(),
+        )
+
     request.session['cart'] = {}
     request.session.modified = True
-
-    messages.success(request, 'Order created and marked paid (Stripe not configured).')
+    messages.success(request, 'Order created and marked paid.')
 
     if created_orders:
         return redirect('order_success', pk=created_orders[-1].id)

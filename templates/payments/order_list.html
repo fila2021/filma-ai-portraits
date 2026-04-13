@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Orders</span>
+        <h1>Your previous orders</h1>
+        <p class="muted">Track your purchases and access order details.</p>
+    </div>
+</section>
+
+<section class="section">
+    {% if orders %}
+        <div class="request-premium-grid">
+            {% for order in orders %}
+                <article class="card-floating request-premium-card">
+                    <div class="request-card-top">
+                        <span class="pill accent">Order #{{ order.pk }}</span>
+                        <span class="pill">{{ order.get_status_display }}</span>
+                    </div>
+                    <h3>{{ order.product.title }}</h3>
+                    <p class="muted">Total: €{{ order.price_snapshot }}</p>
+                    <p class="muted">Created: {{ order.created_at|date:"M d, Y" }}</p>
+                    <div class="service-actions">
+                        <a href="{% url 'order_detail' order.pk %}" class="btn-secondary">View</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Orders Yet</span>
+            <h2>You have not placed any orders yet</h2>
+            <p class="muted">Browse products and complete checkout to see your orders here.</p>
+            <div class="cta-row">
+                <a href="{% url 'product_list' %}" class="btn-primary">Browse Products</a>
+                <a href="{% url 'gallery' %}" class="btn-secondary">View Gallery</a>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Cart Paid | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Payment confirmed</span>
+        <h1>Your cart checkout is complete</h1>
+        <p class="muted">
+            We’ve processed your payment. Your orders are now marked as paid.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="card-row">
+        {% for order in orders %}
+            <article class="card-floating">
+                <span class="badge">Order #{{ order.pk }}</span>
+                <h3>{{ order.product.title }}</h3>
+                <p class="muted">Total: €{{ order.price_snapshot }}</p>
+                <p class="muted">Status: {{ order.get_status_display }}</p>
+                <div class="cta-row">
+                    <a class="btn-secondary" href="{% url 'order_detail' order.pk %}">View order</a>
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty-state">
+                <span class="badge">No Orders</span>
+                <h2>No orders were found for this session.</h2>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="cta-row">
+        <a class="btn-primary" href="{% url 'gallery' %}">Continue browsing</a>
+        <a class="btn-secondary" href="{% url 'order_list' %}">View all orders</a>
+    </div>
+</section>
+{% endblock %}
