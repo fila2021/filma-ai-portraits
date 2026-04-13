@@ -482,6 +482,11 @@ img {
   background: linear-gradient(135deg, #202938 0%, #131a24 100%);
 }
 
+.card-img-placeholder.with-bg {
+  background-size: cover;
+  background-position: center;
+}
+
 .service-card-image {
   width: 100%;
   height: 100%;
