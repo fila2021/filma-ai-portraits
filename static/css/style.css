@@ -176,7 +176,7 @@ img {
   display: none;
   position: absolute;
   top: 120%;
-  right: 0;
+  left: 0;
   min-width: 180px;
   background: var(--card);
   border: 1px solid var(--card-border);
@@ -1051,6 +1051,42 @@ img {
 .request-premium-card {
   display: grid;
   gap: 14px;
+}
+
+.orders-grid-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+
+.order-table-card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.order-table-title {
+  font-weight: 700;
+}
+
+.order-table-cell {
+  color: var(--muted);
+}
+
+.order-table-cell.status {
+  color: #f0b84e;
+  font-weight: 700;
+}
+
+.order-table-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .request-card-top {
