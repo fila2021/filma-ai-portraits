@@ -26,8 +26,6 @@
         <div class="product-grid">
             {% for product in products %}
                 <article class="product-card">
-
-                    <!-- Image -->
                     <div class="product-image-wrap">
                         {% if product.image_url %}
                             <img src="{{ product.image_url }}" alt="{{ product.title }}">
@@ -36,7 +34,6 @@
                         {% endif %}
                     </div>
 
-                    <!-- Content -->
                     <div class="product-card-body">
                         <div class="tag-row">
                             <span class="pill accent">Portrait Pack</span>
@@ -44,11 +41,35 @@
 
                         <h3>{{ product.title }}</h3>
 
-                        <p class="muted">
-                            {{ product.description|truncatewords:18 }}
-                        </p>
+                        <div class="product-rating-block">
+                            <div class="mini-star-row" aria-label="Average rating {{ product.avg_rating|default:0 }} out of 5">
+                                <span class="mini-star {% if product.avg_rating|default:0 >= 1 %}filled{% endif %}">★</span>
+                                <span class="mini-star {% if product.avg_rating|default:0 >= 2 %}filled{% endif %}">★</span>
+                                <span class="mini-star {% if product.avg_rating|default:0 >= 3 %}filled{% endif %}">★</span>
+                                <span class="mini-star {% if product.avg_rating|default:0 >= 4 %}filled{% endif %}">★</span>
+                                <span class="mini-star {% if product.avg_rating|default:0 >= 5 %}filled{% endif %}">★</span>
+                            </div>
 
-                        <!-- Footer -->
+                            {% if product.review_count %}
+                                <p class="product-rating-text">
+                                    {{ product.avg_rating|floatformat:1 }}/5 from {{ product.review_count }} review{{ product.review_count|pluralize }}
+                                </p>
+                            {% else %}
+                                <p class="product-rating-text muted">No reviews yet</p>
+                            {% endif %}
+                        </div>
+
+                        {% if product.description %}
+                            <p class="muted">
+                                {{ product.description|truncatewords:18 }}
+                            </p>
+                        {% else %}
+                            <p class="muted">
+                                Premium AI-generated portrait visuals designed for a more polished,
+                                creator-ready presentation.
+                            </p>
+                        {% endif %}
+
                         <div class="product-card-footer">
                             <div>
                                 {% if product.price %}
@@ -67,7 +88,6 @@
                             {% endif %}
                         </div>
                     </div>
-
                 </article>
             {% endfor %}
         </div>
