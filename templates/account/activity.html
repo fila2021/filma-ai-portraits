@@ -13,20 +13,32 @@
 
 <section class="section split">
     <div class="card-soft">
-        <span class="badge">Orders</span>
+        <div class="section-head">
+            <div>
+                <span class="badge">Orders</span>
+                <h3 class="muted">Recent purchases</h3>
+            </div>
+        </div>
         {% if orders %}
-            <div class="orders-grid-table">
+            <div class="orders-table">
+                <div class="orders-row orders-head">
+                    <span>#</span>
+                    <span>Title</span>
+                    <span>Total</span>
+                    <span>Date</span>
+                    <span>Status / Action</span>
+                </div>
                 {% for order in orders %}
-                    <article class="order-table-card">
-                        <span class="pill accent">#{{ order.pk }}</span>
-                        <div class="order-table-title">{{ order.product.title }}</div>
-                        <div class="order-table-cell">€{{ order.price_snapshot }}</div>
-                        <div class="order-table-cell">{{ order.created_at|date:"M d, Y" }}</div>
-                        <div class="order-table-cell status">{{ order.get_status_display }}</div>
-                        <div class="order-table-actions">
+                    <div class="orders-row">
+                        <span class="orders-cell-id">#{{ order.pk }}</span>
+                        <span class="orders-cell-title">{{ order.product.title }}</span>
+                        <span>€{{ order.price_snapshot }}</span>
+                        <span>{{ order.created_at|date:"M d, Y" }}</span>
+                        <span class="orders-cell-action">
+                            <span class="pill accent">{{ order.get_status_display }}</span>
                             <a href="{% url 'order_detail' order.pk %}" class="btn-secondary btn-small">View</a>
-                        </div>
-                    </article>
+                        </span>
+                    </div>
                 {% endfor %}
             </div>
         {% else %}
