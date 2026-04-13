@@ -1,92 +1,120 @@
 # Askuala AI Portraits
 
-Django storefront for AI-generated portrait products, prompt bundles, and custom portrait requests. Users can browse, buy, submit briefs, manage orders/requests, and leave reviews in a polished dark/gold UI.
+Full‑stack Django application for browsing, purchasing, and requesting AI‑generated portrait products and prompt bundles through a premium, responsive UI.
 
-## Features
-- Home hero with clear CTAs (browse, bundles, custom request)
-- Shop (products) + Bundles (prompt bundles) + Wishlist + Cart with Stripe checkout
-- Services with custom request flow
-- Orders and Requests dashboards (table view)
-- Reviews with star ratings
-- Auth (signup/login/logout/profile)
-- Dark/light theme toggle
-- Responsive layout (desktop, tablet, mobile)
+## 🎯 Purpose & Users
+- **Purpose:** Provide a professional storefront for AI portrait products, prompt bundles, and custom portrait requests with clear e‑commerce and request tracking.
+- **Target users:** Creators and individuals wanting ready-made AI portraits, prompt bundles, or personalised AI portrait services; non‑technical users who need a guided flow.
 
-## Tech Stack
-- Django 6, SQLite (dev), Stripe Checkout
-- HTML, CSS, vanilla JS (no build step)
-- Deployed via Heroku (dyno + staticfiles)
+## 🚀 Features
+- Shop: product listing, detail, wishlist, cart, Stripe checkout.
+- Bundles: prompt bundles with cart/wishlist and pricing from admin.
+- Services/Requests: submit and track custom portrait requests.
+- Orders & Requests dashboards (table view) with bundle support.
+- Reviews with star ratings.
+- Auth: signup, login, logout, profile.
+- UI/UX: dark/gold theme, centered hero CTAs, responsive layout.
 
-## Environment Variables
-Create a `.env` (or set in Heroku config):
-- `SECRET_KEY` – Django secret key
-- `DEBUG` – `True/False`
-- `STRIPE_PUBLISHABLE_KEY` – your Stripe publishable key
-- `STRIPE_SECRET_KEY` – your Stripe secret key
-- `DATABASE_URL` – optional (Heroku Postgres)
-Use `.env.example` as a template.
+## 🧠 UX Decisions
+- Clear entry points on the hero (Shop / Bundles / Custom Request).
+- Minimal-friction checkout; confirmation modals for cart actions.
+- Table layouts for orders/requests for quick scanning.
+- Empty/fallback states for missing data and images.
+- Consistent typography and spacing across desktop/mobile.
 
-## Local Setup
+## 🏗️ Data Model
+- **User** (auth)
+- **Product** (store items)
+- **ServicePackage** (service offerings)
+- **CustomRequest** (user submissions)
+- **Order** (product or bundle purchases; bundle_label/count stored)
+- **Review** (product or request feedback)
+Relationships: User→Orders (1:m), User→CustomRequests (1:m), Product→Reviews (1:m).
+
+## 🛠 Tech Stack
+- Django 6, SQLite (dev) / PostgreSQL (Heroku)
+- HTML, CSS, vanilla JS
+- Stripe Checkout
+- WhiteNoise for static files
+- Deployment: Heroku
+
+## ⚙️ Environment Variables
+Set in `.env` (template provided) or Heroku config:
+```
+SECRET_KEY=
+DEBUG=
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+DATABASE_URL=           # set by Heroku Postgres
+ALLOWED_HOSTS=
+```
+
+## 💻 Local Setup
 ```bash
 git clone <repo_url> filma-ai-portraits
 cd filma-ai-portraits
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # or create manually with vars above
+cp .env.example .env    # fill values
 python3 manage.py migrate
 python3 manage.py createsuperuser
 python3 manage.py runserver
 ```
 Visit http://127.0.0.1:8000/
 
-## Key URLs
-- `/` home
-- `/browse/` combined shop + services
-- `/bundles/` prompt bundles
-- `/shop/` products
-- `/cart/`, `/wishlist/`
-- `/services/`, `/requests/`
-- `/orders/`
-- `/accounts/login/`, `/accounts/signup/`
-- `/admin/` (staff only)
+## 🌐 Deployment (Heroku)
+```bash
+heroku create askuala-ai
+heroku addons:create heroku-postgresql:essential-0
+heroku config:set SECRET_KEY=... DEBUG=False ALLOWED_HOSTS=askuala-ai.herokuapp.com \
+  STRIPE_PUBLISHABLE_KEY=... STRIPE_SECRET_KEY=...
+git push heroku main
+heroku run -- python manage.py migrate
+heroku run -- python manage.py createsuperuser
+heroku run -- python manage.py collectstatic --noinput
+heroku ps:restart
+```
 
-## Deployment (Heroku)
-1. Create app, add Postgres addon.
-2. Config Vars: `SECRET_KEY`, `DEBUG=False`, `ALLOWED_HOSTS=<heroku-domain>`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`, `DATABASE_URL`.
-3. Files: `Procfile`, `requirements.txt`, `runtime.txt` (if needed).
-4. Push code: `git push heroku main`
-5. Run: `heroku run python manage.py migrate`
-6. Create admin: `heroku run python manage.py createsuperuser`
-7. Collect static (Heroku handles via whitenoise/staticfiles on deploy).
+## 🧪 Testing & Validation
+- Manual flows: auth, shop/cart, bundles, checkout (Stripe test), orders, requests, reviews, responsive.
+- Validation tools planned: W3C HTML, Jigsaw CSS, flake8 (PEP8), browser console (desktop/mobile).
+- Record findings/screenshots in `TESTING.md` (Validation section) and `docs/testing/`.
 
-## Validation Plan (keep updated)
-- HTML: https://validator.w3.org/ — check home, browse, shop/product detail, bundles, cart, checkout success/cancel, requests, orders, reviews after final build.
-- CSS: https://jigsaw.w3.org/css-validator/
-- Python: `flake8` (PEP8). Do not claim “0 issues” unless run.
-- Browser console: check all key pages on desktop & mobile; ensure no missing assets/404s or JS errors.
-Record findings in `TESTING.md` (Validation section) with screenshots/notes. Mention any acceptable warnings.
+## 🐞 Bugs & Fixes (notable)
+- Fixed duplicate `image_url` migration and made `image_url` nullable.
+- Fixed review redirect (product detail by id).
+- Fixed bundle order handling and pricing from admin.
+- Fixed CSS cache/manifest issues (WhiteNoise + cache bust).
 
-## Testing (manual checklist)
-- Auth: signup / login / logout / profile update
-- Shop: list, product detail, add to cart, wishlist toggle
-- Bundles: add to cart/wishlist, checkout (Stripe session), price shown
-- Cart: update qty, remove, clear, confirmation modals
-- Checkout: success, cancel, receipts, orders created
-- Orders: list (table), detail (product or bundle)
-- Services/Requests: list, create request, view/edit if allowed
-- Reviews: add review, star rating display
-- Theme toggle: dark/light persistence
-- Responsive: home, browse, shop, cart, checkout, orders (mobile widths)
+## 📁 Structure
+```
+home/ accounts/ shop/ services/ payments/ reviews/ gallery/
+templates/ static/
+```
 
-Record outcomes and screenshots in `/docs/testing/` (add images) and link them in README when finalized.
+## 🔒 Security
+- Secrets via env vars; DEBUG=False in production; ALLOWED_HOSTS set.
+- CSRF protection enabled.
+- WhiteNoise compressed manifest for static assets.
 
-## Known Areas to Monitor
-- Stripe keys must be set in env; missing keys fallback to non-Stripe flow.
-- Product `image_url` should be populated for best display; placeholders used otherwise.
-- If adding new migrations, run `python manage.py migrate` locally and on Heroku.
+## 📈 Future Improvements
+- Automated tests (pytest)
+- Advanced product filtering/search
+- Email notifications
+- Admin analytics
+- Improved review moderation
 
-## Credits / Attribution
-- All custom Django/JS/CSS written by the project author.
-- Icons/illustrations from project assets; replace with licensed media as needed.
-- Cite any external snippets/tutorials directly in code comments and here when added.
+## 🙌 Credits
+- Developed by Filmawit Gebreegziabher
+- Django, Stripe, Heroku
+Resources used:
+- Django Documentation
+- Code Institute learning materials
+- Heroku Documentation
+- Cloudinary Documentatio
+
+Images and content used for educational purposes.
+
+Project developed by the author as part of the backend development assessment.
+
+Thank You for Visiting Askuala AI!
