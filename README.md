@@ -81,10 +81,15 @@ heroku ps:restart
 - Record findings/screenshots in `TESTING.md` (Validation section) and `docs/testing/`.
 
 ## 🐞 Bugs & Fixes (notable)
-- Fixed duplicate `image_url` migration and made `image_url` nullable.
-- Fixed review redirect (product detail by id).
-- Fixed bundle order handling and pricing from admin.
-- Fixed CSS cache/manifest issues (WhiteNoise + cache bust).
+- Duplicate `image_url` migration / nullability conflict → cleaned model, added migration, applied on Heroku.
+- Review redirect failing for products → now routes to ID-based product detail.
+- Bundles showing €0 in cart/checkout → now pull price/label from `PromptBundle` and hydrate carts.
+- Orders for bundles missing → create bundle orders without product FK; updated templates to display bundle info.
+- CSS not updating on Heroku → ensured WhiteNoise manifest storage, collectstatic, and cache-bust on stylesheet.
+- Admin link needed separate tab → set `target="_blank"` for staff admin link.
+- Stripe was bypassed / auto-paid fallback → Stripe now mandatory in production; missing keys show user error.
+- DisallowedHost / 400 → ALLOWED_HOSTS set to Heroku domain via config vars.
+- Service images not showing → render service cards with background-image when `image_url` is present.
 
 ## 📁 Structure
 ```
