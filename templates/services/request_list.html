@@ -30,14 +30,14 @@
                     <div class="request-card-top">
                         <span class="pill accent">Custom Request</span>
                         {% if request.status %}
-                            <span class="pill">{{ request.status }}</span>
+                            <span class="pill">{{ request.get_status_display }}</span>
                         {% endif %}
                     </div>
 
-                    <h3>{{ request.title }}</h3>
+                    <h3>{{ request.package.name|default:"Custom package" }}</h3>
 
-                    {% if request.description %}
-                        <p class="muted">{{ request.description|truncatewords:28 }}</p>
+                    {% if request.prompt_details %}
+                        <p class="muted">{{ request.prompt_details|truncatewords:28 }}</p>
                     {% else %}
                         <p class="muted">
                             Custom AI portrait request submitted for a tailored premium result.
@@ -48,8 +48,11 @@
                         {% if request.created_at %}
                             <p><strong>Created:</strong> {{ request.created_at|date:"M d, Y" }}</p>
                         {% endif %}
-                        {% if request.service %}
-                            <p><strong>Service:</strong> {{ request.service }}</p>
+                        {% if request.platform_type %}
+                            <p><strong>Platform:</strong> {{ request.get_platform_type_display }}</p>
+                        {% endif %}
+                        {% if request.style_choice %}
+                            <p><strong>Style:</strong> {{ request.get_style_choice_display }}</p>
                         {% endif %}
                     </div>
 

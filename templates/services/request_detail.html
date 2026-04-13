@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Request Detail | Askuala AI Portraits{% endblock %}
+{% block title %}Request #{{ custom_request.id }} | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
-    <div class="card-soft">
+    <div class="card-soft page-intro-card">
         <span class="badge accent">Request Detail</span>
-        <h1>Request #{{ request_obj.id }}</h1>
+        <h1>Request #{{ custom_request.id }}</h1>
         <p class="muted">
             Review the details of your custom portrait request and track progress.
         </p>
@@ -19,38 +19,66 @@
             <h2>Request Information</h2>
 
             <div class="meta-row">
-                <span class="meta-label">Service</span>
+                <span class="meta-label">Package</span>
                 <span class="meta-value">
-                    {{ request_obj.service.name }}
+                    {{ custom_request.package.name|default:"Custom package" }}
+                </span>
+            </div>
+
+            <div class="meta-row">
+                <span class="meta-label">Platform</span>
+                <span class="meta-value">
+                    {{ custom_request.get_platform_type_display }}
+                </span>
+            </div>
+
+            <div class="meta-row">
+                <span class="meta-label">Style</span>
+                <span class="meta-value">
+                    {{ custom_request.get_style_choice_display }}
                 </span>
             </div>
 
             <div class="meta-row">
                 <span class="meta-label">Status</span>
                 <span class="meta-value">
-                    <span class="pill accent">{{ request_obj.status }}</span>
+                    <span class="pill accent">{{ custom_request.get_status_display }}</span>
                 </span>
             </div>
 
             <div class="meta-row">
                 <span class="meta-label">Created</span>
                 <span class="meta-value">
-                    {{ request_obj.created_at|date:"M d, Y" }}
+                    {{ custom_request.created_at|date:"M d, Y" }}
+                </span>
+            </div>
+
+            <div class="meta-row">
+                <span class="meta-label">Total</span>
+                <span class="meta-value">
+                    €{{ custom_request.total_price }}
                 </span>
             </div>
         </div>
 
         <!-- RIGHT -->
         <div class="card-soft">
-            <span class="badge">Description</span>
-            <h2>Creative Brief</h2>
+            <span class="badge">Creative Brief</span>
+            <h2>Prompt Details</h2>
 
-            {% if request_obj.description %}
-                <p>{{ request_obj.description }}</p>
+            {% if custom_request.prompt_details %}
+                <p>{{ custom_request.prompt_details }}</p>
             {% else %}
                 <p class="muted">
-                    No extra description was provided for this request.
+                    No brief was provided for this request.
                 </p>
+            {% endif %}
+
+            {% if custom_request.extra_notes %}
+                <div class="meta-row">
+                    <span class="meta-label">Extra Notes</span>
+                    <span class="meta-value">{{ custom_request.extra_notes }}</span>
+                </div>
             {% endif %}
         </div>
     </div>
