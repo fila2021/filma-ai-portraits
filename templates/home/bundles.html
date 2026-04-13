@@ -6,8 +6,8 @@
 <section class="section">
     <div class="card-soft page-intro-card">
         <span class="badge accent">Bundles</span>
-        <h1>Bundles of AI Prompts and Products</h1>
-        <p class="muted">Pick a bundle size or shop products. Prompts are delivered in randomized order from our premium list.</p>
+        <h1>Bundles of AI Prompts</h1>
+        <p class="muted">Pick a bundle size. Prompts are delivered in randomized order from our premium list after purchase.</p>
     </div>
 </section>
 
@@ -16,28 +16,14 @@
         {% for bundle in bundle_options %}
             <article class="card-floating">
                 <span class="pill accent">{{ bundle.label }}</span>
-                <h3>{{ bundle.count }} {% if bundle.count|stringformat:'s' == 'Shop' %}{% else %}prompts{% endif %}</h3>
+                <h3>{{ bundle.count }} prompts</h3>
                 <p class="muted">{{ bundle.description }}</p>
                 <div class="cta-row">
-                    {% if bundle.url_name %}
-                        <a href="{% url bundle.url_name %}" class="btn-primary">Shop Products</a>
-                    {% else %}
-                        <a href="{% url 'product_list' %}" class="btn-secondary">Buy Bundle</a>
-                    {% endif %}
+                    <a href="{% url 'product_list' %}" class="btn-secondary">Buy Bundle</a>
                 </div>
             </article>
         {% endfor %}
     </div>
 </section>
 
-<section class="section">
-    <div class="card-soft">
-        <span class="badge">Locked until purchase</span>
-        <h2>Prompts unlock after you buy a bundle</h2>
-        <p class="muted">Prompt contents are protected and revealed only once you complete your bundle purchase.</p>
-        <div class="cta-row">
-            <a href="{% url 'product_list' %}" class="btn-primary">Buy a Bundle</a>
-        </div>
-    </div>
-</section>
 {% endblock %}
