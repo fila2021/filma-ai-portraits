@@ -26,6 +26,9 @@
             <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
             <li><a href="{{ browse_url }}" class="{% if request.path|starts_with:browse_url %}active{% endif %}">Browse</a></li>
             <li><a href="{{ ai_bundles_url }}" class="{% if request.path|starts_with:ai_bundles_url %}active{% endif %}">Bundles</a></li>
+            {% if user.is_staff %}
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            {% endif %}
 
             {% if user.is_authenticated %}
                 <li class="nav-user">
