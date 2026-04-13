@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Orders & Requests | Askuala AI Portraits{% endblock %}
+{% block title %}My Orders | Askuala AI Portraits{% endblock %}
 
 {% block content %}
 <section class="section">
     <div class="card-soft page-intro-card">
         <span class="badge accent">Account</span>
-        <h1>Orders & Requests</h1>
-        <p class="muted">Review your purchases and custom portrait requests in one place.</p>
+        <h1>My Orders</h1>
+        <p class="muted">Review previous orders or start a new custom request.</p>
     </div>
 </section>
 
@@ -45,7 +45,13 @@
     </div>
 
     <div class="card-soft">
-        <span class="badge">Requests</span>
+        <div class="section-head">
+            <div>
+                <span class="badge">Requests</span>
+                <h3 class="muted">Submit a new custom brief or review your past requests.</h3>
+            </div>
+            <a href="{% url 'create_request' %}" class="btn-primary">New Request</a>
+        </div>
         {% if requests %}
             <div class="request-premium-grid">
                 {% for request in requests %}

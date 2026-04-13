@@ -12,6 +12,8 @@
 
         {% url 'home' as home_url %}
         {% url 'browse' as browse_url %}
+        {% url 'ai_photos' as ai_photos_url %}
+        {% url 'ai_prompts' as ai_prompts_url %}
         {% url 'cart_view' as cart_url %}
         {% url 'profile' as profile_url %}
         {% url 'request_list' as requests_url %}
@@ -23,6 +25,8 @@
         <ul class="nav-menu">
             <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
             <li><a href="{{ browse_url }}" class="{% if request.path|starts_with:browse_url %}active{% endif %}">Browse</a></li>
+            <li><a href="{{ ai_photos_url }}" class="{% if request.path|starts_with:ai_photos_url %}active{% endif %}">AI Photos</a></li>
+            <li><a href="{{ ai_prompts_url }}" class="{% if request.path|starts_with:ai_prompts_url %}active{% endif %}">Prompts</a></li>
 
             {% if user.is_authenticated %}
                 <li class="nav-user">
@@ -31,7 +35,7 @@
                         <span aria-hidden="true">▾</span>
                     </button>
                     <div class="nav-user-menu">
-                        <a href="{{ activity_url }}" class="{% if request.path|starts_with:activity_url %}active{% endif %}">Orders & Requests</a>
+                        <a href="{{ activity_url }}" class="{% if request.path|starts_with:activity_url %}active{% endif %}">My Orders</a>
                         <a href="{{ profile_url }}" class="{% if request.path|starts_with:profile_url %}active{% endif %}">Edit Profile</a>
                         <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                             {% csrf_token %}

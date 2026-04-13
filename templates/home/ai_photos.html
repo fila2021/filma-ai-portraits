@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}AI Photos | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">AI Photos</span>
+        <h1>Explore premium AI-generated portrait products</h1>
+        <p class="muted">All products from the shop, presented as AI photo collections.</p>
+    </div>
+</section>
+
+<section class="section">
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+                <article class="product-card">
+                    <div class="product-image-wrap">
+                        {% if product.image_url %}
+                            <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                        {% else %}
+                            <div class="product-placeholder"></div>
+                        {% endif %}
+                    </div>
+                    <div class="product-card-body">
+                        <div class="tag-row">
+                            <span class="pill accent">AI Photo Pack</span>
+                        </div>
+                        <h3>{{ product.title }}</h3>
+                        {% if product.description %}
+                            <p class="muted">{{ product.description|truncatewords:18 }}</p>
+                        {% else %}
+                            <p class="muted">Premium AI-generated portraits ready to use.</p>
+                        {% endif %}
+                        <div class="product-card-footer">
+                            <div>
+                                {% if product.price %}
+                                    <p class="product-price">€{{ product.price }}</p>
+                                {% endif %}
+                            </div>
+                            {% if product.slug %}
+                                <a href="{% url 'product_detail' product.slug %}" class="btn-primary btn-small">View</a>
+                            {% else %}
+                                <a href="{% url 'product_detail_by_id' product.id %}" class="btn-primary btn-small">View</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No AI Photos</span>
+            <h2>No AI photo products available yet</h2>
+            <p class="muted">Products will appear here when added to the shop.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
