@@ -42,7 +42,7 @@
                     <div class="cart-summary-lines">
                         {% for item in cart_items %}
                             <div class="cart-summary-line">
-                                <span>{{ item.title }}</span>
+                                <span>{{ item.title }} × {{ item.quantity }}</span>
                                 <span>€{{ item.line_total }}</span>
                             </div>
                         {% endfor %}
@@ -54,11 +54,10 @@
                     </div>
 
                     <div class="cart-summary-actions">
-                        {% if cart_items.0 %}
-                            <a href="{% url 'product_detail_by_id' cart_items.0.id %}" class="cart-checkout-button">
-                                ▭ Proceed to Checkout
-                            </a>
-                        {% endif %}
+                        <form method="post" action="{% url 'cart_checkout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="cart-checkout-button">▭ Proceed to Checkout</button>
+                        </form>
                     </div>
 
                     <p class="cart-summary-note">Secure payment powered by Stripe</p>
