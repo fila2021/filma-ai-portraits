@@ -4,16 +4,31 @@
 
 {% block content %}
 <section class="success-hero">
-    <h2>Payment successful</h2>
-    <p>Your order is paid. We’ll send the files/fulfillment details shortly.</p>
+    <span class="badge accent">Payment confirmed</span>
+    <h2>Thank you — your order is locked in</h2>
+    <p class="muted">
+        We’ve processed your payment and are preparing your premium portraits.
+    </p>
+
     <div class="gallery-card">
-        <p><strong>Order:</strong> #{{ order.pk }}</p>
+        <h3>Order #{{ order.pk }}</h3>
         <p><strong>Product:</strong> {{ order.product.title }}</p>
         <p><strong>Total:</strong> €{{ order.price_snapshot }}</p>
         <p><strong>Status:</strong> {{ order.get_status_display }}</p>
     </div>
+
+    <div class="card-soft success-option-card">
+        <span class="badge">What happens next</span>
+        <ul class="muted success-steps">
+            <li>We’ll email your receipt and fulfillment details.</li>
+            <li>Your download / delivery instructions will appear in your account.</li>
+            <li>If you need changes, reply to the confirmation email.</li>
+        </ul>
+    </div>
+
     <div class="cta-row">
         <a class="btn-primary" href="{% url 'order_detail' order.pk %}">View order</a>
+        <a class="btn-secondary" href="{% url 'gallery' %}">Browse gallery</a>
         <a class="btn-secondary" href="{% url 'product_detail' order.product.slug %}">Back to product</a>
     </div>
 </section>

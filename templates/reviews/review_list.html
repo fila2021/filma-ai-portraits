@@ -35,7 +35,16 @@
                                 <p class="muted review-product-label">{{ review.custom_request }}</p>
                             {% endif %}
                         </div>
-                        <span class="pill accent">{{ review.rating }}/5</span>
+                        <div class="rating-stars display">
+                            {% for i in \"12345\" %}
+                                {% if forloop.counter <= review.rating %}
+                                    <span aria-hidden=\"true\">★</span>
+                                {% else %}
+                                    <span aria-hidden=\"true\" class=\"muted\">★</span>
+                                {% endif %}
+                            {% endfor %}
+                            <span class=\"sr-only\">{{ review.rating }} out of 5</span>
+                        </div>
                     </div>
 
                     <p class="muted">{{ review.comment }}</p>

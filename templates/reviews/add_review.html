@@ -32,22 +32,35 @@
                     </div>
                 {% endif %}
 
-                {% for field in form %}
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {{ field }}
-
-                        {% if field.help_text %}
-                            <p class="form-help">{{ field.help_text }}</p>
-                        {% endif %}
-
-                        {% if field.errors %}
-                            <div class="form-error">
-                                {{ field.errors }}
-                            </div>
-                        {% endif %}
+                <div class="form-group">
+                    <label>Rating (1–5)</label>
+                    <div class="rating-stars">
+                        {% for value in "54321" %}
+                            <input type="radio" id="rating-{{ value }}" name="rating" value="{{ value }}" {% if form.rating.value|stringformat:'s' == value %}checked{% endif %}>
+                            <label for="rating-{{ value }}">★</label>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                    {% if form.rating.errors %}
+                        <div class="form-error">
+                            {{ form.rating.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.comment.id_for_label }}">{{ form.comment.label }}</label>
+                    {{ form.comment }}
+
+                    {% if form.comment.help_text %}
+                        <p class="form-help">{{ form.comment.help_text }}</p>
+                    {% endif %}
+
+                    {% if form.comment.errors %}
+                        <div class="form-error">
+                            {{ form.comment.errors }}
+                        </div>
+                    {% endif %}
+                </div>
 
                 <div class="cta-row">
                     <button type="submit" class="btn-primary">Submit Review</button>

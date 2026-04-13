@@ -10,16 +10,26 @@
             >
         </a>
 
+        {% url 'home' as home_url %}
+        {% url 'gallery' as gallery_url %}
+        {% url 'product_list' as shop_url %}
+        {% url 'service_list' as services_url %}
+        {% url 'about' as about_url %}
+        {% url 'profile' as profile_url %}
+        {% url 'request_list' as requests_url %}
+        {% url 'login' as login_url %}
+        {% url 'signup' as signup_url %}
+
         <ul class="nav-menu">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'gallery' %}">Gallery</a></li>
-            <li><a href="{% url 'product_list' %}">Shop</a></li>
-            <li><a href="{% url 'service_list' %}">Services</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
+            <li><a href="{{ gallery_url }}" class="{% if request.path == gallery_url %}active{% endif %}">Gallery</a></li>
+            <li><a href="{{ shop_url }}" class="{% if request.path == shop_url %}active{% endif %}">Shop</a></li>
+            <li><a href="{{ services_url }}" class="{% if request.path == services_url %}active{% endif %}">Services</a></li>
+            <li><a href="{{ about_url }}" class="{% if request.path == about_url %}active{% endif %}">About</a></li>
 
             {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'request_list' %}">Requests</a></li>
+                <li><a href="{{ profile_url }}" class="{% if request.path == profile_url %}active{% endif %}">Profile</a></li>
+                <li><a href="{{ requests_url }}" class="{% if request.path == requests_url %}active{% endif %}">Requests</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                         {% csrf_token %}
@@ -27,8 +37,8 @@
                     </form>
                 </li>
             {% else %}
-                <li><a href="{% url 'signup' %}" class="nav-btn nav-btn-outline">Sign Up</a></li>
-                <li><a href="{% url 'login' %}" class="nav-btn nav-btn-solid">Login</a></li>
+                <li><a href="{{ signup_url }}" class="nav-btn nav-btn-outline {% if request.path == signup_url %}active{% endif %}">Sign Up</a></li>
+                <li><a href="{{ login_url }}" class="nav-btn nav-btn-solid {% if request.path == login_url %}active{% endif %}">Login</a></li>
             {% endif %}
 
             <li>
