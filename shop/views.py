@@ -94,6 +94,40 @@ def cart_remove(request, item_key):
     return redirect('cart_view')
 
 
+def cart_update(request, item_key):
+    if request.method != 'POST':
+        return redirect('cart_view')
+
+    cart = _get_cart(request)
+    if item_key not in cart:
+        messages.error(request, 'Item not found in cart.')
+        return redirect('cart_view')
+
+    try:
+        qty = int(request.POST.get('quantity', '1'))
+    except ValueError:
+        qty = 1
+
+    if qty <= 0:
+        removed_title = cart[item_key]['title']
+        del cart[item_key]
+        messages.success(request, f'"{removed_title}" removed from cart.')
+    else:
+        cart[item_key]['quantity'] = qty
+        messages.success(request, f'Updated "{cart[item_key]["title"]}" to {qty}.')
+
+    request.session.modified = True
+    return redirect('cart_view')
+
+
+def cart_clear(request):
+    if request.method == 'POST':
+        request.session['cart'] = {}
+        request.session.modified = True
+        messages.info(request, 'Cart cleared.')
+    return redirect('cart_view')
+
+
 def cart_view(request):
     cart = _get_cart(request)
     cart_items, cart_total = _cart_totals(cart)

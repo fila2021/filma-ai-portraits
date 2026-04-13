@@ -3,7 +3,9 @@ from django.urls import path
 from .views import (
     cart_add,
     cart_checkout,
+    cart_clear,
     cart_remove,
+    cart_update,
     cart_view,
     product_detail,
     product_list,
@@ -14,6 +16,8 @@ urlpatterns = [
     path('cart/', cart_view, name='cart_view'),
     path('cart/add/<int:pk>/', cart_add, name='cart_add'),
     path('cart/remove/<str:item_key>/', cart_remove, name='cart_remove'),
+    path('cart/update/<str:item_key>/', cart_update, name='cart_update'),
+    path('cart/clear/', cart_clear, name='cart_clear'),
     path('cart/checkout/', cart_checkout, name='cart_checkout'),
     path('<int:pk>/', product_detail, name='product_detail_by_id'),
     path('<slug:slug>/', product_detail, name='product_detail'),

@@ -88,6 +88,13 @@
             <a href="{% url 'request_list' %}" class="btn-secondary">
                 Back to My Requests
             </a>
+            <a href="{% url 'edit_request' custom_request.id %}" class="btn-secondary">
+                Edit Request
+            </a>
+            <form method="post" action="{% url 'delete_request' custom_request.id %}" class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="btn-secondary">Delete</button>
+            </form>
             <a href="{% url 'create_request' %}" class="btn-primary">
                 Create Another Request
             </a>
