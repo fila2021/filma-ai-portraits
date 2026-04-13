@@ -1,4 +1,4 @@
-from django.db import migrations, models
+from django.db import migrations
 
 
 class Migration(migrations.Migration):
@@ -7,10 +7,4 @@ class Migration(migrations.Migration):
         ('shop', '0001_initial'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='product',
-            name='image_url',
-            field=models.URLField(blank=True, null=True),
-        ),
-    ]
+    operations = []
