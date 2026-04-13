@@ -76,17 +76,32 @@
                 </div>
 
                 <div class="product-prompt-panel">
-                    <h2>✦ Prompt Details</h2>
+                    <div class="prompt-header">
+                        <h2>✦ Prompt Details</h2>
+                        {% if not has_paid %}
+                            <span class="pill locked-pill">Locked</span>
+                        {% endif %}
+                    </div>
 
                     {% if has_paid %}
                         <div class="product-prompt-unlocked">
-                            <p>Purchased users can view the full premium prompt text and generation details here.</p>
+                            {% if product.description %}
+                                <p class="product-prompt-text">{{ product.description }}</p>
+                            {% else %}
+                                <p>Full prompt available to buyers.</p>
+                            {% endif %}
                         </div>
                     {% else %}
-                        <div class="product-prompt-locked">
+                        <div class="product-prompt-locked-card">
                             <div class="product-lock-icon">🔒</div>
-                            <h3>Prompt Locked</h3>
-                            <p>Purchase this product to unlock the full prompt text and generation details.</p>
+                            <p class="muted">Purchase to unlock the full prompt and generation details.</p>
+                            <div class="prompt-preview">
+                                {% if product.description %}
+                                    <p>{{ product.description|truncatewords:35 }} …</p>
+                                {% else %}
+                                    <p>Premium prompt preview will appear here.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     {% endif %}
                 </div>
