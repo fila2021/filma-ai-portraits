@@ -12,7 +12,6 @@ urlpatterns = [
 
     path('accounts/', include('accounts.urls')),
     path('account/', include('account.urls')),
-    path('gallery/', include('gallery.urls')),
     path('shop/', include('shop.urls')),
     path('services/', include('services.urls')),
     path('payments/', include('payments.urls')),

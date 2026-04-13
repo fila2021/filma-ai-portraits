@@ -29,7 +29,6 @@
     <div class="cta-row">
         <a class="btn-primary" href="{% url 'order_detail' order.pk %}">View order</a>
         <a class="btn-secondary" href="{% url 'order_receipt' order.pk %}">Receipt</a>
-        <a class="btn-secondary" href="{% url 'gallery' %}">Browse gallery</a>
         <a class="btn-secondary" href="{% url 'product_detail' order.product.slug %}">Back to product</a>
     </div>
 </section>

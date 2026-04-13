@@ -16,21 +16,21 @@
 <section class="section">
     <div class="card-row">
         {% for order in orders %}
-            <article class="card-floating">
-                <span class="badge">Order #{{ order.pk }}</span>
-                <h3>
-                    {% if order.product %}
-                        {{ order.product.title }}
-                    {% else %}
-                        {{ order.bundle_label|default:"Prompt Bundle" }}
-                    {% endif %}
-                </h3>
-                <p class="muted">Total: €{{ order.price_snapshot }}</p>
-                <p class="muted">Status: {{ order.get_status_display }}</p>
-                <div class="cta-row">
-                    <a class="btn-secondary" href="{% url 'order_detail' order.pk %}">View order</a>
-                </div>
-            </article>
+        <article class="card-floating">
+            <span class="badge">Order #{{ order.pk }}</span>
+            <h3>
+                {% if order.product %}
+                    {{ order.product.title }}
+                {% else %}
+                    {{ order.bundle_label|default:"Prompt Bundle" }}
+                {% endif %}
+            </h3>
+            <p class="muted">Total: €{{ order.price_snapshot }}</p>
+            <p class="muted">Status: {{ order.get_status_display }}</p>
+            <div class="cta-row">
+                <a class="btn-secondary" href="{% url 'order_detail' order.pk %}">View order</a>
+            </div>
+        </article>
         {% empty %}
             <div class="empty-state">
                 <span class="badge">No Orders</span>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="cta-row">
-        <a class="btn-primary" href="{% url 'gallery' %}">Continue browsing</a>
+        <a class="btn-primary" href="{% url 'product_list' %}">Continue browsing</a>
         <a class="btn-secondary" href="{% url 'order_list' %}">View all orders</a>
     </div>
 </section>
