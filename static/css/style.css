@@ -1890,3 +1890,23 @@ img {
   text-align: center;
   padding: 40px;
 }
+
+.product-card h3 {
+  margin: 4px 0;
+  font-size: 18px;
+}
+
+.product-card p {
+  font-size: 14px;
+}
+
+/* subtle image zoom */
+.product-card:hover img {
+  transform: scale(1.05);
+  transition: transform 220ms ease;
+}
+
+.section-head h2 {
+  margin: 4px 0 0;
+  font-size: 22px;
+}
