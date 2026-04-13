@@ -30,6 +30,18 @@ def _get_wishlist(request):
     return request.session.setdefault('wishlist', {})
 
 
+def _add_bundle_to_session(target, count, price, title_prefix):
+    key = f"bundle-{count}"
+    target[key] = {
+        'id': key,
+        'title': f"{title_prefix} ({count} prompts)",
+        'price': str(price),
+        'quantity': 1,
+        'image_url': '',
+    }
+    return key
+
+
 def _cart_totals(cart):
     items = []
     total = Decimal('0.00')
@@ -95,6 +107,23 @@ def cart_add(request, pk):
 
     request.session.modified = True
     messages.success(request, f'"{product.title}" added to cart.')
+    return redirect('cart_view')
+
+
+def cart_add_bundle(request, count):
+    if request.method != 'POST':
+        return redirect('browse')
+    cart = _get_cart(request)
+    price_map = {
+        100: Decimal('49'),
+        50: Decimal('29'),
+        10: Decimal('12'),
+        5: Decimal('7'),
+    }
+    price = price_map.get(int(count), Decimal('0'))
+    key = _add_bundle_to_session(cart, count, price, "Prompt Bundle")
+    request.session.modified = True
+    messages.success(request, f'Prompt bundle ({count}) added to cart.')
     return redirect('cart_view')
 
 
@@ -165,6 +194,23 @@ def wishlist_remove(request, item_key):
         del wishlist[item_key]
         request.session.modified = True
         messages.info(request, f'"{removed_title}" removed from wishlist.')
+    return redirect('wishlist_view')
+
+
+def wishlist_add_bundle(request, count):
+    if request.method != 'POST':
+        return redirect('browse')
+    wishlist = _get_wishlist(request)
+    price_map = {
+        100: Decimal('49'),
+        50: Decimal('29'),
+        10: Decimal('12'),
+        5: Decimal('7'),
+    }
+    price = price_map.get(int(count), Decimal('0'))
+    _add_bundle_to_session(wishlist, count, price, "Prompt Bundle")
+    request.session.modified = True
+    messages.success(request, f'Prompt bundle ({count}) added to wishlist.')
     return redirect('wishlist_view')
 
 
