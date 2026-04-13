@@ -26,6 +26,10 @@ def _get_cart(request):
     return request.session.setdefault('cart', {})
 
 
+def _get_wishlist(request):
+    return request.session.setdefault('wishlist', {})
+
+
 def _cart_totals(cart):
     items = []
     total = Decimal('0.00')
@@ -138,6 +142,36 @@ def cart_clear(request):
         request.session.modified = True
         messages.info(request, 'Cart cleared.')
     return redirect('cart_view')
+
+
+def wishlist_add(request, pk):
+    product = get_object_or_404(Product, pk=pk, is_active=True)
+    wishlist = _get_wishlist(request)
+    wishlist[str(product.id)] = {
+        'id': product.id,
+        'title': product.title,
+        'price': str(product.price),
+        'image_url': product.image_url or '',
+    }
+    request.session.modified = True
+    messages.success(request, f'"{product.title}" added to wishlist.')
+    return redirect('wishlist_view')
+
+
+def wishlist_remove(request, item_key):
+    wishlist = _get_wishlist(request)
+    if item_key in wishlist:
+        removed_title = wishlist[item_key]['title']
+        del wishlist[item_key]
+        request.session.modified = True
+        messages.info(request, f'"{removed_title}" removed from wishlist.')
+    return redirect('wishlist_view')
+
+
+def wishlist_view(request):
+    wishlist = _get_wishlist(request)
+    items = list(wishlist.values())
+    return render(request, 'shop/wishlist.html', {'wishlist_items': items})
 
 
 def cart_view(request):

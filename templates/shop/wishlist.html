@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}My Wishlist | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Wishlist</span>
+        <h1>Saved items</h1>
+        <p class="muted">Items you’ve saved for later. Move them to cart when you’re ready.</p>
+    </div>
+</section>
+
+<section class="section">
+    {% if wishlist_items %}
+        <div class="cart-layout">
+            <div class="cart-items-panel">
+                {% for item in wishlist_items %}
+                    <article class="cart-item-card">
+                        <div class="cart-item-left">
+                            <div class="cart-item-image-wrap">
+                                {% if item.image_url %}
+                                    <img src="{{ item.image_url }}" alt="{{ item.title }}" class="cart-item-image">
+                                {% else %}
+                                    <div class="cart-item-placeholder"></div>
+                                {% endif %}
+                            </div>
+                            <div class="cart-item-content">
+                                <h3>{{ item.title }}</h3>
+                                {% if item.price %}<strong>€{{ item.price }}</strong>{% endif %}
+                            </div>
+                        </div>
+                        <div class="cart-item-actions">
+                            <form method="post" action="{% url 'cart_add' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-primary btn-small">Add to Cart</button>
+                            </form>
+                            <a href="{% url 'wishlist_remove' item.id %}" class="cart-remove-link">🗑 Remove</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Saved Items</span>
+            <h2>Your wishlist is empty</h2>
+            <p class="muted">Browse products and save items you like for later.</p>
+            <div class="cta-row">
+                <a href="{% url 'browse' %}" class="btn-primary">Browse</a>
+                <a href="{% url 'product_list' %}" class="btn-secondary">Shop Products</a>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

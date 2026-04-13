@@ -19,6 +19,7 @@
         {% url 'request_list' as requests_url %}
         {% url 'account_activity' as activity_url %}
         {% url 'order_list' as orders_url %}
+        {% url 'wishlist_view' as wishlist_url %}
         {% url 'login' as login_url %}
         {% url 'signup' as signup_url %}
 
@@ -36,6 +37,7 @@
                     </button>
                     <div class="nav-user-menu">
                         <a href="{{ activity_url }}" class="{% if request.path|starts_with:activity_url %}active{% endif %}">My Orders</a>
+                        <a href="{{ wishlist_url }}" class="{% if request.path|starts_with:wishlist_url %}active{% endif %}">Wishlist</a>
                         <a href="{{ profile_url }}" class="{% if request.path|starts_with:profile_url %}active{% endif %}">Edit Profile</a>
                         <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                             {% csrf_token %}

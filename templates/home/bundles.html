@@ -31,31 +31,13 @@
 </section>
 
 <section class="section">
-    <div class="section-head">
-        <div>
-            <span class="badge">Prompt Vault</span>
-            <h2>Sample of the prompts you receive (randomized each purchase)</h2>
+    <div class="card-soft">
+        <span class="badge">Locked until purchase</span>
+        <h2>Prompts unlock after you buy a bundle</h2>
+        <p class="muted">Prompt contents are protected and revealed only once you complete your bundle purchase.</p>
+        <div class="cta-row">
+            <a href="{% url 'product_list' %}" class="btn-primary">Buy a Bundle</a>
         </div>
     </div>
-
-    {% if prompts %}
-        <div class="request-premium-grid">
-            {% for prompt in prompts %}
-                <article class="card-floating request-premium-card">
-                    <div class="request-card-top">
-                        <span class="pill accent">Prompt {{ forloop.counter }}</span>
-                        <span class="pill">Included</span>
-                    </div>
-                    <p class="muted">{{ prompt }}</p>
-                </article>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="empty-state premium-empty-state">
-            <span class="badge accent">No Prompts</span>
-            <h2>No prompts available yet</h2>
-            <p class="muted">Prompts will appear here when added.</p>
-        </div>
-    {% endif %}
 </section>
 {% endblock %}

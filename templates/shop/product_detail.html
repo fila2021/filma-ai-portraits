@@ -49,7 +49,10 @@
                         <button type="submit" class="product-cart-button">🛒 Add to Cart</button>
                     </form>
 
-                    <button type="button" class="product-wishlist-button">♡ Wishlist</button>
+                    <form method="post" action="{% url 'wishlist_add' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="product-wishlist-button">♡ Wishlist</button>
+                    </form>
                 </div>
 
                 <ul class="product-benefits-list">
