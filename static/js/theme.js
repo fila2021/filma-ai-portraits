@@ -15,7 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const savedTheme = localStorage.getItem(storageKey);
-  const initialTheme = savedTheme || root.getAttribute("data-theme") || "dark";
+
+  // Default every new visitor to dark mode and persist that choice unless they toggle.
+  const initialTheme = savedTheme || "dark";
+  if (!savedTheme) {
+    localStorage.setItem(storageKey, "dark");
+  }
   applyTheme(initialTheme);
 
   if (toggle) {
