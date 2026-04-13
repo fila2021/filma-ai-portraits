@@ -162,7 +162,7 @@ def cart_checkout(request):
             order = Order.objects.create(
                 user=request.user,
                 product=product,
-                amount=product.price,
+                price_snapshot=product.price,
                 status='paid',
             )
             created_orders.append(order)
@@ -173,6 +173,6 @@ def cart_checkout(request):
     messages.success(request, 'Order created and marked paid (Stripe not configured).')
 
     if created_orders:
-        return redirect('payment_success', order_id=created_orders[-1].id)
+        return redirect('order_success', pk=created_orders[-1].id)
 
     return redirect('cart_view')
