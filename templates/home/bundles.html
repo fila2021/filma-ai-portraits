@@ -8,6 +8,27 @@
         <span class="badge accent">Bundles</span>
         <h1>Bundles of AI Prompts</h1>
         <p class="muted">Pick a bundle size. Prompts are delivered in randomized order from our premium list after purchase.</p>
+
+        <div class="bundle-free-prompts">
+            <h3>Sample free prompts</h3>
+            <div class="card-row">
+                <article class="card-floating">
+                    <span class="pill accent">Prompt 1</span>
+                    <p class="muted">A hyper-realistic macro photograph capturing a tiny man standing at the edge of a colossal camera lens, peering into its reflective glass surface. The subject, using the uploaded face as reference, is leaning forward slightly, as if about to step into another world within the lens. He wears a modern casual outfit with a light jacket and sneakers. The lens glass is rendered with extreme detail, showing layered reflections, dust particles, and subtle curvature distortion. Light refracts across the surface, creating complex highlights and depth. The background is softly blurred, with hints of a photography studio environment and warm ambient lighting.</p>
+                    <button class="btn-secondary btn-small" data-modal="prompt1-modal">View generation</button>
+                </article>
+                <article class="card-floating">
+                    <span class="pill accent">Prompt 2</span>
+                    <p class="muted">A hyper-realistic 8K cinematic composition where a man, using the uploaded face as reference, stands in the middle of a surreal city made entirely of analytics graphs and data visualizations. Towering bar charts rise like skyscrapers around him, while glowing line graphs stretch across the ground like roads. He wears a sleek modern outfit—dark blazer, t-shirt, and sneakers—standing confidently with hands at his sides. The lighting is a blend of cool digital tones and warm highlights, creating a futuristic yet grounded atmosphere. The background fades into a soft haze, emphasizing scale and depth.</p>
+                    <button class="btn-secondary btn-small" data-modal="prompt2-modal">View generation</button>
+                </article>
+                <article class="card-floating">
+                    <span class="pill accent">Prompt 3</span>
+                    <p class="muted">A high-end commercial photography shot showing a man seated at a premium workstation surrounded by floating UI panels displaying analytics and engagement metrics. The subject, using the uploaded face as reference, is confidently leaning forward with hands resting on a mechanical keyboard. The desk setup includes multiple monitors, RGB lighting, and sleek accessories. The lighting combines soft cinematic tones with neon accents, creating a modern creator aesthetic. The background features acoustic panels and glowing signage.</p>
+                    <button class="btn-secondary btn-small" data-modal="prompt3-modal">View generation</button>
+                </article>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -18,6 +39,7 @@
                 <span class="pill accent">{{ bundle.label }}</span>
                 <h3>{{ bundle.count }} prompts</h3>
                 <p class="muted">{{ bundle.description }}</p>
+                <p class="product-price-large">{{ bundle.price }}</p>
                 <div class="cta-row">
                     <a href="{% url 'product_list' %}" class="btn-secondary">Buy Bundle</a>
                 </div>
@@ -25,5 +47,53 @@
         {% endfor %}
     </div>
 </section>
+
+<!-- Prompt modals -->
+<div class="modal" id="prompt1-modal">
+    <div class="modal-content">
+        <button class="modal-close" data-close>&times;</button>
+        <h3>Prompt 1</h3>
+        <p>A hyper-realistic macro photograph capturing a tiny man standing at the edge of a colossal camera lens, peering into its reflective glass surface. The subject, using the uploaded face as reference, is leaning forward slightly, as if about to step into another world within the lens. He wears a modern casual outfit with a light jacket and sneakers. The lens glass is rendered with extreme detail, showing layered reflections, dust particles, and subtle curvature distortion. Light refracts across the surface, creating complex highlights and depth. The background is softly blurred, with hints of a photography studio environment and warm ambient lighting.</p>
+    </div>
+</div>
+<div class="modal" id="prompt2-modal">
+    <div class="modal-content">
+        <button class="modal-close" data-close>&times;</button>
+        <h3>Prompt 2</h3>
+        <p>A hyper-realistic 8K cinematic composition where a man, using the uploaded face as reference, stands in the middle of a surreal city made entirely of analytics graphs and data visualizations. Towering bar charts rise like skyscrapers around him, while glowing line graphs stretch across the ground like roads. He wears a sleek modern outfit—dark blazer, t-shirt, and sneakers—standing confidently with hands at his sides. The lighting is a blend of cool digital tones and warm highlights, creating a futuristic yet grounded atmosphere. The background fades into a soft haze, emphasizing scale and depth.</p>
+    </div>
+</div>
+<div class="modal" id="prompt3-modal">
+    <div class="modal-content">
+        <button class="modal-close" data-close>&times;</button>
+        <h3>Prompt 3</h3>
+        <p>A high-end commercial photography shot showing a man seated at a premium workstation surrounded by floating UI panels displaying analytics and engagement metrics. The subject, using the uploaded face as reference, is confidently leaning forward with hands resting on a mechanical keyboard. The desk setup includes multiple monitors, RGB lighting, and sleek accessories. The lighting combines soft cinematic tones with neon accents, creating a modern creator aesthetic. The background features acoustic panels and glowing signage.</p>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const openButtons = document.querySelectorAll('[data-modal]');
+  const closeButtons = document.querySelectorAll('[data-close]');
+  openButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.modal);
+      if (target) target.classList.add('open');
+    });
+  });
+  closeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.modal')?.classList.remove('open');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+      e.target.classList.remove('open');
+    }
+  });
+});
+</script>
+{% endblock %}
 
 {% endblock %}

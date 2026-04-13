@@ -141,10 +141,10 @@ def ai_bundles(request):
     shuffled = prompts[:]
     random.shuffle(shuffled)
     bundle_options = [
-        {"label": "100 Prompts", "description": "Full prompt vault (randomized)", "count": 100},
-        {"label": "50 Prompts", "description": "Half vault selection", "count": 50},
-        {"label": "10 Prompts", "description": "Curated starter set", "count": 10},
-        {"label": "5 Prompts", "description": "Quick inspiration pack", "count": 5},
+        {"label": "100 Prompts", "description": "Full prompt vault (randomized)", "count": 100, "price": "€49"},
+        {"label": "50 Prompts", "description": "Half vault selection", "count": 50, "price": "€29"},
+        {"label": "10 Prompts", "description": "Curated starter set", "count": 10, "price": "€12"},
+        {"label": "5 Prompts", "description": "Quick inspiration pack", "count": 5, "price": "€7"},
     ]
     return render(request, 'home/bundles.html', {
         'prompts': shuffled,
