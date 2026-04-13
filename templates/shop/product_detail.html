@@ -40,15 +40,12 @@
                     </p>
                 {% endif %}
 
-                <div class="prompt-inline {% if has_paid %}success{% else %}locked{% endif %}">
-                    {% if has_paid %}
+                {% if has_paid %}
+                    <div class="prompt-inline success">
                         <span class="pill accent">Prompt unlocked</span>
                         <p class="muted">Full prompt revealed above for your use.</p>
-                    {% else %}
-                        <span class="pill locked-pill">Prompt locked</span>
-                        <p class="muted">Purchase to reveal the full prompt text and generation details.</p>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
 
                 <div class="product-tag-list">
                     <span class="product-tag">portrait</span>
