@@ -74,11 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'shop.context_processors.cart_count',
             ],
-            # Explicitly register custom template tag libraries.
-            'libraries': {
-                'nav_extras': 'home.templatetags.nav_extras',
-            },
         },
     },
 ]
