@@ -27,20 +27,17 @@
         <div class="gallery-grid">
             {% for product in products %}
                 <article class="gallery-card">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% if product.image_url %}
+                        <img src="{{ product.image_url }}" alt="{{ product.title }}">
                     {% else %}
                         <div class="card-img-placeholder"></div>
                     {% endif %}
 
                     <div class="tag-row">
                         <span class="pill accent">Portrait Pack</span>
-                        {% if product.category %}
-                            <span class="pill">{{ product.category }}</span>
-                        {% endif %}
                     </div>
 
-                    <h3>{{ product.name }}</h3>
+                    <h3>{{ product.title }}</h3>
 
                     {% if product.description %}
                         <p class="muted">{{ product.description|truncatewords:24 }}</p>
@@ -56,8 +53,10 @@
                             <p class="product-price">€{{ product.price }}</p>
                         {% endif %}
 
-                        {% if product.id %}
-                            <a href="{% url 'product_detail' product.id %}" class="btn-primary">View Product</a>
+                        {% if product.slug %}
+                            <a href="{% url 'product_detail' product.slug %}" class="btn-primary">View Product</a>
+                        {% else %}
+                            <a href="{% url 'product_detail_by_id' product.id %}" class="btn-primary">View Product</a>
                         {% endif %}
                     </div>
                 </article>
