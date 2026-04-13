@@ -1,4 +1,4 @@
-{% load static %}
+{% load static nav_extras %}
 
 <header class="site-header">
     <nav class="site-nav container">
@@ -22,14 +22,14 @@
 
         <ul class="nav-menu">
             <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
-            <li><a href="{{ gallery_url }}" class="{% if request.path == gallery_url %}active{% endif %}">Gallery</a></li>
-            <li><a href="{{ shop_url }}" class="{% if request.path == shop_url %}active{% endif %}">Shop</a></li>
-            <li><a href="{{ services_url }}" class="{% if request.path == services_url %}active{% endif %}">Services</a></li>
+            <li><a href="{{ gallery_url }}" class="{% if request.path|starts_with:gallery_url %}active{% endif %}">Gallery</a></li>
+            <li><a href="{{ shop_url }}" class="{% if request.path|starts_with:shop_url %}active{% endif %}">Shop</a></li>
+            <li><a href="{{ services_url }}" class="{% if request.path|starts_with:services_url %}active{% endif %}">Services</a></li>
             <li><a href="{{ about_url }}" class="{% if request.path == about_url %}active{% endif %}">About</a></li>
 
             {% if user.is_authenticated %}
-                <li><a href="{{ profile_url }}" class="{% if request.path == profile_url %}active{% endif %}">Profile</a></li>
-                <li><a href="{{ requests_url }}" class="{% if request.path == requests_url %}active{% endif %}">Requests</a></li>
+                <li><a href="{{ profile_url }}" class="{% if request.path|starts_with:profile_url %}active{% endif %}">Profile</a></li>
+                <li><a href="{{ requests_url }}" class="{% if request.path|starts_with:requests_url %}active{% endif %}">Requests</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                         {% csrf_token %}
