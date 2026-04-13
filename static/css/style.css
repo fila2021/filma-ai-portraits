@@ -1736,3 +1736,80 @@ img {
   }
 }
 /* About page uses existing global card and section styles */
+.product-detail-glass {
+  background: rgba(23, 31, 43, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.product-rating-summary {
+  display: grid;
+  gap: 6px;
+  margin: 6px 0 2px;
+}
+
+.star-row,
+.mini-star-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.star {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.mini-star {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.star.filled,
+.mini-star.filled {
+  color: var(--accent-2);
+}
+
+.rating-summary-text {
+  margin: 0;
+}
+
+.product-cta-row {
+  margin-top: 4px;
+}
+
+.premium-content-card,
+.trust-grid-card {
+  display: grid;
+  gap: 18px;
+}
+
+.locked-premium-box {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.locked-premium-box h3 {
+  margin: 0;
+}
+
+.trust-card {
+  display: grid;
+  gap: 10px;
+}
+
+.trust-card h3 {
+  margin: 0;
+}
+
+.product-detail-info h1 {
+  margin: 14px 0 6px;
+}
+
+.product-detail-price {
+  margin-top: 2px;
+  margin-bottom: 14px;
+}
