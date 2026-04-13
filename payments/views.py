@@ -35,6 +35,16 @@ def _retrieve_session(session_id: str):
         return None
 
 
+def _payment_intent_id(session):
+    """Return a safe PaymentIntent id string from a Stripe session."""
+    if not session:
+        return ''
+    payment_intent = getattr(session, 'payment_intent', '') or ''
+    # When expanded, payment_intent is a stripe.PaymentIntent object; when not, it's already the id
+    pid = getattr(payment_intent, 'id', payment_intent)
+    return str(pid)[:255]
+
+
 @login_required
 def buy_now(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
@@ -132,7 +142,7 @@ def order_success(request, pk):
         payment.status = 'succeeded'
         payment.paid_at = timezone.now()
         payment.stripe_session_id = session.id
-        payment.stripe_payment_intent = getattr(session, 'payment_intent', '') or ''
+        payment.stripe_payment_intent = _payment_intent_id(session)
         payment.save()
     elif order.status != 'paid':
         messages.error(request, 'We could not confirm the Stripe payment. Please try again or contact support.')
@@ -211,7 +221,7 @@ def request_checkout_success(request, pk):
         payment.status = 'succeeded'
         payment.paid_at = timezone.now()
         payment.stripe_session_id = session.id
-        payment.stripe_payment_intent = getattr(session, 'payment_intent', '') or ''
+        payment.stripe_payment_intent = _payment_intent_id(session)
         payment.save()
     elif custom_request.status != 'completed':
         messages.error(request, 'We could not confirm the Stripe payment. Please try again or contact support.')
@@ -251,7 +261,7 @@ def cart_checkout_success(request):
         payments.update(
             status='succeeded',
             paid_at=now,
-            stripe_payment_intent=getattr(session, 'payment_intent', '') or '',
+            stripe_payment_intent=_payment_intent_id(session),
         )
         messages.success(request, 'Payment confirmed and orders updated.')
     else:

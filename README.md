@@ -123,3 +123,5 @@ Images and content used for educational purposes.
 Project developed by the author as part of the backend development assessment.
 
 Thank You for Visiting Askuala AI!
+
+
