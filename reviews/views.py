@@ -38,7 +38,7 @@ def add_product_review(request, product_id):
             review.user = request.user
             review.product = product
             review.save()
-            return redirect('product_detail', pk=product.id)
+            return redirect('product_detail_by_id', pk=product.id)
     else:
         form = ReviewForm()
 
