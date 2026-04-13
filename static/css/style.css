@@ -2465,3 +2465,39 @@ img {
     width: 100%;
   }
 }
+
+.cart-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.cart-nav-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.cart-nav-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #dca33d, #f0b84e);
+  color: #1c1409;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  box-shadow: 0 10px 18px rgba(212, 162, 76, 0.28);
+}
