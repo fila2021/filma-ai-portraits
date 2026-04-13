@@ -13,6 +13,11 @@ def service_list(request):
     return render(request, 'services/service_list.html', {'packages': packages})
 
 
+def service_detail(request, pk):
+    service = get_object_or_404(ServicePackage, pk=pk, is_active=True)
+    return render(request, 'services/service_detail.html', {'service': service})
+
+
 @login_required
 def request_list(request):
     requests = CustomRequest.objects.filter(user=request.user).order_by('-created_at')

@@ -7,10 +7,12 @@ from .views import (
     request_success,
     request_list,
     service_list,
+    service_detail,
 )
 
 urlpatterns = [
     path('', service_list, name='service_list'),
+    path('<int:pk>/', service_detail, name='service_detail'),
     path('requests/', request_list, name='request_list'),
     path('requests/create/', create_request, name='create_request'),
     path('requests/<int:pk>/success/', request_success, name='request_success'),

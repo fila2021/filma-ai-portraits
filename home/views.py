@@ -5,10 +5,6 @@ def home(request):
     return render(request, 'home/index.html')
 
 
-def about(request):
-    return render(request, 'home/about.html')
-
-
 def browse(request):
     from shop.models import Product
     from services.models import ServicePackage

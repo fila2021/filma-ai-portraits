@@ -12,7 +12,6 @@
 
         {% url 'home' as home_url %}
         {% url 'browse' as browse_url %}
-        {% url 'about' as about_url %}
         {% url 'cart_view' as cart_url %}
         {% url 'profile' as profile_url %}
         {% url 'request_list' as requests_url %}
@@ -24,7 +23,6 @@
         <ul class="nav-menu">
             <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
             <li><a href="{{ browse_url }}" class="{% if request.path|starts_with:browse_url %}active{% endif %}">Browse</a></li>
-            <li><a href="{{ about_url }}" class="{% if request.path == about_url %}active{% endif %}">About</a></li>
 
             {% if user.is_authenticated %}
                 <li class="nav-user">
