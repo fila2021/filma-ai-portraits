@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Receipt | Order #{{ order.pk }}{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Receipt</span>
+        <h1>Order #{{ order.pk }}</h1>
+        <p class="muted">Issued: {{ issued_at|date:"M d, Y H:i" }}</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="card-soft">
+        <div class="orders-row orders-head">
+            <span>#</span><span>Title</span><span>Total</span><span>Date</span><span>Status</span>
+        </div>
+        <div class="orders-row">
+            <span>#{{ order.pk }}</span>
+            <span>{{ order.product.title }}</span>
+            <span>€{{ order.price_snapshot }}</span>
+            <span>{{ order.created_at|date:"M d, Y" }}</span>
+            <span class="pill accent">{{ order.get_status_display }}</span>
+        </div>
+
+        <div class="order-receipt-meta">
+            {% if payment %}
+                <p><strong>Payment ID:</strong> {{ payment.stripe_payment_intent|default:"N/A" }}</p>
+                <p><strong>Paid at:</strong> {{ payment.paid_at|date:"M d, Y H:i" }}</p>
+            {% endif %}
+            <p><strong>User:</strong> {{ request.user.get_full_name|default:request.user.username }}</p>
+        </div>
+
+        <div class="cta-row">
+            <a href="{% url 'order_detail' order.pk %}" class="btn-secondary">Back to Order</a>
+            <a href="{% url 'order_list' %}" class="btn-primary">My Orders</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

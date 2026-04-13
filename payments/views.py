@@ -98,6 +98,18 @@ def order_detail(request, pk):
 
 
 @login_required
+def order_receipt(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    payment = Payment.objects.filter(order=order).order_by('-paid_at', '-created_at').first()
+    context = {
+        'order': order,
+        'payment': payment,
+        'issued_at': timezone.now(),
+    }
+    return render(request, 'payments/order_receipt.html', context)
+
+
+@login_required
 def order_list(request):
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'payments/order_list.html', {'orders': orders})
