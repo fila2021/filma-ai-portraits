@@ -6,11 +6,10 @@
 <section class="section">
     <div class="card-soft page-intro-card">
         <span class="badge accent">Shop</span>
-        <h1>Premium portrait packs and ready-to-buy visuals</h1>
+        <h1>Premium AI Portrait Collections</h1>
         <p class="muted">
-            Browse curated AI portrait products designed for creators, personal brands,
-            and polished online presence. Each product is presented as a cleaner, more
-            premium storefront item with stronger visual hierarchy.
+            Discover curated portrait packs designed for creators, professionals,
+            and personal brands looking for a more refined visual presence.
         </p>
     </div>
 </section>
@@ -24,50 +23,60 @@
     </div>
 
     {% if products %}
-        <div class="gallery-grid">
+        <div class="product-grid">
             {% for product in products %}
-                <article class="gallery-card">
-                    {% if product.image_url %}
-                        <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                    {% else %}
-                        <div class="card-img-placeholder"></div>
-                    {% endif %}
+                <article class="product-card">
 
-                    <div class="tag-row">
-                        <span class="pill accent">Portrait Pack</span>
-                    </div>
-
-                    <h3>{{ product.title }}</h3>
-
-                    {% if product.description %}
-                        <p class="muted">{{ product.description|truncatewords:24 }}</p>
-                    {% else %}
-                        <p class="muted">
-                            Premium AI-generated portrait visuals designed for a more polished,
-                            creator-ready presentation.
-                        </p>
-                    {% endif %}
-
-                    <div class="product-card-footer">
-                        {% if product.price %}
-                            <p class="product-price">€{{ product.price }}</p>
-                        {% endif %}
-
-                        {% if product.slug %}
-                            <a href="{% url 'product_detail' product.slug %}" class="btn-primary">View Product</a>
+                    <!-- Image -->
+                    <div class="product-image-wrap">
+                        {% if product.image_url %}
+                            <img src="{{ product.image_url }}" alt="{{ product.title }}">
                         {% else %}
-                            <a href="{% url 'product_detail_by_id' product.id %}" class="btn-primary">View Product</a>
+                            <div class="product-placeholder"></div>
                         {% endif %}
                     </div>
+
+                    <!-- Content -->
+                    <div class="product-card-body">
+                        <div class="tag-row">
+                            <span class="pill accent">Portrait Pack</span>
+                        </div>
+
+                        <h3>{{ product.title }}</h3>
+
+                        <p class="muted">
+                            {{ product.description|truncatewords:18 }}
+                        </p>
+
+                        <!-- Footer -->
+                        <div class="product-card-footer">
+                            <div>
+                                {% if product.price %}
+                                    <p class="product-price">€{{ product.price }}</p>
+                                {% endif %}
+                            </div>
+
+                            {% if product.slug %}
+                                <a href="{% url 'product_detail' product.slug %}" class="btn-primary btn-small">
+                                    View
+                                </a>
+                            {% else %}
+                                <a href="{% url 'product_detail_by_id' product.id %}" class="btn-primary btn-small">
+                                    View
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
                 </article>
             {% endfor %}
         </div>
     {% else %}
-        <div class="empty-state">
-            <span class="badge">No Products Yet</span>
-            <h2>There are no products available right now</h2>
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Products Yet</span>
+            <h2>No products available</h2>
             <p class="muted">
-                Once products are added, this page will showcase them in a premium storefront layout.
+                Once products are added, they will appear here in a curated storefront layout.
             </p>
         </div>
     {% endif %}
