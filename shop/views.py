@@ -1,9 +1,12 @@
 from decimal import Decimal
 
 from django.contrib import messages
+from django.db import transaction
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
 
+from payments.models import Order
 from .models import Product
 
 
@@ -101,3 +104,41 @@ def cart_view(request):
         'cart_count': sum(item['quantity'] for item in cart_items),
     }
     return render(request, 'shop/cart.html', context)
+
+
+@login_required
+@transaction.atomic
+def cart_checkout(request):
+    if request.method != 'POST':
+        return redirect('cart_view')
+
+    cart = _get_cart(request)
+    cart_items, cart_total = _cart_totals(cart)
+
+    if not cart_items:
+        messages.error(request, 'Your cart is empty.')
+        return redirect('cart_view')
+
+    created_orders = []
+
+    for item in cart_items:
+        product = get_object_or_404(Product, pk=item['id'], is_active=True)
+
+        for _ in range(item['quantity']):
+            order = Order.objects.create(
+                user=request.user,
+                product=product,
+                amount=product.price,
+                status='paid',
+            )
+            created_orders.append(order)
+
+    request.session['cart'] = {}
+    request.session.modified = True
+
+    messages.success(request, 'Order created and marked paid (Stripe not configured).')
+
+    if created_orders:
+        return redirect('payment_success', order_id=created_orders[-1].id)
+
+    return redirect('cart_view')
