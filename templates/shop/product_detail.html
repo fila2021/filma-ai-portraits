@@ -36,6 +36,18 @@
                     </p>
                 {% endif %}
 
+                {% if has_paid %}
+                    <div class="prompt-inline success">
+                        <span class="pill accent">Prompt unlocked</span>
+                        <p class="muted">You can use the full prompt description for regeneration.</p>
+                    </div>
+                {% else %}
+                    <div class="prompt-inline locked">
+                        <span class="pill locked-pill">Prompt locked</span>
+                        <p class="muted">Purchase to reveal the full prompt text and generation details.</p>
+                    </div>
+                {% endif %}
+
                 <div class="product-tag-list">
                     <span class="product-tag">portrait</span>
                     <span class="product-tag">premium</span>
@@ -96,11 +108,7 @@
                             <div class="product-lock-icon">🔒</div>
                             <p class="muted">Purchase to unlock the full prompt and generation details.</p>
                             <div class="prompt-preview">
-                                {% if product.description %}
-                                    <p>{{ product.description|truncatewords:35 }} …</p>
-                                {% else %}
-                                    <p>Premium prompt preview will appear here.</p>
-                                {% endif %}
+                                <p class="muted">Preview hidden until purchase.</p>
                             </div>
                         </div>
                     {% endif %}

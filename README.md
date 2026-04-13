@@ -84,6 +84,6 @@ Record outcomes and screenshots in `/docs/testing/` (add images) and link them i
 - Product `image_url` should be populated for best display; placeholders used otherwise.
 - If adding new migrations, run `python manage.py migrate` locally and on Heroku.
 
-## Credits
+## Credits / Attribution
+- All custom Django/JS/CSS written by the project author.
 - Icons/illustrations from project assets; replace with licensed media as needed.
-
