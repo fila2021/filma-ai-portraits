@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Bundles | Askuala AI Portraits{% endblock %}
 
@@ -15,17 +16,20 @@
                 <article class="card-floating">
                     <span class="pill accent">Prompt 1</span>
                     <p class="muted">A hyper-realistic macro photograph capturing a tiny man standing at the edge of a colossal camera lens, peering into its reflective glass surface. The subject, using the uploaded face as reference, is leaning forward slightly, as if about to step into another world within the lens. He wears a modern casual outfit with a light jacket and sneakers. The lens glass is rendered with extreme detail, showing layered reflections, dust particles, and subtle curvature distortion. Light refracts across the surface, creating complex highlights and depth. The background is softly blurred, with hints of a photography studio environment and warm ambient lighting.</p>
-                    <button class="btn-secondary btn-small" data-modal="prompt1-modal">View generation</button>
+                    <img src="{% static 'img/prompts/prompt1.jpg' %}" alt="Prompt 1 preview" class="prompt-thumb">
+                    <button class="btn-secondary btn-small" data-modal="prompt1-modal">View image</button>
                 </article>
                 <article class="card-floating">
                     <span class="pill accent">Prompt 2</span>
                     <p class="muted">A hyper-realistic 8K cinematic composition where a man, using the uploaded face as reference, stands in the middle of a surreal city made entirely of analytics graphs and data visualizations. Towering bar charts rise like skyscrapers around him, while glowing line graphs stretch across the ground like roads. He wears a sleek modern outfit—dark blazer, t-shirt, and sneakers—standing confidently with hands at his sides. The lighting is a blend of cool digital tones and warm highlights, creating a futuristic yet grounded atmosphere. The background fades into a soft haze, emphasizing scale and depth.</p>
-                    <button class="btn-secondary btn-small" data-modal="prompt2-modal">View generation</button>
+                    <img src="{% static 'img/prompts/prompt2.jpg' %}" alt="Prompt 2 preview" class="prompt-thumb">
+                    <button class="btn-secondary btn-small" data-modal="prompt2-modal">View image</button>
                 </article>
                 <article class="card-floating">
                     <span class="pill accent">Prompt 3</span>
                     <p class="muted">A high-end commercial photography shot showing a man seated at a premium workstation surrounded by floating UI panels displaying analytics and engagement metrics. The subject, using the uploaded face as reference, is confidently leaning forward with hands resting on a mechanical keyboard. The desk setup includes multiple monitors, RGB lighting, and sleek accessories. The lighting combines soft cinematic tones with neon accents, creating a modern creator aesthetic. The background features acoustic panels and glowing signage.</p>
-                    <button class="btn-secondary btn-small" data-modal="prompt3-modal">View generation</button>
+                    <img src="{% static 'img/prompts/prompt3.jpg' %}" alt="Prompt 3 preview" class="prompt-thumb">
+                    <button class="btn-secondary btn-small" data-modal="prompt3-modal">View image</button>
                 </article>
             </div>
         </div>
@@ -53,6 +57,7 @@
     <div class="modal-content">
         <button class="modal-close" data-close>&times;</button>
         <h3>Prompt 1</h3>
+        <img src="{% static 'img/prompts/prompt1.jpg' %}" alt="Prompt 1 full" class="modal-image">
         <p>A hyper-realistic macro photograph capturing a tiny man standing at the edge of a colossal camera lens, peering into its reflective glass surface. The subject, using the uploaded face as reference, is leaning forward slightly, as if about to step into another world within the lens. He wears a modern casual outfit with a light jacket and sneakers. The lens glass is rendered with extreme detail, showing layered reflections, dust particles, and subtle curvature distortion. Light refracts across the surface, creating complex highlights and depth. The background is softly blurred, with hints of a photography studio environment and warm ambient lighting.</p>
     </div>
 </div>
@@ -60,6 +65,7 @@
     <div class="modal-content">
         <button class="modal-close" data-close>&times;</button>
         <h3>Prompt 2</h3>
+        <img src="{% static 'img/prompts/prompt2.jpg' %}" alt="Prompt 2 full" class="modal-image">
         <p>A hyper-realistic 8K cinematic composition where a man, using the uploaded face as reference, stands in the middle of a surreal city made entirely of analytics graphs and data visualizations. Towering bar charts rise like skyscrapers around him, while glowing line graphs stretch across the ground like roads. He wears a sleek modern outfit—dark blazer, t-shirt, and sneakers—standing confidently with hands at his sides. The lighting is a blend of cool digital tones and warm highlights, creating a futuristic yet grounded atmosphere. The background fades into a soft haze, emphasizing scale and depth.</p>
     </div>
 </div>
@@ -67,6 +73,7 @@
     <div class="modal-content">
         <button class="modal-close" data-close>&times;</button>
         <h3>Prompt 3</h3>
+        <img src="{% static 'img/prompts/prompt3.jpg' %}" alt="Prompt 3 full" class="modal-image">
         <p>A high-end commercial photography shot showing a man seated at a premium workstation surrounded by floating UI panels displaying analytics and engagement metrics. The subject, using the uploaded face as reference, is confidently leaning forward with hands resting on a mechanical keyboard. The desk setup includes multiple monitors, RGB lighting, and sleek accessories. The lighting combines soft cinematic tones with neon accents, creating a modern creator aesthetic. The background features acoustic panels and glowing signage.</p>
     </div>
 </div>

@@ -1755,6 +1755,23 @@ img {
   position: relative;
 }
 
+.modal-image {
+  width: 100%;
+  border-radius: 12px;
+  margin: 10px 0 16px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.prompt-thumb {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+  margin: 10px 0 12px;
+}
+
 .modal-close {
   position: absolute;
   top: 10px;
