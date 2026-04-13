@@ -36,7 +36,7 @@
 
 <section class="section">
         <div class="product-grid bundle-grid">
-            {% for bundle in bundles %}
+            {% for bundle in bundles_page %}
                 <article class="card-floating">
                     {% if bundle.image_url %}
                         <div class="bundle-thumb">
@@ -62,6 +62,23 @@
                 </article>
             {% endfor %}
         </div>
+        {% if bundles_page.has_other_pages %}
+            <div class="pagination">
+                {% if bundles_page.has_previous %}
+                    <a class="page-link" href="?page={{ bundles_page.previous_page_number }}">← Prev</a>
+                {% else %}
+                    <span class="page-link disabled">← Prev</span>
+                {% endif %}
+
+                <span class="page-link current">Page {{ bundles_page.number }} of {{ bundles_page.paginator.num_pages }}</span>
+
+                {% if bundles_page.has_next %}
+                    <a class="page-link" href="?page={{ bundles_page.next_page_number }}">Next →</a>
+                {% else %}
+                    <span class="page-link disabled">Next →</span>
+                {% endif %}
+            </div>
+        {% endif %}
 </section>
 
 <!-- Prompt modals -->

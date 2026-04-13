@@ -2612,6 +2612,34 @@ img {
   background: var(--card);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+  align-items: center;
+}
+
+.page-link {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.page-link.current {
+  border-color: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+
+.page-link.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 .table-row {
   display: grid;
   grid-template-columns: 1.2fr 2fr 1fr 1.3fr 1fr 1fr;

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 from .models import PromptBundle, PromptSample
@@ -18,13 +19,14 @@ def browse(request):
     from services.models import ServicePackage
 
     products = Product.objects.filter(is_active=True).order_by('-created_at')
+    products_page = Paginator(products, 8).get_page(request.GET.get('p'))
     services = ServicePackage.objects.filter(is_active=True).order_by('name')
 
     return render(
         request,
         'home/browse.html',
         {
-            'products': products,
+            'products_page': products_page,
             'services': services,
         }
     )
@@ -38,8 +40,9 @@ def ai_photos(request):
 
 def ai_bundles(request):
     bundles = PromptBundle.objects.all()
+    bundles_page = Paginator(bundles, 9).get_page(request.GET.get('page'))
     sample_prompts = PromptSample.objects.all()
     return render(request, 'home/bundles.html', {
         'prompts': sample_prompts,
-        'bundles': bundles,
+        'bundles_page': bundles_page,
     })
