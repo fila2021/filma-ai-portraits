@@ -29,7 +29,7 @@
 
             {% if user.is_authenticated %}
                 <li class="nav-user">
-                    <button class="nav-btn nav-btn-outline nav-user-toggle">
+                    <button class="nav-btn nav-btn-outline nav-user-toggle" aria-haspopup="true" aria-expanded="false">
                         {{ user.get_full_name|default:user.username }}
                         <span aria-hidden="true">▾</span>
                     </button>
@@ -42,7 +42,7 @@
                         {% endif %}
                         <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
                             {% csrf_token %}
-                            <button type="submit">Logout</button>
+                            <button type="submit" class="nav-btn nav-btn-outline">Logout</button>
                         </form>
                     </div>
                 </li>
