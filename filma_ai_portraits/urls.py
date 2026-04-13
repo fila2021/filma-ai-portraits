@@ -3,7 +3,6 @@ from django.urls import path, include
 
 from home.views import home, about
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
 
