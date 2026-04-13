@@ -29,15 +29,6 @@
             <li><a href="{{ services_url }}" class="{% if request.path|starts_with:services_url %}active{% endif %}">Services</a></li>
             <li><a href="{{ about_url }}" class="{% if request.path == about_url %}active{% endif %}">About</a></li>
 
-            <li>
-                <a href="{{ cart_url }}" class="cart-nav-link {% if request.path|starts_with:cart_url %}active{% endif %}" aria-label="View cart">
-                    <span class="cart-nav-icon">🛒</span>
-                    {% if cart_count > 0 %}
-                        <span class="cart-nav-badge">{{ cart_count }}</span>
-                    {% endif %}
-                </a>
-            </li>
-
             {% if user.is_authenticated %}
                 <li><a href="{{ profile_url }}" class="{% if request.path|starts_with:profile_url %}active{% endif %}">Profile</a></li>
                 <li><a href="{{ orders_url }}" class="{% if request.path|starts_with:orders_url %}active{% endif %}">Orders</a></li>
@@ -47,6 +38,14 @@
                         {% csrf_token %}
                         <button type="submit" class="nav-btn nav-btn-outline">Logout</button>
                     </form>
+                </li>
+                <li>
+                    <a href="{{ cart_url }}" class="cart-nav-link {% if request.path|starts_with:cart_url %}active{% endif %}" aria-label="View cart">
+                        <span class="cart-nav-icon">🛒</span>
+                        {% if cart_count > 0 %}
+                            <span class="cart-nav-badge">{{ cart_count }}</span>
+                        {% endif %}
+                    </a>
                 </li>
             {% else %}
                 <li><a href="{% url 'signup' %}" class="nav-btn nav-btn-outline">Sign Up</a></li>
