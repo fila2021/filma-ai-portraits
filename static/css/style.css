@@ -129,10 +129,13 @@ img {
 }
 
 .logo-large {
-  width: 210px;
+  /*width: 210px; */
   max-width: 100%;
   height: auto;
   object-fit: contain;
+}
+.hero-banner {
+    outline: 8px solid red !important;
 }
 
 .nav-menu {
