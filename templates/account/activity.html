@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Orders & Requests | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Account</span>
+        <h1>Orders & Requests</h1>
+        <p class="muted">Review your purchases and custom portrait requests in one place.</p>
+    </div>
+</section>
+
+<section class="section split">
+    <div class="card-soft">
+        <span class="badge">Orders</span>
+        {% if orders %}
+            <div class="request-premium-grid">
+                {% for order in orders %}
+                    <article class="card-floating request-premium-card">
+                        <div class="request-card-top">
+                            <span class="pill accent">Order #{{ order.pk }}</span>
+                            <span class="pill">{{ order.get_status_display }}</span>
+                        </div>
+                        <h3>{{ order.product.title }}</h3>
+                        <p class="muted">Total: €{{ order.price_snapshot }}</p>
+                        <p class="muted">Created: {{ order.created_at|date:"M d, Y" }}</p>
+                        <div class="service-actions">
+                            <a href="{% url 'order_detail' order.pk %}" class="btn-secondary">View</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state premium-empty-state">
+                <span class="badge accent">No Orders Yet</span>
+                <h3>You have not placed any orders yet</h3>
+                <p class="muted">Browse products and complete checkout to see your orders here.</p>
+                <div class="cta-row">
+                    <a href="{% url 'product_list' %}" class="btn-primary">Browse Products</a>
+                    <a href="{% url 'gallery' %}" class="btn-secondary">View Gallery</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="card-soft">
+        <span class="badge">Requests</span>
+        {% if requests %}
+            <div class="request-premium-grid">
+                {% for request in requests %}
+                    <article class="card-floating request-premium-card">
+                        <div class="request-card-top">
+                            <span class="pill accent">Custom Request</span>
+                            <span class="pill">{{ request.get_status_display }}</span>
+                        </div>
+                        <h3>{{ request.package.name|default:"Custom package" }}</h3>
+                        <p class="muted">{{ request.prompt_details|default:"Custom AI portrait request submitted for a tailored premium result."|truncatewords:28 }}</p>
+                        <p class="muted">Created: {{ request.created_at|date:"M d, Y" }}</p>
+                        <div class="service-actions">
+                            <a href="{% url 'request_detail' request.id %}" class="btn-secondary">View</a>
+                            <a href="{% url 'edit_request' request.id %}" class="btn-secondary">Edit</a>
+                            <form method="post" action="{% url 'delete_request' request.id %}" class="inline-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-secondary">Delete</button>
+                            </form>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state premium-empty-state">
+                <span class="badge accent">No Requests Yet</span>
+                <h3>You have not submitted any requests yet</h3>
+                <p class="muted">Start your first custom portrait request to begin building tailored visual assets.</p>
+                <div class="cta-row">
+                    <a href="{% url 'create_request' %}" class="btn-primary">Create Request</a>
+                    <a href="{% url 'service_list' %}" class="btn-secondary">View Services</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -11,33 +11,35 @@
         </a>
 
         {% url 'home' as home_url %}
-        {% url 'gallery' as gallery_url %}
-        {% url 'product_list' as shop_url %}
-        {% url 'service_list' as services_url %}
+        {% url 'browse' as browse_url %}
         {% url 'about' as about_url %}
         {% url 'cart_view' as cart_url %}
         {% url 'profile' as profile_url %}
         {% url 'request_list' as requests_url %}
+        {% url 'account_activity' as activity_url %}
         {% url 'order_list' as orders_url %}
         {% url 'login' as login_url %}
         {% url 'signup' as signup_url %}
 
         <ul class="nav-menu">
             <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
-            <li><a href="{{ gallery_url }}" class="{% if request.path|starts_with:gallery_url %}active{% endif %}">Gallery</a></li>
-            <li><a href="{{ shop_url }}" class="{% if request.path|starts_with:shop_url %}active{% endif %}">Shop</a></li>
-            <li><a href="{{ services_url }}" class="{% if request.path|starts_with:services_url %}active{% endif %}">Services</a></li>
+            <li><a href="{{ browse_url }}" class="{% if request.path|starts_with:browse_url %}active{% endif %}">Browse</a></li>
             <li><a href="{{ about_url }}" class="{% if request.path == about_url %}active{% endif %}">About</a></li>
 
             {% if user.is_authenticated %}
-                <li><a href="{{ profile_url }}" class="{% if request.path|starts_with:profile_url %}active{% endif %}">Profile</a></li>
-                <li><a href="{{ orders_url }}" class="{% if request.path|starts_with:orders_url %}active{% endif %}">Orders</a></li>
-                <li><a href="{{ requests_url }}" class="{% if request.path|starts_with:requests_url %}active{% endif %}">Requests</a></li>
-                <li>
-                    <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-btn nav-btn-outline">Logout</button>
-                    </form>
+                <li class="nav-user">
+                    <button class="nav-btn nav-btn-outline nav-user-toggle">
+                        {{ user.get_full_name|default:user.username }}
+                        <span aria-hidden="true">▾</span>
+                    </button>
+                    <div class="nav-user-menu">
+                        <a href="{{ activity_url }}" class="{% if request.path|starts_with:activity_url %}active{% endif %}">Orders & Requests</a>
+                        <a href="{{ profile_url }}" class="{% if request.path|starts_with:profile_url %}active{% endif %}">Edit Profile</a>
+                        <form action="{% url 'logout' %}" method="post" class="nav-logout-form">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form>
+                    </div>
                 </li>
                 <li>
                     <a href="{{ cart_url }}" class="cart-nav-link {% if request.path|starts_with:cart_url %}active{% endif %}" aria-label="View cart">

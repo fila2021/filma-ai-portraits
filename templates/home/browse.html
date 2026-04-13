@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Browse | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Browse</span>
+        <h1>Shop products and custom services in one place</h1>
+        <p class="muted">Pick a ready-made portrait pack or request a bespoke service without switching pages.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Products</span>
+            <h2>Portrait Packs</h2>
+        </div>
+        <a href="{% url 'product_list' %}" class="btn-secondary">View all products</a>
+    </div>
+
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+                <article class="product-card">
+                    <div class="product-image-wrap">
+                        {% if product.image_url %}
+                            <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                        {% else %}
+                            <div class="product-placeholder"></div>
+                        {% endif %}
+                    </div>
+
+                    <div class="product-card-body">
+                        <div class="tag-row">
+                            <span class="pill accent">Portrait Pack</span>
+                        </div>
+
+                        <h3>{{ product.title }}</h3>
+
+                        {% if product.description %}
+                            <p class="muted">{{ product.description|truncatewords:18 }}</p>
+                        {% else %}
+                            <p class="muted">Premium AI-generated portrait visuals for creators and brands.</p>
+                        {% endif %}
+
+                        <div class="product-card-footer">
+                            <div>
+                                {% if product.price %}
+                                    <p class="product-price">€{{ product.price }}</p>
+                                {% endif %}
+                            </div>
+
+                            {% if product.slug %}
+                                <a href="{% url 'product_detail' product.slug %}" class="btn-primary btn-small">
+                                    View
+                                </a>
+                            {% else %}
+                                <a href="{% url 'product_detail_by_id' product.id %}" class="btn-primary btn-small">
+                                    View
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Products</span>
+            <h2>No products available yet</h2>
+            <p class="muted">Products will appear here when added.</p>
+        </div>
+    {% endif %}
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Services</span>
+            <h2>Custom Portrait Services</h2>
+        </div>
+        <a href="{% url 'service_list' %}" class="btn-secondary">View all services</a>
+    </div>
+
+    {% if services %}
+        <div class="service-premium-grid">
+            {% for service in services %}
+                <article class="card-floating service-premium-card">
+                    <div class="service-premium-top">
+                        <span class="pill accent">Service</span>
+                        {% if service.base_price %}
+                            <span class="service-price">€{{ service.base_price }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-img-placeholder dark"></div>
+
+                    <h3>{{ service.name }}</h3>
+
+                    {% if service.description %}
+                        <p class="muted">{{ service.description|truncatewords:24 }}</p>
+                    {% else %}
+                        <p class="muted">Tailored AI portrait creation with a premium finish.</p>
+                    {% endif %}
+
+                    <div class="tag-row">
+                        <span class="pill">Custom</span>
+                        <span class="pill">Premium finish</span>
+                        <span class="pill">Creator-ready</span>
+                    </div>
+
+                    <div class="service-actions">
+                        <a href="{% url 'service_detail' service.id %}" class="btn-secondary">Details</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'create_request' %}" class="btn-primary">Request This</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn-primary">Login to Request</a>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Services</span>
+            <h2>No services are available yet</h2>
+            <p class="muted">Services will appear here when added.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
