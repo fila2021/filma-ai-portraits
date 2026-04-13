@@ -13,9 +13,22 @@
             {% endif %}
         </div>
 
-        <div class="card-soft product-detail-info">
+        <div class="card-soft product-detail-info product-detail-glass">
             <span class="badge accent">Premium Portrait Product</span>
             <h1>{{ product.title }}</h1>
+
+            <div class="product-rating-summary">
+                <div class="star-row" aria-label="Average rating {{ avg_rating }} out of 5">
+                    <span class="star {% if avg_rating >= 1 %}filled{% endif %}">★</span>
+                    <span class="star {% if avg_rating >= 2 %}filled{% endif %}">★</span>
+                    <span class="star {% if avg_rating >= 3 %}filled{% endif %}">★</span>
+                    <span class="star {% if avg_rating >= 4 %}filled{% endif %}">★</span>
+                    <span class="star {% if avg_rating >= 5 %}filled{% endif %}">★</span>
+                </div>
+                <p class="muted rating-summary-text">
+                    {{ avg_rating }}/5 average from {{ review_count }} review{{ review_count|pluralize }}
+                </p>
+            </div>
 
             {% if product.price %}
                 <p class="product-detail-price">€{{ product.price }}</p>
@@ -36,28 +49,20 @@
                 <span class="pill">Creator-ready</span>
             </div>
 
-            <div class="cta-row">
+            <div class="cta-row product-cta-row">
+                <a href="{% url 'product_list' %}" class="btn-secondary">Back to Shop</a>
+                <a href="{% url 'create_request' %}" class="btn-primary">Request Similar Style</a>
                 {% if user.is_authenticated %}
-                    <form method="post" action="{% url 'buy_now' product.slug %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-primary">Buy now</button>
-                    </form>
-
                     <a href="{% url 'add_product_review' product.id %}" class="btn-secondary">Write a Review</a>
-
-                    {% if has_paid %}
-                        <span class="badge success">Already purchased</span>
-                    {% endif %}
                 {% else %}
-                    <a class="btn-primary" href="{% url 'login' %}?next={{ request.path }}">Log in to buy</a>
-                    <a class="btn-secondary" href="{% url 'login' %}?next={{ request.path }}">Log in to review</a>
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn-secondary">Login to Review</a>
                 {% endif %}
             </div>
 
             <div class="product-detail-meta">
                 <div class="meta-row">
                     <span class="meta-label">Delivery</span>
-                    <span class="meta-value">Digital / instant access after purchase</span>
+                    <span class="meta-value">Digital / premium product access</span>
                 </div>
                 <div class="meta-row">
                     <span class="meta-label">Use case</span>
@@ -69,6 +74,44 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="card-soft premium-content-card">
+        <div class="section-head">
+            <div>
+                <span class="badge accent">Included Content</span>
+                <h2>Premium prompt and styling details</h2>
+            </div>
+        </div>
+
+        {% if has_paid %}
+            <div class="card-row">
+                <article class="card-floating">
+                    <h3>Prompt Pack</h3>
+                    <p class="muted">
+                        Full premium prompt details would appear here after purchase.
+                    </p>
+                </article>
+
+                <article class="card-floating">
+                    <h3>Styling Notes</h3>
+                    <p class="muted">
+                        Creative direction, output notes, and premium visual suggestions appear here.
+                    </p>
+                </article>
+            </div>
+        {% else %}
+            <div class="locked-premium-box">
+                <span class="pill accent">Locked</span>
+                <h3>Unlock premium details after purchase</h3>
+                <p class="muted">
+                    This section is designed to mirror the Manus-style gated premium content experience,
+                    where deeper prompt or usage details are available after purchase. :contentReference[oaicite:1]{index=1}
+                </p>
+            </div>
+        {% endif %}
     </div>
 </section>
 
@@ -99,8 +142,32 @@
             <article class="card-floating">
                 <h3>Premium storefront experience</h3>
                 <p class="muted">
-                    This page structure supports a cleaner, more curated product-detail experience.
+                    This page structure now follows a stronger curated marketplace feel.
                 </p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="card-soft trust-grid-card">
+        <div class="card-row">
+            <article class="card-floating trust-card">
+                <span class="pill accent">Secure</span>
+                <h3>Secure checkout</h3>
+                <p class="muted">A cleaner and more trustworthy purchase experience.</p>
+            </article>
+
+            <article class="card-floating trust-card">
+                <span class="pill accent">Digital</span>
+                <h3>Digital delivery</h3>
+                <p class="muted">Designed for fast access and smooth product flow.</p>
+            </article>
+
+            <article class="card-floating trust-card">
+                <span class="pill accent">Curated</span>
+                <h3>Premium quality</h3>
+                <p class="muted">Presented as a more refined and premium creator product.</p>
             </article>
         </div>
     </div>
@@ -133,18 +200,33 @@
                             <span class="pill accent">{{ review.rating }}/5</span>
                         </div>
 
+                        <div class="mini-star-row" aria-label="Rating {{ review.rating }} out of 5">
+                            <span class="mini-star {% if review.rating >= 1 %}filled{% endif %}">★</span>
+                            <span class="mini-star {% if review.rating >= 2 %}filled{% endif %}">★</span>
+                            <span class="mini-star {% if review.rating >= 3 %}filled{% endif %}">★</span>
+                            <span class="mini-star {% if review.rating >= 4 %}filled{% endif %}">★</span>
+                            <span class="mini-star {% if review.rating >= 5 %}filled{% endif %}">★</span>
+                        </div>
+
                         <p class="muted">{{ review.comment }}</p>
                         <p class="review-date">{{ review.created_at|date:"M d, Y" }}</p>
                     </article>
                 {% endfor %}
             </div>
         {% else %}
-            <div class="empty-state">
-                <span class="badge">No Reviews Yet</span>
+            <div class="empty-state premium-empty-state">
+                <span class="badge accent">No Reviews Yet</span>
                 <h3>Be the first to review this product</h3>
                 <p class="muted">
                     Reviews help create trust and make your storefront feel more complete and premium.
                 </p>
+                <div class="cta-row">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'add_product_review' product.id %}" class="btn-primary">Write First Review</a>
+                    {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary">Login to Review</a>
+                    {% endif %}
+                </div>
             </div>
         {% endif %}
     </div>
