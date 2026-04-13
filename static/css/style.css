@@ -1910,3 +1910,30 @@ img {
   margin: 4px 0 0;
   font-size: 22px;
 }
+
+.product-rating-block {
+  display: grid;
+  gap: 4px;
+  margin-top: -2px;
+}
+
+.product-rating-text {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.mini-star-row {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.mini-star {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.mini-star.filled {
+  color: var(--accent-2);
+}
