@@ -75,6 +75,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # Explicitly register custom template tag libraries.
+            'libraries': {
+                'nav_extras': 'home.templatetags.nav_extras',
+            },
         },
     },
 ]
