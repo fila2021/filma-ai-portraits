@@ -491,7 +491,18 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   border-radius: 12px;
+}
+
+.img-missing {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,0.45);
+  font-size: 13px;
+  text-align: center;
 }
 
 .service-hero-image img {

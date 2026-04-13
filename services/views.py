@@ -9,8 +9,8 @@ from .models import CustomRequest, ServicePackage
 
 
 def service_list(request):
-    packages = ServicePackage.objects.filter(is_active=True)
-    return render(request, 'services/service_list.html', {'packages': packages})
+    services = ServicePackage.objects.filter(is_active=True)
+    return render(request, 'services/service_list.html', {'services': services})
 
 
 def service_detail(request, pk):

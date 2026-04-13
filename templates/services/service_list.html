@@ -35,13 +35,17 @@
                 <article class="card-floating service-premium-card">
                     <div class="service-premium-top">
                         <span class="pill accent">Service</span>
-                        {% if service.price %}
-                            <span class="service-price">€{{ service.price }}</span>
+                        {% if service.base_price %}
+                            <span class="service-price">€{{ service.base_price }}</span>
                         {% endif %}
                     </div>
 
-                    <div class="card-img-placeholder dark {% if service.image_url %}with-bg{% endif %}"
-                        {% if service.image_url %}style="background-image: url('{{ service.image_url }}');"{% endif %}>
+                    <div class="card-img-placeholder dark">
+                        {% if service.image_url %}
+                            <img src="{{ service.image_url }}" alt="{{ service.name }}" class="service-card-image">
+                        {% else %}
+                            <div class="img-missing">Image URL not set</div>
+                        {% endif %}
                     </div>
 
                     <h3>{{ service.name }}</h3>
