@@ -30,7 +30,7 @@
                         <div>
                             <h3>{{ review.user.username }}</h3>
                             {% if review.product %}
-                                <p class="muted review-product-label">{{ review.product.name }}</p>
+                                <p class="muted review-product-label">{{ review.product.title }}</p>
                             {% elif review.custom_request %}
                                 <p class="muted review-product-label">{{ review.custom_request }}</p>
                             {% endif %}
