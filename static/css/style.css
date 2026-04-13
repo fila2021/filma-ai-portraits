@@ -885,8 +885,8 @@ img {
 
 .product-price {
   margin: 0;
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--accent-2);
 }
 
@@ -2156,7 +2156,7 @@ img {
 /* Price */
 .product-price {
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* Small button */
@@ -2320,7 +2320,7 @@ img {
 }
 
 .product-price-large {
-  font-size: 2.7rem;
+  font-size: 2.0rem;
   line-height: 1;
   font-weight: 800;
   color: #f0b645;

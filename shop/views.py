@@ -20,6 +20,7 @@ try:
         stripe = None
 except ImportError:  # pragma: no cover
     stripe = None
+STRIPE_ENABLED = bool(stripe and getattr(stripe, "api_key", None))
 
 
 def _get_cart(request):
@@ -344,7 +345,7 @@ def cart_checkout(request):
             created_orders.append(order)
 
     # If Stripe configured, create a single checkout session
-    if stripe is not None and getattr(stripe, 'api_key', None):
+    if STRIPE_ENABLED:
         line_items = []
         for item in cart_items:
             line_items.append({
@@ -385,7 +386,11 @@ def cart_checkout(request):
         request.session.modified = True
         return redirect(session.url)
 
-    # Fallback: mark paid immediately (no Stripe)
+    # Fallback: mark paid immediately (no Stripe) only in DEBUG
+    if not settings.DEBUG:
+        messages.error(request, 'Stripe is not configured on this deployment. Please set STRIPE keys.')
+        return redirect('cart_view')
+
     for order in created_orders:
         order.status = 'paid'
         order.save(update_fields=['status'])

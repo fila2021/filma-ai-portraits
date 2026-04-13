@@ -19,6 +19,7 @@ try:
         stripe = None
 except ImportError:  # pragma: no cover - if stripe not installed we fallback
     stripe = None
+STRIPE_ENABLED = bool(stripe and getattr(stripe, "api_key", None))
 
 
 def _retrieve_session(session_id: str):
@@ -47,7 +48,10 @@ def buy_now(request, slug):
         price_snapshot=Decimal(product.price),
         status='pending',
     )
-    if stripe is None or not getattr(stripe, 'api_key', None):
+    if not STRIPE_ENABLED:
+        if not settings.DEBUG:
+            messages.error(request, 'Stripe is not configured on this deployment.')
+            return redirect('product_detail', slug=slug)
         order.status = 'paid'
         order.save(update_fields=['status'])
         Payment.objects.create(
@@ -167,7 +171,10 @@ def request_checkout(request, pk):
 
     amount = Decimal(custom_request.total_price)
 
-    if stripe is None or not getattr(stripe, 'api_key', None):
+    if not STRIPE_ENABLED:
+        if not settings.DEBUG:
+            messages.error(request, 'Stripe is not configured on this deployment.')
+            return redirect('request_detail', pk=pk)
         Payment.objects.create(
             user=request.user,
             custom_request=custom_request,
