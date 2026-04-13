@@ -21,5 +21,10 @@
             <button type="submit" class="btn-primary">Pay now</button>
         </form>
     {% endif %}
+
+    <div class="cta-row" style="margin-top:16px;">
+        <a href="javascript:history.back()" class="btn-secondary">Go Back</a>
+        <a href="{% url 'order_list' %}" class="btn-primary">My Orders</a>
+    </div>
 </section>
 {% endblock %}
