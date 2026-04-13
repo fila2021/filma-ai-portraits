@@ -8,6 +8,11 @@
         <div class="card-soft">
             <span class="badge accent">Service</span>
             <h1>{{ service.name }}</h1>
+            {% if service.image_url %}
+                <div class="service-hero-image">
+                    <img src="{{ service.image_url }}" alt="{{ service.name }}">
+                </div>
+            {% endif %}
             <p class="muted">{{ service.description }}</p>
 
             <p class="price-preview">Starting from €{{ service.price }}</p>

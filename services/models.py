@@ -12,6 +12,7 @@ class ServicePackage(models.Model):
     ]
 
     name = models.CharField(max_length=100)
+    image_url = models.URLField(blank=True, null=True)
     description = models.TextField()
     base_price = models.DecimalField(max_digits=8, decimal_places=2)
     number_of_images = models.PositiveIntegerField(default=10)

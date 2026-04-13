@@ -26,7 +26,7 @@
                 <article class="product-card">
                     <div class="product-image-wrap">
                         {% if product.image_url %}
-                            <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                            <img src="{{ product.image_url }}" alt="{{ product.title }}" class="product-card-image">
                         {% else %}
                             <div class="product-placeholder"></div>
                         {% endif %}
@@ -95,7 +95,11 @@
                         {% endif %}
                     </div>
 
-                    <div class="card-img-placeholder dark"></div>
+                    <div class="card-img-placeholder dark">
+                        {% if service.image_url %}
+                            <img src="{{ service.image_url }}" alt="{{ service.name }}" class="service-card-image">
+                        {% endif %}
+                    </div>
 
                     <h3>{{ service.name }}</h3>
 
