@@ -6,7 +6,14 @@
 <section>
     <h2>Order #{{ order.id }}</h2>
     <div class="gallery-card">
-        <p><strong>Product:</strong> {{ order.product.title }}</p>
+        <p><strong>Item:</strong>
+            {% if order.product %}
+                {{ order.product.title }}
+            {% else %}
+                {{ order.bundle_label|default:"Prompt Bundle" }}
+                {% if order.bundle_count %} ({{ order.bundle_count }} prompts){% endif %}
+            {% endif %}
+        </p>
         <p><strong>Price:</strong> €{{ order.price_snapshot }}</p>
         <p><strong>Status:</strong> {{ order.get_status_display }}</p>
         <p><strong>Created:</strong> {{ order.created_at }}</p>
@@ -16,10 +23,12 @@
         <p>Payment received. We’ll send your download/fulfillment details shortly.</p>
     {% else %}
         <p>Payment pending. If you just paid, refresh in a moment; otherwise try again or contact support.</p>
-        <form method="post" action="{% url 'buy_now' order.product.slug %}">
-            {% csrf_token %}
-            <button type="submit" class="btn-primary">Pay now</button>
-        </form>
+        {% if order.product %}
+            <form method="post" action="{% url 'buy_now' order.product.slug %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-primary">Pay now</button>
+            </form>
+        {% endif %}
     {% endif %}
 
     <div class="cta-row" style="margin-top:16px;">
