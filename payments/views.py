@@ -49,20 +49,9 @@ def buy_now(request, slug):
         status='pending',
     )
     if not STRIPE_ENABLED:
-        if not settings.DEBUG:
-            messages.error(request, 'Stripe is not configured on this deployment.')
-            return redirect('product_detail', slug=slug)
-        order.status = 'paid'
-        order.save(update_fields=['status'])
-        Payment.objects.create(
-            user=request.user,
-            order=order,
-            amount=order.price_snapshot,
-            status='succeeded',
-            paid_at=timezone.now(),
-        )
-        messages.success(request, 'Order created and marked paid (Stripe not configured).')
-        return redirect('order_detail', pk=order.pk)
+        messages.error(request, 'Stripe is not configured. Please try again later.')
+        order.delete()
+        return redirect('product_detail', slug=slug)
 
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
@@ -172,20 +161,8 @@ def request_checkout(request, pk):
     amount = Decimal(custom_request.total_price)
 
     if not STRIPE_ENABLED:
-        if not settings.DEBUG:
-            messages.error(request, 'Stripe is not configured on this deployment.')
-            return redirect('request_detail', pk=pk)
-        Payment.objects.create(
-            user=request.user,
-            custom_request=custom_request,
-            amount=amount,
-            status='succeeded',
-            paid_at=timezone.now(),
-        )
-        custom_request.status = 'completed'
-        custom_request.save(update_fields=['status'])
-        messages.success(request, 'Marked paid (Stripe not configured).')
-        return redirect('request_checkout_success', pk=custom_request.pk)
+        messages.error(request, 'Stripe is not configured. Please try again later.')
+        return redirect('request_detail', pk=pk)
 
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],

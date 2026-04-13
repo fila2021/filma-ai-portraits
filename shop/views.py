@@ -344,7 +344,7 @@ def cart_checkout(request):
             )
             created_orders.append(order)
 
-    # If Stripe configured, create a single checkout session
+    # Stripe is mandatory
     if STRIPE_ENABLED:
         line_items = []
         for item in cart_items:
@@ -386,27 +386,5 @@ def cart_checkout(request):
         request.session.modified = True
         return redirect(session.url)
 
-    # Fallback: mark paid immediately (no Stripe) only in DEBUG
-    if not settings.DEBUG:
-        messages.error(request, 'Stripe is not configured on this deployment. Please set STRIPE keys.')
-        return redirect('cart_view')
-
-    for order in created_orders:
-        order.status = 'paid'
-        order.save(update_fields=['status'])
-        Payment.objects.create(
-            user=request.user,
-            order=order if order.product else None,
-            amount=order.price_snapshot,
-            status='succeeded',
-            paid_at=timezone.now(),
-        )
-
-    request.session['cart'] = {}
-    request.session.modified = True
-    messages.success(request, 'Order created and marked paid.')
-
-    if created_orders:
-        return redirect('order_success', pk=created_orders[-1].id)
-
+    messages.error(request, 'Stripe is not configured. Please try again later.')
     return redirect('cart_view')
