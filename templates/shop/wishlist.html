@@ -31,11 +31,19 @@
                             </div>
                         </div>
                         <div class="cart-item-actions">
-                            <form method="post" action="{% url 'cart_add' item.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn-primary btn-small">Add to Cart</button>
-                            </form>
-                            <a href="{% url 'wishlist_remove' item.id %}" class="cart-remove-link">🗑 Remove</a>
+                            {% if item.id|stringformat:'s'|slice:':7' == 'bundle-' %}
+                                <form method="post" action="{% url 'cart_add_bundle' item.id|cut:'bundle-' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-primary btn-small">Add to Cart</button>
+                                </form>
+                                <a href="{% url 'wishlist_remove' item.id %}" class="cart-remove-link">🗑 Remove</a>
+                            {% else %}
+                                <form method="post" action="{% url 'cart_add' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-primary btn-small">Add to Cart</button>
+                                </form>
+                                <a href="{% url 'wishlist_remove' item.id %}" class="cart-remove-link">🗑 Remove</a>
+                            {% endif %}
                         </div>
                     </article>
                 {% endfor %}
