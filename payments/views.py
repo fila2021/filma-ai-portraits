@@ -21,6 +21,19 @@ except ImportError:  # pragma: no cover - if stripe not installed we fallback
     stripe = None
 
 
+def _retrieve_session(session_id: str):
+    """Safely retrieve a Stripe Checkout Session with expanded payment intent."""
+    if not session_id or stripe is None or not getattr(stripe, 'api_key', None):
+        return None
+    try:
+        return stripe.checkout.Session.retrieve(
+            session_id,
+            expand=['payment_intent'],
+        )
+    except Exception:
+        return None
+
+
 @login_required
 def buy_now(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
@@ -87,21 +100,41 @@ def order_detail(request, pk):
 @login_required
 def order_success(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
-    session_id = request.GET.get('session_id')
-    if order.status != 'paid':
+    payment = Payment.objects.filter(order=order).order_by('-created_at').first()
+    session_id = request.GET.get('session_id') or order.stripe_session_id or (payment.stripe_session_id if payment else None)
+    session = _retrieve_session(session_id)
+
+    if session and session.payment_status == 'paid':
         order.status = 'paid'
-        order.save(update_fields=['status'])
-    Payment.objects.filter(order=order).update(
-        status='succeeded',
-        paid_at=timezone.now(),
-        stripe_session_id=session_id or '',
-    )
+        order.stripe_session_id = session.id
+        order.save(update_fields=['status', 'stripe_session_id'])
+
+        payment, _ = Payment.objects.get_or_create(
+            order=order,
+            defaults={
+                'user': request.user,
+                'amount': order.price_snapshot,
+                'status': 'pending',
+                'stripe_session_id': session.id,
+            },
+        )
+        payment.status = 'succeeded'
+        payment.paid_at = timezone.now()
+        payment.stripe_session_id = session.id
+        payment.stripe_payment_intent = getattr(session, 'payment_intent', '') or ''
+        payment.save()
+    elif order.status != 'paid':
+        messages.error(request, 'We could not confirm the Stripe payment. Please try again or contact support.')
+
     return render(request, 'payments/order_success.html', {'order': order})
 
 
 @login_required
 def order_cancel(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
+    order.status = 'cancelled'
+    order.save(update_fields=['status'])
+    Payment.objects.filter(order=order, status='pending').update(status='failed')
     messages.info(request, 'Payment cancelled.')
     return render(request, 'payments/order_cancel.html', {'order': order})
 
@@ -157,15 +190,30 @@ def request_checkout(request, pk):
 def request_checkout_success(request, pk):
     from services.models import CustomRequest
     custom_request = get_object_or_404(CustomRequest, pk=pk, user=request.user)
-    session_id = request.GET.get('session_id')
-    if custom_request.status != 'completed':
+    payment = Payment.objects.filter(custom_request=custom_request).order_by('-created_at').first()
+    session_id = request.GET.get('session_id') or (payment.stripe_session_id if payment else None)
+    session = _retrieve_session(session_id)
+
+    if session and session.payment_status == 'paid':
         custom_request.status = 'completed'
         custom_request.save(update_fields=['status'])
-    Payment.objects.filter(custom_request=custom_request).update(
-        status='succeeded',
-        paid_at=timezone.now(),
-        stripe_session_id=session_id or '',
-    )
+        payment, _ = Payment.objects.get_or_create(
+            custom_request=custom_request,
+            defaults={
+                'user': request.user,
+                'amount': custom_request.total_price,
+                'status': 'pending',
+                'stripe_session_id': session.id,
+            },
+        )
+        payment.status = 'succeeded'
+        payment.paid_at = timezone.now()
+        payment.stripe_session_id = session.id
+        payment.stripe_payment_intent = getattr(session, 'payment_intent', '') or ''
+        payment.save()
+    elif custom_request.status != 'completed':
+        messages.error(request, 'We could not confirm the Stripe payment. Please try again or contact support.')
+
     return render(request, 'payments/request_success.html', {'custom_request': custom_request})
 
 
@@ -173,5 +221,8 @@ def request_checkout_success(request, pk):
 def request_checkout_cancel(request, pk):
     from services.models import CustomRequest
     custom_request = get_object_or_404(CustomRequest, pk=pk, user=request.user)
+    custom_request.status = 'cancelled'
+    custom_request.save(update_fields=['status'])
+    Payment.objects.filter(custom_request=custom_request, status='pending').update(status='failed')
     messages.info(request, 'Payment cancelled.')
     return render(request, 'payments/request_cancel.html', {'custom_request': custom_request})
