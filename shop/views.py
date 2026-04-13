@@ -57,13 +57,28 @@ def _cart_totals(cart):
             except Exception:
                 bundle_count = None
 
-        line_total = Decimal(str(item['price'])) * int(item['quantity'])
+        price_value = Decimal(str(item.get('price', '0')))
+        if is_bundle and price_value == 0 and bundle_count:
+            try:
+                from home.models import PromptBundle
+                pb = PromptBundle.objects.filter(count=bundle_count).first()
+                if pb:
+                    price_value = Decimal(str(pb.price))
+                    item['price'] = str(price_value)
+                    # refresh title/image from db if missing
+                    item['title'] = item.get('title') or f"{pb.label} ({bundle_count} prompts)"
+                    if pb.image_url and not item.get('image_url'):
+                        item['image_url'] = pb.image_url
+            except Exception:
+                pass
+
+        line_total = price_value * int(item['quantity'])
         total += line_total
         items.append({
             'key': key,
             'id': item['id'],
-            'title': item['title'],
-            'price': Decimal(str(item['price'])),
+            'title': item.get('title'),
+            'price': price_value,
             'quantity': item['quantity'],
             'line_total': line_total,
             'image_url': item.get('image_url', ''),
@@ -127,16 +142,34 @@ def cart_add_bundle(request, count):
     if request.method != 'POST':
         return redirect('browse')
     cart = _get_cart(request)
+    try:
+        bundle_count = int(count)
+    except (TypeError, ValueError):
+        bundle_count = 0
+
+    # Try to pull price/label from DB; fallback to static map
+    try:
+        from home.models import PromptBundle
+        prompt_bundle = PromptBundle.objects.filter(count=bundle_count).first()
+    except Exception:
+        prompt_bundle = None
+
     price_map = {
+        150: Decimal('65'),
         100: Decimal('49'),
+        75: Decimal('39'),
         50: Decimal('29'),
+        25: Decimal('18'),
         10: Decimal('12'),
         5: Decimal('7'),
     }
-    price = price_map.get(int(count), Decimal('0'))
-    key = _add_bundle_to_session(cart, count, price, "Prompt Bundle")
+    price = (prompt_bundle.price if prompt_bundle else price_map.get(bundle_count, Decimal('0')))
+    title_prefix = prompt_bundle.label if prompt_bundle else "Prompt Bundle"
+    key = _add_bundle_to_session(cart, bundle_count, price, title_prefix)
+    if prompt_bundle and prompt_bundle.image_url:
+        cart[key]['image_url'] = prompt_bundle.image_url
     request.session.modified = True
-    messages.success(request, f'Prompt bundle ({count}) added to cart.')
+    messages.success(request, f'Prompt bundle ({bundle_count}) added to cart.')
     redirect_url = request.POST.get('next') or request.META.get('HTTP_REFERER') or 'cart_view'
     return redirect(redirect_url)
 
@@ -216,16 +249,33 @@ def wishlist_add_bundle(request, count):
     if request.method != 'POST':
         return redirect('browse')
     wishlist = _get_wishlist(request)
+    try:
+        bundle_count = int(count)
+    except (TypeError, ValueError):
+        bundle_count = 0
+
+    try:
+        from home.models import PromptBundle
+        prompt_bundle = PromptBundle.objects.filter(count=bundle_count).first()
+    except Exception:
+        prompt_bundle = None
+
     price_map = {
+        150: Decimal('65'),
         100: Decimal('49'),
+        75: Decimal('39'),
         50: Decimal('29'),
+        25: Decimal('18'),
         10: Decimal('12'),
         5: Decimal('7'),
     }
-    price = price_map.get(int(count), Decimal('0'))
-    _add_bundle_to_session(wishlist, count, price, "Prompt Bundle")
+    price = (prompt_bundle.price if prompt_bundle else price_map.get(bundle_count, Decimal('0')))
+    title_prefix = prompt_bundle.label if prompt_bundle else "Prompt Bundle"
+    key = _add_bundle_to_session(wishlist, bundle_count, price, title_prefix)
+    if prompt_bundle and prompt_bundle.image_url:
+        wishlist[key]['image_url'] = prompt_bundle.image_url
     request.session.modified = True
-    messages.success(request, f'Prompt bundle ({count}) added to wishlist.')
+    messages.success(request, f'Prompt bundle ({bundle_count}) added to wishlist.')
     redirect_url = request.POST.get('next') or request.META.get('HTTP_REFERER') or 'wishlist_view'
     return redirect(redirect_url)
 
@@ -239,6 +289,7 @@ def wishlist_view(request):
 def cart_view(request):
     cart = _get_cart(request)
     cart_items, cart_total = _cart_totals(cart)
+    request.session.modified = True
 
     context = {
         'cart_items': cart_items,
@@ -256,6 +307,7 @@ def cart_checkout(request):
 
     cart = _get_cart(request)
     cart_items, cart_total = _cart_totals(cart)
+    request.session.modified = True
 
     if not cart_items:
         messages.error(request, 'Your cart is empty.')
