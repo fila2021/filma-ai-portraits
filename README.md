@@ -78,7 +78,7 @@ heroku ps:restart
 ## 🧪 Testing & Validation
 - Manual flows: auth, shop/cart, bundles, checkout (Stripe test), orders, requests, reviews, responsive.
 - Validation tools planned: W3C HTML, Jigsaw CSS, flake8 (PEP8), browser console (desktop/mobile).
-- Record findings/screenshots in `TESTING.md` (Validation section) and `docs/testing/`.
+- Testing summary and screenshots are included in `TESTING.md` (Validation section), with supporting assets in `docs/testing/`.
 
 ## 🐞 Bugs & Fixes (notable)
 - Duplicate `image_url` migration / nullability conflict → cleaned model, added migration, applied on Heroku.
@@ -123,5 +123,4 @@ Images and content used for educational purposes.
 Project developed by the author as part of the backend development assessment.
 
 Thank You for Visiting Askuala AI!
-
 
