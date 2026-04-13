@@ -353,15 +353,19 @@ def cart_checkout(request):
                 'quantity': item['quantity'],
             })
 
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            mode='payment',
-            line_items=line_items,
-            success_url=request.build_absolute_uri(
-                reverse('cart_checkout_success')
-            ) + '?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=request.build_absolute_uri(reverse('cart_checkout_cancel')),
-        )
+        try:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                mode='payment',
+                line_items=line_items,
+                success_url=request.build_absolute_uri(
+                    reverse('cart_checkout_success')
+                ) + '?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=request.build_absolute_uri(reverse('cart_checkout_cancel')),
+            )
+        except Exception as e:  # catch Stripe errors and surface to user instead of 500
+            messages.error(request, f"Stripe error: {getattr(e, 'user_message', str(e))}")
+            return redirect('cart_view')
 
         for order in created_orders:
             order.stripe_session_id = session.id
