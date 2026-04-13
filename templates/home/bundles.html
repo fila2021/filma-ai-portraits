@@ -12,38 +12,41 @@
 
         <div class="bundle-free-prompts">
             <h3>Sample free prompts</h3>
-            <div class="card-row">
-                <article class="card-floating">
-                    <span class="pill accent">Prompt 1</span>
-                    <p class="muted">A hyper-realistic macro photograph capturing a tiny man standing at the edge of a colossal camera lens, peering into its reflective glass surface. The subject, using the uploaded face as reference, is leaning forward slightly, as if about to step into another world within the lens. He wears a modern casual outfit with a light jacket and sneakers. The lens glass is rendered with extreme detail, showing layered reflections, dust particles, and subtle curvature distortion. Light refracts across the surface, creating complex highlights and depth. The background is softly blurred, with hints of a photography studio environment and warm ambient lighting.</p>
-                    <img src="{% static 'img/prompts/prompt1.png' %}" alt="Prompt 1 preview" class="prompt-thumb">
-                    <button class="btn-secondary btn-small" data-modal="prompt1-modal">View image</button>
-                </article>
-                <article class="card-floating">
-                    <span class="pill accent">Prompt 2</span>
-                    <p class="muted">A hyper-realistic 8K cinematic composition where a man, using the uploaded face as reference, stands in the middle of a surreal city made entirely of analytics graphs and data visualizations. Towering bar charts rise like skyscrapers around him, while glowing line graphs stretch across the ground like roads. He wears a sleek modern outfit—dark blazer, t-shirt, and sneakers—standing confidently with hands at his sides. The lighting is a blend of cool digital tones and warm highlights, creating a futuristic yet grounded atmosphere. The background fades into a soft haze, emphasizing scale and depth.</p>
-                    <img src="{% static 'img/prompts/prompt2.png' %}" alt="Prompt 2 preview" class="prompt-thumb">
-                    <button class="btn-secondary btn-small" data-modal="prompt2-modal">View image</button>
-                </article>
-                <article class="card-floating">
-                    <span class="pill accent">Prompt 3</span>
-                    <p class="muted">A high-end commercial photography shot showing a man seated at a premium workstation surrounded by floating UI panels displaying analytics and engagement metrics. The subject, using the uploaded face as reference, is confidently leaning forward with hands resting on a mechanical keyboard. The desk setup includes multiple monitors, RGB lighting, and sleek accessories. The lighting combines soft cinematic tones with neon accents, creating a modern creator aesthetic. The background features acoustic panels and glowing signage.</p>
-                    <img src="{% static 'img/prompts/prompt3.png' %}" alt="Prompt 3 preview" class="prompt-thumb">
-                    <button class="btn-secondary btn-small" data-modal="prompt3-modal">View image</button>
-                </article>
-            </div>
+            {% if prompts %}
+                <div class="card-row">
+                    {% for prompt in prompts %}
+                        <article class="card-floating">
+                            <span class="pill accent">Prompt {{ forloop.counter }}</span>
+                            <p class="muted">{{ prompt.description }}</p>
+                            {% if prompt.image_url %}
+                                <img src="{{ prompt.image_url }}" alt="{{ prompt.title }} preview" class="prompt-thumb">
+                                <button class="btn-secondary btn-small" data-modal="prompt-{{ prompt.id }}-modal">View image</button>
+                            {% else %}
+                                <p class="muted">Image coming soon.</p>
+                            {% endif %}
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="muted">Add sample prompts in Django admin to showcase what buyers receive.</p>
+            {% endif %}
         </div>
     </div>
 </section>
 
 <section class="section">
         <div class="card-row">
-            {% for bundle in bundle_options %}
+            {% for bundle in bundles %}
                 <article class="card-floating">
+                    {% if bundle.image_url %}
+                        <div class="bundle-thumb">
+                            <img src="{{ bundle.image_url }}" alt="{{ bundle.label }} artwork">
+                        </div>
+                    {% endif %}
                     <span class="pill accent">{{ bundle.label }}</span>
                     <h3>{{ bundle.count }} prompts</h3>
                     <p class="muted">{{ bundle.description }}</p>
-                    <p class="product-price-large">{{ bundle.price }}</p>
+                    <p class="product-price-large">€{{ bundle.price }}</p>
                     <div class="cta-row">
                         <form method="post" action="{% url 'cart_add_bundle' bundle.count %}">
                             {% csrf_token %}
@@ -62,30 +65,18 @@
 </section>
 
 <!-- Prompt modals -->
-<div class="modal" id="prompt1-modal">
-    <div class="modal-content">
-        <button class="modal-close" data-close>&times;</button>
-        <h3>Prompt 1</h3>
-        <img src="{% static 'img/prompts/prompt1.png' %}" alt="Prompt 1 full" class="modal-image">
-        <p>A hyper-realistic macro photograph capturing a tiny man standing at the edge of a colossal camera lens, peering into its reflective glass surface. The subject, using the uploaded face as reference, is leaning forward slightly, as if about to step into another world within the lens. He wears a modern casual outfit with a light jacket and sneakers. The lens glass is rendered with extreme detail, showing layered reflections, dust particles, and subtle curvature distortion. Light refracts across the surface, creating complex highlights and depth. The background is softly blurred, with hints of a photography studio environment and warm ambient lighting.</p>
+{% for prompt in prompts %}
+    {% if prompt.image_url %}
+    <div class="modal" id="prompt-{{ prompt.id }}-modal">
+        <div class="modal-content">
+            <button class="modal-close" data-close>&times;</button>
+            <h3>{{ prompt.title }}</h3>
+            <img src="{{ prompt.image_url }}" alt="{{ prompt.title }} full" class="modal-image">
+            <p>{{ prompt.description }}</p>
+        </div>
     </div>
-</div>
-<div class="modal" id="prompt2-modal">
-    <div class="modal-content">
-        <button class="modal-close" data-close>&times;</button>
-        <h3>Prompt 2</h3>
-        <img src="{% static 'img/prompts/prompt2.png' %}" alt="Prompt 2 full" class="modal-image">
-        <p>A hyper-realistic 8K cinematic composition where a man, using the uploaded face as reference, stands in the middle of a surreal city made entirely of analytics graphs and data visualizations. Towering bar charts rise like skyscrapers around him, while glowing line graphs stretch across the ground like roads. He wears a sleek modern outfit—dark blazer, t-shirt, and sneakers—standing confidently with hands at his sides. The lighting is a blend of cool digital tones and warm highlights, creating a futuristic yet grounded atmosphere. The background fades into a soft haze, emphasizing scale and depth.</p>
-    </div>
-</div>
-<div class="modal" id="prompt3-modal">
-    <div class="modal-content">
-        <button class="modal-close" data-close>&times;</button>
-        <h3>Prompt 3</h3>
-        <img src="{% static 'img/prompts/prompt3.png' %}" alt="Prompt 3 full" class="modal-image">
-        <p>A high-end commercial photography shot showing a man seated at a premium workstation surrounded by floating UI panels displaying analytics and engagement metrics. The subject, using the uploaded face as reference, is confidently leaning forward with hands resting on a mechanical keyboard. The desk setup includes multiple monitors, RGB lighting, and sleek accessories. The lighting combines soft cinematic tones with neon accents, creating a modern creator aesthetic. The background features acoustic panels and glowing signage.</p>
-    </div>
-</div>
+    {% endif %}
+{% endfor %}
 
 {% block extra_js %}
 <script>

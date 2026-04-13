@@ -57,148 +57,48 @@
 <section class="section">
     <div class="section-head">
         <div>
-            <span class="badge">Featured Services</span>
-            <h2>Designed for creators, brands, and standout profiles</h2>
+            <span class="badge">Start here</span>
+            <h2>Pick the quickest path for you</h2>
         </div>
-        <a href="{% url 'service_list' %}" class="btn-secondary">View All Services</a>
     </div>
 
     <div class="card-row">
         <article class="card-floating">
-            <span class="pill accent">Custom Portraits</span>
-            <div class="card-img-placeholder dark"></div>
-            <h3>Custom AI Portrait Requests</h3>
-            <p class="muted">
-                Submit a tailored request for portraits that match your vibe, audience,
-                platform, and personal or business brand.
-            </p>
-            <a href="{% url 'service_list' %}" class="btn-primary">Start Request</a>
+            <span class="pill accent">Shop</span>
+            <h3>Portrait Products</h3>
+            <p class="muted">Ready-made portraits and AI photos for instant download.</p>
+            <a href="{% url 'product_list' %}" class="btn-primary">Browse Shop</a>
         </article>
 
         <article class="card-floating">
-            <span class="pill accent">Creator Packs</span>
-            <div class="card-img-placeholder"></div>
-            <h3>Ready-to-Buy Portrait Packs</h3>
-            <p class="muted">
-                Browse prepared portrait products for profile images, content packs,
-                social media visuals, and creator branding.
-            </p>
-            <a href="{% url 'product_list' %}" class="btn-secondary">Shop Packs</a>
+            <span class="pill accent">Bundles</span>
+            <h3>Prompt Collections</h3>
+            <p class="muted">Buy curated prompt bundles, delivered in randomized order.</p>
+            <a href="{% url 'ai_bundles' %}" class="btn-secondary">View Bundles</a>
         </article>
 
         <article class="card-floating">
-            <span class="pill accent">Showcase</span>
-            <div class="card-img-placeholder dark"></div>
-            <h3>Explore the Gallery</h3>
-            <p class="muted">
-                See example outputs, visual directions, and premium style references
-                before placing your request or buying a pack.
-            </p>
-            <a href="{% url 'gallery' %}" class="btn-secondary">View Gallery</a>
+            <span class="pill accent">Custom</span>
+            <h3>Request a Portrait</h3>
+            <p class="muted">Submit your brief for a tailored portrait set that matches your brand.</p>
+            <a href="{% url 'service_list' %}" class="btn-secondary">Start a Request</a>
         </article>
-    </div>
-</section>
-
-<section class="section">
-    <div class="split">
-        <div class="card-soft">
-            <span class="badge accent">For creators</span>
-            <h2>Build a stronger visual identity</h2>
-            <p class="muted">
-                Whether you need polished profile portraits, branded creator imagery,
-                or visually consistent assets for your audience, Askuala AI Portraits
-                gives you a cleaner, more premium starting point.
-            </p>
-            <div class="tag-row">
-                <span class="pill">Instagram</span>
-                <span class="pill">TikTok</span>
-                <span class="pill">YouTube</span>
-                <span class="pill">Facebook</span>
-            </div>
-        </div>
-
-        <div class="card-soft">
-            <span class="badge">Storefront experience</span>
-            <h2>Clearer paths to buy, browse, and request</h2>
-            <p class="muted">
-                A stronger section hierarchy and more consistent premium UI makes the site
-                easier to navigate and more visually convincing for customers.
-            </p>
-            <div class="cta-row">
-                <a href="{% url 'product_list' %}" class="btn-primary">Browse Shop</a>
-                <a href="{% url 'service_list' %}" class="btn-secondary">Explore Services</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="card-soft">
-        <div class="section-head">
-            <div>
-                <span class="badge accent">Next step</span>
-                <h2>Choose how you want to begin</h2>
-            </div>
-        </div>
-
-        <div class="card-row">
-            <article class="card-floating">
-                <h3>Buy a portrait pack</h3>
-                <p class="muted">
-                    Best if you want a faster, ready-made purchase experience with clear products.
-                </p>
-                <a href="{% url 'product_list' %}" class="btn-primary">Go to Shop</a>
-            </article>
-
-            <article class="card-floating">
-                <h3>Submit a custom request</h3>
-                <p class="muted">
-                    Best if you want something tailored to your exact style, purpose, or brand direction.
-                </p>
-                <a href="{% url 'service_list' %}" class="btn-secondary">Request a Service</a>
-            </article>
-        </div>
     </div>
 </section>
 
 <section class="section">
     <div class="card-soft page-intro-card">
         <span class="badge accent">About</span>
-        <h2>About Askuala AI Portraits</h2>
+        <h2>Askuala AI Portraits in one glance</h2>
         <p class="muted">
-            Askuala AI Portraits is a premium platform for polished AI portrait visuals,
-            creator-ready image packs, and tailored custom portrait services.
+            Premium AI portrait visuals, prompt bundles, and custom services built for creators, brands,
+            and professionals who want polished results fast.
         </p>
-    </div>
-</section>
-
-<section class="section">
-    <div class="split">
-        <div class="card-soft">
-            <span class="badge">Who we help</span>
-            <h2>Built for creators, brands, and professionals</h2>
-            <p class="muted">
-                We help people create more polished digital visuals for profile images,
-                brand identity, content creation, and premium online presentation.
-            </p>
-            <div class="tag-row">
-                <span class="pill">Creators</span>
-                <span class="pill">Personal brands</span>
-                <span class="pill">Professionals</span>
-                <span class="pill">Businesses</span>
-            </div>
-        </div>
-
-        <div class="card-soft">
-            <span class="badge accent">What we offer</span>
-            <h2>Premium visual direction with flexible options</h2>
-            <p class="muted">
-                You can browse ready-made portrait products or submit a custom request for a tailored outcome.
-            </p>
-            <div class="cta-row">
-                <a href="{% url 'product_list' %}" class="btn-secondary">Browse Shop</a>
-                <a href="{% url 'service_list' %}" class="btn-primary">Explore Services</a>
-            </div>
+        <div class="tag-row">
+            <span class="pill">Creators</span>
+            <span class="pill">Personal brands</span>
+            <span class="pill">Businesses</span>
+            <span class="pill">Agencies</span>
         </div>
     </div>
 </section>
