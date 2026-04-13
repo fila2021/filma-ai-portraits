@@ -107,7 +107,8 @@ def cart_add(request, pk):
 
     request.session.modified = True
     messages.success(request, f'"{product.title}" added to cart.')
-    return redirect('cart_view')
+    redirect_url = request.POST.get('next') or request.META.get('HTTP_REFERER') or 'cart_view'
+    return redirect(redirect_url)
 
 
 def cart_add_bundle(request, count):
@@ -124,7 +125,8 @@ def cart_add_bundle(request, count):
     key = _add_bundle_to_session(cart, count, price, "Prompt Bundle")
     request.session.modified = True
     messages.success(request, f'Prompt bundle ({count}) added to cart.')
-    return redirect('cart_view')
+    redirect_url = request.POST.get('next') or request.META.get('HTTP_REFERER') or 'cart_view'
+    return redirect(redirect_url)
 
 
 def cart_remove(request, item_key):
@@ -184,7 +186,8 @@ def wishlist_add(request, pk):
     }
     request.session.modified = True
     messages.success(request, f'"{product.title}" added to wishlist.')
-    return redirect('wishlist_view')
+    redirect_url = request.POST.get('next') or request.META.get('HTTP_REFERER') or 'wishlist_view'
+    return redirect(redirect_url)
 
 
 def wishlist_remove(request, item_key):
@@ -211,7 +214,8 @@ def wishlist_add_bundle(request, count):
     _add_bundle_to_session(wishlist, count, price, "Prompt Bundle")
     request.session.modified = True
     messages.success(request, f'Prompt bundle ({count}) added to wishlist.')
-    return redirect('wishlist_view')
+    redirect_url = request.POST.get('next') or request.META.get('HTTP_REFERER') or 'wishlist_view'
+    return redirect(redirect_url)
 
 
 def wishlist_view(request):

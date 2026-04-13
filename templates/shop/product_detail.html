@@ -46,11 +46,13 @@
                 <div class="product-main-actions">
                     <form method="post" action="{% url 'cart_add' product.id %}" class="product-cart-form">
                         {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
                         <button type="submit" class="product-cart-button">🛒 Add to Cart</button>
                     </form>
 
                     <form method="post" action="{% url 'wishlist_add' product.id %}">
                         {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
                         <button type="submit" class="product-wishlist-button">♡ Wishlist</button>
                     </form>
                 </div>

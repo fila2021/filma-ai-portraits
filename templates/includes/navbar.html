@@ -12,7 +12,6 @@
 
         {% url 'home' as home_url %}
         {% url 'browse' as browse_url %}
-        {% url 'ai_photos' as ai_photos_url %}
         {% url 'ai_bundles' as ai_bundles_url %}
         {% url 'cart_view' as cart_url %}
         {% url 'profile' as profile_url %}
@@ -26,7 +25,6 @@
         <ul class="nav-menu">
             <li><a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">Home</a></li>
             <li><a href="{{ browse_url }}" class="{% if request.path|starts_with:browse_url %}active{% endif %}">Browse</a></li>
-            <li><a href="{{ ai_photos_url }}" class="{% if request.path|starts_with:ai_photos_url %}active{% endif %}">AI Photos</a></li>
             <li><a href="{{ ai_bundles_url }}" class="{% if request.path|starts_with:ai_bundles_url %}active{% endif %}">Bundles</a></li>
 
             {% if user.is_authenticated %}

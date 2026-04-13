@@ -29,13 +29,13 @@
                             </div>
 
                             <div class="cart-item-actions">
-                                <form method="post" action="{% url 'cart_update' item.key %}" class="cart-qty-form">
+                                <form method="post" action="{% url 'cart_update' item.key %}" class="cart-qty-form" data-confirm="Update this item quantity?">
                                     {% csrf_token %}
                                     <label for="qty-{{ forloop.counter }}">Qty</label>
                                     <input id="qty-{{ forloop.counter }}" type="number" name="quantity" min="1" value="{{ item.quantity }}">
                                     <button type="submit" class="btn-secondary">Update</button>
                                 </form>
-                                <a href="{% url 'cart_remove' item.key %}" class="cart-remove-link">🗑 Remove</a>
+                                <a href="{% url 'cart_remove' item.key %}" class="cart-remove-link" data-confirm="Remove this item from cart?">🗑 Remove</a>
                             </div>
                         </article>
                     {% endfor %}
@@ -65,7 +65,7 @@
                         </form>
                         <form method="post" action="{% url 'cart_clear' %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn-secondary full-width">Clear Cart</button>
+                            <button type="submit" class="btn-secondary full-width" data-confirm="Clear all items from cart?">Clear Cart</button>
                         </form>
                     </div>
 

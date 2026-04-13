@@ -2470,6 +2470,7 @@ img {
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  align-items: center;
 }
 
 .cart-item-left {
@@ -2518,9 +2519,10 @@ img {
 }
 
 .cart-item-actions {
-  display: grid;
-  gap: 12px;
-  justify-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
 }
 
 .cart-item-actions p,
@@ -2532,6 +2534,31 @@ img {
 .cart-remove-link {
   color: #f0b84e;
   font-weight: 700;
+}
+
+.cart-qty-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.cart-qty-form input {
+  width: 88px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.cart-qty-form label {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.cart-qty-form .btn-secondary {
+  padding: 8px 14px;
 }
 
 .cart-summary-panel {
