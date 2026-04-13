@@ -25,7 +25,7 @@ Record manual test results here. Use this table format:
   Findings:  
   -  
 - Python (flake8):  
-  Findings:  
+  Findings: (flake8 not run – install offline and record results)  
   -  
 - Browser console (Chrome/Firefox, desktop & mobile):  
   Findings:  

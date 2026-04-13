@@ -24,6 +24,7 @@ Create a `.env` (or set in Heroku config):
 - `STRIPE_PUBLISHABLE_KEY` – your Stripe publishable key
 - `STRIPE_SECRET_KEY` – your Stripe secret key
 - `DATABASE_URL` – optional (Heroku Postgres)
+Use `.env.example` as a template.
 
 ## Local Setup
 ```bash
