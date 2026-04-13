@@ -28,7 +28,11 @@
                 </div>
 
                 {% if product.description %}
-                    <p class="product-showcase-description">{{ product.description }}</p>
+                    {% if has_paid %}
+                        <p class="product-showcase-description">{{ product.description }}</p>
+                    {% else %}
+                        <p class="product-showcase-description muted">Prompt text unlocks after purchase.</p>
+                    {% endif %}
                 {% else %}
                     <p class="product-showcase-description">
                         A premium AI portrait product designed for creators, personal brands,
@@ -36,17 +40,15 @@
                     </p>
                 {% endif %}
 
-                {% if has_paid %}
-                    <div class="prompt-inline success">
+                <div class="prompt-inline {% if has_paid %}success{% else %}locked{% endif %}">
+                    {% if has_paid %}
                         <span class="pill accent">Prompt unlocked</span>
-                        <p class="muted">You can use the full prompt description for regeneration.</p>
-                    </div>
-                {% else %}
-                    <div class="prompt-inline locked">
+                        <p class="muted">Full prompt revealed above for your use.</p>
+                    {% else %}
                         <span class="pill locked-pill">Prompt locked</span>
                         <p class="muted">Purchase to reveal the full prompt text and generation details.</p>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
 
                 <div class="product-tag-list">
                     <span class="product-tag">portrait</span>
