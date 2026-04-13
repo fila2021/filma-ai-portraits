@@ -3,31 +3,18 @@
 {% block title %}Askuala AI Portraits{% endblock %}
 
 {% block content %}
-<section class="section hero-home-section">
-    <div class="hero-split">
-        <div class="hero-dark">
-            <span class="badge accent">Premium AI Portrait Studio</span>
-            <h1>Portraits that feel editorial, premium, and ready for every platform.</h1>
-            <p>
-                Askuala AI Portraits helps creators, brands, and professionals turn ideas into
-                polished AI portraits, creator packs, and custom visual assets with a more refined,
-                high-end look.
-            </p>
-
-            <div class="cta-row hero-cta-row">
-                <a href="{% url 'service_list' %}" class="btn-primary">Create a Custom Request</a>
-                <a href="{% url 'product_list' %}" class="btn-secondary">Browse Packs</a>
-            </div>
-
-            <div class="tag-row">
-                <span class="pill accent">Premium quality</span>
-                <span class="pill">Creator-ready</span>
-                <span class="pill">Custom portrait requests</span>
-            </div>
-        </div>
-
-        <div class="hero-light">
-            <div class="hero-photo"></div>
+<section class="hero-banner">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <span class="badge accent">Premium AI-Generated Art Marketplace</span>
+        <h1>Where AI Artistry<br>Meets <span class="accent-text">Creative Vision</span></h1>
+        <p class="muted">
+            Discover stunning AI-generated photographs, expertly crafted design prompts, and curated bundles.
+            Instant digital delivery with commercial licensing.
+        </p>
+        <div class="cta-row hero-cta-row">
+            <a href="{% url 'browse' %}" class="btn-primary">Browse Collection</a>
+            <a href="{% url 'ai_bundles' %}" class="btn-secondary">Explore Prompts</a>
         </div>
     </div>
 </section>

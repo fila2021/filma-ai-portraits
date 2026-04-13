@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render
 
 
@@ -28,7 +29,7 @@ def ai_photos(request):
     return render(request, 'home/ai_photos.html', {'products': products})
 
 
-def ai_prompts(request):
+def ai_bundles(request):
     prompts = [
         "Cinematic portrait, golden hour rim light, 85mm lens, shallow depth of field, soft bokeh",
         "Editorial studio headshot, Rembrandt lighting, charcoal backdrop, sharp focus",
@@ -137,4 +138,16 @@ def ai_prompts(request):
         "Soft morning bedroom, linen sheets, window light, airy mood",
         "Concept car render, studio lighting, glossy paint, dramatic shadows",
     ]
-    return render(request, 'home/prompts.html', {'prompts': prompts})
+    shuffled = prompts[:]
+    random.shuffle(shuffled)
+    bundle_options = [
+        {"label": "Products", "description": "Ready-made portrait packs", "count": "Shop", "url_name": "product_list"},
+        {"label": "100 Prompts", "description": "Full prompt vault (randomized)", "count": 100},
+        {"label": "50 Prompts", "description": "Half vault selection", "count": 50},
+        {"label": "10 Prompts", "description": "Curated starter set", "count": 10},
+        {"label": "5 Prompts", "description": "Quick inspiration pack", "count": 5},
+    ]
+    return render(request, 'home/bundles.html', {
+        'prompts': shuffled,
+        'bundle_options': bundle_options,
+    })

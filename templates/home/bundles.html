@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Bundles | Askuala AI Portraits{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="card-soft page-intro-card">
+        <span class="badge accent">Bundles</span>
+        <h1>Bundles of AI Prompts and Products</h1>
+        <p class="muted">Pick a bundle size or shop products. Prompts are delivered in randomized order from our premium list.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="card-row">
+        {% for bundle in bundle_options %}
+            <article class="card-floating">
+                <span class="pill accent">{{ bundle.label }}</span>
+                <h3>{{ bundle.count }} {% if bundle.count|stringformat:'s' == 'Shop' %}{% else %}prompts{% endif %}</h3>
+                <p class="muted">{{ bundle.description }}</p>
+                <div class="cta-row">
+                    {% if bundle.url_name %}
+                        <a href="{% url bundle.url_name %}" class="btn-primary">Shop Products</a>
+                    {% else %}
+                        <a href="{% url 'product_list' %}" class="btn-secondary">Buy Bundle</a>
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <span class="badge">Prompt Vault</span>
+            <h2>Sample of the prompts you receive (randomized each purchase)</h2>
+        </div>
+    </div>
+
+    {% if prompts %}
+        <div class="request-premium-grid">
+            {% for prompt in prompts %}
+                <article class="card-floating request-premium-card">
+                    <div class="request-card-top">
+                        <span class="pill accent">Prompt {{ forloop.counter }}</span>
+                        <span class="pill">Included</span>
+                    </div>
+                    <p class="muted">{{ prompt }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state premium-empty-state">
+            <span class="badge accent">No Prompts</span>
+            <h2>No prompts available yet</h2>
+            <p class="muted">Prompts will appear here when added.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

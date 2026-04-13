@@ -494,6 +494,52 @@ img {
   line-height: 1.06;
 }
 
+.hero-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+  padding: 72px clamp(18px, 6vw, 64px);
+  background: radial-gradient(circle at 20% 20%, rgba(212,162,76,0.18), transparent 30%),
+              radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.06), transparent 32%),
+              linear-gradient(180deg, #0e131b 0%, #121a24 60%, #0d1219 100%);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+  min-height: 520px;
+  display: grid;
+  align-items: center;
+  justify-items: start;
+}
+
+.hero-banner .hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 4px 4px, 6px 6px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.hero-banner .hero-content {
+  position: relative;
+  max-width: 760px;
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  text-align: center;
+}
+
+.hero-banner h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 4.6vw, 4rem);
+  line-height: 1.05;
+}
+
+.accent-text {
+  color: var(--accent-2);
+}
+
 .hero-split {
   display: grid;
   grid-template-columns: minmax(300px, 0.95fr) minmax(340px, 1.05fr);
